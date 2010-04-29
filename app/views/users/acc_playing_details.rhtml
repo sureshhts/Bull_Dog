@@ -1,0 +1,92 @@
+<script>
+
+function Show()
+{
+
+  if(document.forms[0].account_level_id.value =='other')
+  {
+        Effect.Appear('other');
+  		return false;
+		
+  }
+
+}
+
+function validate()
+{
+ if(document.forms[0].account_level_id.value=='other')
+ { 
+ 	var other_level = document.forms[0].other.value
+	removeAllOptions(document.forms[0].expense_name);
+	addOption(document.forms[0].expense_name, vendor, vendor, "");
+	alert("Done"+document.forms[0].expense_name.value);
+	return true; 
+ }
+
+}
+
+</script>
+
+<div>
+
+<h3>Account Playing Details </h3>
+
+<div>
+<% form_for(:playing_details, :url => {:controller => 'users', :action => 'create_playing_details'}, :html => { :multipart => true }) do |f| %>
+<table width="95%">
+
+<tr>
+  <td><%= f.hidden_field :user_id, :value => params[:id] %></td>
+</tr>
+
+<tr>
+ <td>Facility</td>
+  <td>
+ <select name="account[facility_id]" id="account_facility_id" >
+ <%@facilties.each do |f| %>
+ <option value="">Select the facility</option>
+ <option value="<%=f.id%>"><%=f.name%></option>
+ <%end%>
+ </select>
+</td>
+</tr>
+
+
+<tr>
+ <td>Level</td>
+  <td>
+ <select name="account[level_id]" id="account_level_id" onChange="Show();">
+ <option value="">Select the level</option>
+ <%@level.each do |l| %>
+ <option value="<%=l.id%>"><%=l.name%></option>
+ <%end%>
+ <option value="other">Other</option>
+ </select>
+</td>
+</tr>
+
+
+ <tr>
+  <td>
+  <div id="other" style="display:none">
+  <table>
+  <tr>
+  <td>Enter other levels</td>
+  <td> <input id="account_other_level" name="account[other_level]"/></td>
+  </tr>
+  </table>
+  </div>
+  </td>
+  
+</tr>
+
+<tr>
+	<td>
+	<%= submit_tag "Submit" %>
+	<%= submit_tag "Cancel" %>
+	</td>
+</tr>
+
+</table>
+<%end%>
+</div>

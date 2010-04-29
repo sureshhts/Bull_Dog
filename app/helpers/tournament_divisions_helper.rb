@@ -1,0 +1,2 @@
+module TournamentDivisionsHelper
+end

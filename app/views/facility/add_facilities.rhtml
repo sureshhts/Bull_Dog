@@ -1,0 +1,49 @@
+<div>
+<h3>New Facility </h3>
+</div>
+
+<div>
+<% form_for(:facility, :url => {:controller => 'facility', :action => 'create'}, :html => { :multipart => true }) do |f| %>
+<table width="95%">
+<tr>
+ <td>Name</td>
+  <td><%= f.text_field :name %></td>
+</tr>
+
+<tr>
+ <td>Address1</td>
+  <td><%= f.text_field :address1 %></td>
+</tr>
+
+
+<tr>
+ <td>Address2</td>
+  <td><%= f.text_field :address2 %></td>
+</tr>
+
+<tr>
+ <td>City</td>
+  <td><%= f.text_field :city %></td>
+</tr>
+
+<tr>
+ <td>State</td>
+  <td><%= f.text_field :state %></td>
+</tr>
+
+<tr>
+ <td>Zipcode</td>
+  <td><%= f.text_field :zipcode %></td>
+</tr>
+
+<tr>
+	<td>
+	<%= submit_tag "Submit" %>
+	<%= submit_tag "Cancel" %>
+	</td>
+</tr>
+
+
+</table>
+<%end%>
+</div>

@@ -1,0 +1,24 @@
+
+<div>
+<h3>Tournament Category</h3>
+
+<div>
+<% form_for(:category, :url => {:controller => 'tournament_category', :action => 'create'}, :html => { :multipart => true }) do |f| %>
+<table width="95%">
+<tr>
+ <td>Name
+ <%= f.text_field :name %></td>
+</tr>
+
+<tr>
+<td>
+ <%= submit_tag "Enter" %>
+ <%= submit_tag "Cancel" %>
+</td>
+</tr>
+
+</table>
+<%end%>
+</div>
+
+</div>

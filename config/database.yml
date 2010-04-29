@@ -1,0 +1,28 @@
+# MySQL.  Versions 4.1 and 5.0 are recommended.
+
+# Be sure to use new-style password hashing:
+# http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+
+development:
+  adapter: mysql
+  database: bulldog_dev
+  username: root
+  password: password  
+  host: localhost
+  #socket: /opt/lampp/var/mysql/mysql.sock
+
+test:
+  adapter: mysql
+  database: bulldog_test
+  username: root
+  password:
+  host: localhost
+  socket: /opt/lampp/var/mysql/mysql.sock
+
+production:
+  adapter: mysql
+  database: bulldog_production
+  username: root
+  password:
+  host: localhost
+  socket: /opt/lampp/var/mysql/mysql.sock

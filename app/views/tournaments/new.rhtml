@@ -1,0 +1,83 @@
+<%= javascript_include_tag "tooltip"%>
+<%= javascript_include_tag :defaults%>
+<%= calendar_date_select_includes %>
+<%= calendar_date_select_includes "blue" %>
+
+<div>
+
+<h3>New Tournament </h3>
+
+<div>
+<% form_for(:tournament, :url => {:controller => 'tournaments', :action => 'create'}, :html => { :multipart => true }) do |f| %>
+<table width="95%">
+<tr>
+ <td>Name</td>
+  <td><%= f.text_field :name %></td>
+</tr>
+
+<tr>
+ <td>City</td>
+  <td><%= f.text_field :city %></td>
+</tr>
+
+<tr>
+ <td>Kind of tournament</td>
+  <td>
+ <select name="tournament[kind_of_tournament]" id="tournament_kind_of_tournament" >
+ <option value="">Select kind of tournament</option>
+ <option value="O">Organised</option>
+ <option value="S">Self</option>
+ </select>
+</td>
+</tr>
+
+<tr>
+ <td>Tournament Type</td>
+ <td>
+ <select name="tournament[tournament_type]" id="tournament_tournament_type" >
+ <option value="">Selece tournament type</option>
+ <option value="L">League</option>
+ <option value="K">Knock-out</option>
+ </select>
+</td>
+</tr>
+
+<tr>
+  <td>Registration start date</td>
+  <td><%= calendar_date_select :tournament, :registration_starts %> </td>
+</tr>
+
+<tr>
+  <td>Registration end date</td>
+  <td><%= calendar_date_select :tournament, :registration_ends %> </td>
+</tr>
+
+<tr>
+  <td>Tournament date</td>
+  <td><%= calendar_date_select :tournament, :tournament_starts %> </td>
+</tr>
+
+<tr>
+	<td>Tournament Category</td>
+	<td>
+	<select name="tournament[category_id]" id="tournament_category_id" onChange="Show();">
+	<option value="">Select Recipient</option>
+	<%@tour_category.each do |c| %>
+	<option value="<%=c.id%>"><%=c.name%></option>
+	<%end%>
+	</select>
+	</td>
+</tr>
+
+<tr>
+	<td>
+	<%= submit_tag "Submit" %>
+	<%= submit_tag "Cancel" %>
+	</td>
+</tr>
+
+</table>
+<%end%>
+</div>
+
+</div>

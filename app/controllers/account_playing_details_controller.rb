@@ -1,0 +1,2 @@
+class AccountPlayingDetailsController < ApplicationController
+end

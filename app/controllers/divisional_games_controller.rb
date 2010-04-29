@@ -1,0 +1,2 @@
+class DivisionalGamesController < ApplicationController
+end

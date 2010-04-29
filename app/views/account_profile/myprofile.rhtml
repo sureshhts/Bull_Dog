@@ -1,0 +1,85 @@
+
+<div>
+
+<h3>User Profile </h3>
+
+<div>
+<% form_for(:profile, :url => {:controller => 'account_profile', :action => 'update_profile'}, :html => { :multipart => true }) do |f| %>
+<table width="95%">
+<tr>
+ <td>Name</td>
+  <td><%= f.text_field :first_name %></td>
+</tr>
+
+<tr>
+ <td>City</td>
+  <td><%= f.text_field :last_name %></td>
+</tr>
+
+<tr>
+ <td>Kind of tournament</td>
+  <td>
+ <select name="profile[gender]" id="profile_gender" >
+     <% {"Male" => 'm', "Female" => 'f'}.each_pair{|key,val|
+    	 if val == @profile.gender %>
+     		<option value="<%= val%>" selected="selected"> <%= key%></option>
+   		<% else %>
+     		<option value="<%= val%>"> <%= key%></option>
+   		<% end 
+	}%>
+ </select>
+ </td>
+</tr>
+
+<tr>
+ <td>Address1</td>
+  <td><%= f.text_field :address1 %></td>
+</tr>
+
+
+<tr>
+ <td>Address2</td>
+  <td><%= f.text_field :address2 %></td>
+</tr>
+
+<tr>
+ <td>City</td>
+  <td><%= f.text_field :city %></td>
+</tr>
+
+<tr>
+ <td>State</td>
+  <td><%= f.text_field :state %></td>
+</tr>
+
+<tr>
+ <td>Zipcode</td>
+  <td><%= f.text_field :zipcode %></td>
+</tr>
+
+<tr>
+ <td>Contact Number</td>
+  <td><%= f.text_field :contact_number %></td>
+</tr>
+
+<tr>
+ <td>Emailid</td>
+  <td><%= f.text_field :email_address %></td>
+</tr>
+
+<tr>
+  <td><%= f.hidden_field :user_id, :value => params[:id] %></td>
+</tr>
+
+<tr>
+	<td>
+	<%= submit_tag "Update Profile" %>
+	<%= submit_tag "Cancel" %>
+	</td>
+</tr>
+
+</table>
+<%end%>
+</div>
+
+</div>

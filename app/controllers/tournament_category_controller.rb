@@ -1,4 +1,9 @@
 class TournamentCategoryController < ApplicationController
+ 
+  def index
+ 
+  end
+
  def categories
  
  end
@@ -22,4 +27,5 @@ class TournamentCategoryController < ApplicationController
 	end
  end
  
+
 end

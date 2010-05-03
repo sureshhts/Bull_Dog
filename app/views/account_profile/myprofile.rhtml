@@ -4,7 +4,7 @@
 <h3>User Profile </h3>
 
 <div>
-<% form_for(:profile, :url => {:controller => 'account_profile', :action => 'update_profile'}, :html => { :multipart => true }) do |f| %>
+<% form_for(:profile, :url => {:controller => 'account_profile', :action => 'update_profile', :id => @profile.id}, :html => { :multipart => true }) do |f| %>
 <table width="95%">
 <tr>
  <td>Name</td>

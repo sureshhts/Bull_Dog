@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
   def create
     logout_keeping_session!
     user = User.authenticate(params[:login], params[:password])
-    puts "dddddddddddddddd",user
+  #puts "dddddddddddddddd",user
     if user
     
       # Protects against session fixation attacks, causes request forgery
@@ -23,9 +23,13 @@ class SessionsController < ApplicationController
       handle_remember_cookie! new_cookie_flag
       #redirect_back_or_default('/')
       if user.account_type == 'admin'
+      	 session[:user_name]= current_user.login
+      	 session[:user_id] = current_user.id
          redirect_to :action => "index", :controller => "tournaments", :id => current_user.id
          flash[:notice] = "Logged in successfully"
-      else     
+      else 
+          session[:user_name]= current_user.login
+          session[:user_id] = current_user.id
 	      redirect_to :action => "myprofile", :controller => "account_profile", :id => current_user.id
 	      flash[:notice] = "Logged in successfully"
       end
@@ -40,7 +44,7 @@ class SessionsController < ApplicationController
   def destroy
     logout_killing_session!
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default('/')
+     redirect_to :action => "home", :controller => "users"
   end
 
 protected

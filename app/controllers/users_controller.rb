@@ -34,8 +34,40 @@ class UsersController < ApplicationController
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
       redirect_to :action => 'new'
     end
-    
-   
+     
+  end
+  
+  def forgot_password
+    if request.post?
+      user = User.find(:first,:conditions=>["login=?", params[:user][:email]])
+      if !user.nil? 
+        new_pwd = newpass(8)  
+        passphrase_digest = encrypt_password(new_pwd)
+          username = user.login
+          employee = User.find(:first, :conditions=> ["username=?", username])
+        flag = employee.update_attributes(:hashed_password => passphrase_digest)   
+        if flag
+
+          # UserMailer.deliver_reset_password(user,new_pwd)
+         # Mailer.deliver_forgot_password(user, "Your Password", new_pwd)
+          flash[:notice] = "Your password has been reset."
+          redirect_to :action => "home", :controller => "users"
+        else
+          flash[:notice] = "Your Password could not be changed."
+          redirect_to :action =>"login", :controller => "users"
+        end
+
+      else 
+        flash[:notice]="Email-id doesnt exists" 
+      end   
+    end 
+  end
+  
+  def newpass( len )
+    chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+    newpass = ""
+    1.upto(len) { |i| newpass << chars[rand(chars.size-1)] }
+    return newpass
   end
   
   def profile

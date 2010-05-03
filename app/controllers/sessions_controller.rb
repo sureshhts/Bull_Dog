@@ -22,8 +22,13 @@ class SessionsController < ApplicationController
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
       #redirect_back_or_default('/')
-      redirect_to :action => "myprofile", :controller => "account_profile", :id => current_user.id
-      flash[:notice] = "Logged in successfully"
+      if user.account_type == 'admin'
+         redirect_to :action => "index", :controller => "tournaments", :id => current_user.id
+         flash[:notice] = "Logged in successfully"
+      else     
+	      redirect_to :action => "myprofile", :controller => "account_profile", :id => current_user.id
+	      flash[:notice] = "Logged in successfully"
+      end
     else
       note_failed_signin
       @login       = params[:login]

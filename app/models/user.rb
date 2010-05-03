@@ -1,6 +1,13 @@
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
+
+  has_one :account_profile
+  has_one :account_playing_detail
+  has_many :tournament_players
+  
+  
+  
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
@@ -53,7 +60,5 @@ class User < ActiveRecord::Base
   protected
   
  
-    
-
 
 end

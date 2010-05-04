@@ -60,7 +60,7 @@
 <tr>
 	<td>Tournament Category</td>
 	<td>
-	<select name="tournament[category_id]" id="tournament_category_id" onChange="Show();">
+	<select name="tournament[category_id][]" id="tournament_category_id" onChange="Show();" multiple="multiple">
 	<option value="">Select Recipient</option>
 	<%@tour_category.each do |c| %>
 	<option value="<%=c.id%>"><%=c.name%></option>

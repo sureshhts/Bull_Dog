@@ -123,7 +123,7 @@ class UsersController < ApplicationController
 	      @level = PlayerLevel.create(:name => other_level)
 	      new_level = @level.id
 	      
-	      @playing_details = AccountPlayingDetail.create(:level_id => new_level, :facility_id => params[:account][:facility_id], :user_id  => 	   	      params[:playing_details][:user_id])
+	      @playing_details = AccountPlayingDetail.create(:player_level_id => new_level, :facility_id => params[:account][:facility_id], :user_id  => 	   	      params[:playing_details][:user_id])
 	      
 	      if @playing_details.save
 		   flash[:notice] =  'Account Playing Details Created Successfully'
@@ -132,7 +132,7 @@ class UsersController < ApplicationController
       end
    else  
     
-	    @playing_details = AccountPlayingDetail.create(:level_id => params[:account][:level_id], :facility_id => params[:account][:facility_id],         	:user_id => params[:playing_details][:user_id])
+	    @playing_details = AccountPlayingDetail.create(:player_level_id => params[:account][:level_id], :facility_id => params[:account][:facility_id],         	:user_id => params[:playing_details][:user_id])
 	 
 		
 		if @playing_details.save

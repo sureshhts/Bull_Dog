@@ -69,8 +69,21 @@
 <tr>
 	<td>Tournament Category</td>
 	<td>
-	<select name="tournament[category_id]" id="tournament_category_id" onChange="Show();">
-	<option value="<%= @tournament.category_id%>"><%= @tournament.category_id%></option>
+	<select name="tournament[category_id][]" id="tournament_category_id" onChange="Show();" multiple="multiple">
+	
+	<%
+	 scats = @tournament.tournament_categories.collect{|rec| rec.id}
+	 for cat in @cat
+	  if scats.include?(cat.id)
+	  %>
+	
+	<option value="<%= cat.id%>" selected><%= cat.name%></option>
+	<% else %>
+	<option value="<%= cat.id%>" ><%= cat.name%></option>
+	
+	<% end
+	
+	end%>
 	</select>
 	</td>
 </tr>

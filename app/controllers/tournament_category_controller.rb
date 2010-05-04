@@ -1,7 +1,9 @@
 class TournamentCategoryController < ApplicationController
  
-  def index
+layout 'default'
  
+  def index
+   @category = TournamentCategory.find(:all)
   end
 
  def categories
@@ -21,11 +23,16 @@ class TournamentCategoryController < ApplicationController
   
 	if @category.save
 	   flash[:notice] =  'Tournament Category Created Successfully'
-	   redirect_to :action => 'categories', :controller => 'tournament_category'
+	   redirect_to :action => 'index', :controller => 'tournament_category'
 	else
 	   render :action => 'categories'
 	end
  end
+ 
+ def delete
+  	 TournamentCategory.delete(params[:id])
+  	 redirect_to :controller => 'tournament_category', :action => 'index'
+  end
  
 
 end

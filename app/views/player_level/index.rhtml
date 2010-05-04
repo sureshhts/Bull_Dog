@@ -1,0 +1,45 @@
+<head>
+<style>
+ .oddrow
+{
+  background: #ffbd73; 
+}
+
+.evenrow
+{
+  background: #ffe0be; 
+}
+
+</style>
+ 
+<div style="margin-left:20px;">
+ <h3>Player Levels</h3>
+</div>
+<div style="margin-left:20px;">
+ <a href="/player_level/add_level">New player level</a>
+</div>
+<div>&nbsp</div>
+
+<div align="center">
+<table  width="95%" cellspacing="1" cellpadding="0" align="center">
+<thead>
+
+ <tr bgcolor="#f38001">
+ <th>id</td>
+ <th>Name </th>
+ <th>Delete</td>
+ </tr>
+</thead>
+<tbody>
+ <%@level.each do |l|%>
+ <tr class="<%= cycle('oddrow', 'evenrow') %>">
+ <td valign="top"> <%=h l.id%> </td>
+ <td valign="top"> <%=h l.name%></td>
+ <td align="center"><a href="/tournament_category/delete/<%= l.id%>" title="drop" onClick="return confirm('Are you sure you want to delete?')"><image src="/images/delete_icon.png" style="border: 0px"/></a></td>
+ 
+
+ </tr>
+<%end%>
+  </tbody>                      
+ </table>
+ <div>

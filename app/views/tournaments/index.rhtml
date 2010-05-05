@@ -16,6 +16,11 @@
  <h3>Tournaments</h3>
 </div>
 
+<div style="margin-left:20px;">
+ <a href="/tournaments/new">New tournament</a>
+</div>
+<div>&nbsp</div>
+
 <div align="center">
 <table  width="95%" cellspacing="1" cellpadding="0" align="center">
 <thead>
@@ -37,8 +42,20 @@
  <tr class="<%= cycle('oddrow', 'evenrow') %>">
  <td valign="top"> <%=h t.name%> </td>
  <td valign="top"> <%=h t.city%></td>
- <td valign="top"> <%=h t.tournament_type%> </td>
- <td valign="top"> <%=h t.kind_of_tournament%> </td>
+ <td valign="top"> 
+  <% {"League" => 'L', "Knockout" => 'K'}.each_pair{|key,val|
+    	 if val == t.tournament_type %>
+     		<%= key%>
+   		<% end 
+	}%>
+   
+ </td>
+ <td valign="top">  <% {"Organised" => 'O', "Self" => 'S'}.each_pair{|key,val|
+    	 if val == t.kind_of_tournament %>
+     		<%= key%>
+   		<% end 
+	}%>
+   </td>
  <td valign="top"> <%= Time.at(t.registration_starts).strftime("%m/%d/%y") %>&nbsp;</td>
  <td valign="top"> <%= Time.at(t.registration_ends).strftime("%m/%d/%y") %>&nbsp;</td>
  <td align="center"><a href="/tournaments/edit_tournament/<%= t.id%>" title="modify"><image src="/images/edit_icon.png" align="center" style="border: 0px"/></a></td>

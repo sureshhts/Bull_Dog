@@ -1,0 +1,121 @@
+<div>
+
+<h3>New Tournament </h3>
+
+<div>
+<% form_for(:tournament, :url => {:controller => 'tournament_players', :action => 'create'}, :html => { :multipart => true }) do |f| %>
+<table width="95%">
+<tr>
+
+  <td><%= f.hidden_field :user_id, :value => @id %></td>
+</tr>
+
+<tr>
+
+  <td><%= f.hidden_field :tournament_id, :value => @tournament.id %></td>
+</tr>
+
+
+<tr>
+ <td>Tournament</td>
+  <td>
+   <%= @tournament.name %> 
+</td>
+</tr>
+
+<tr>
+ <td>City</td>
+  <td>
+   <%= @tournament.city %> 
+</td>
+</tr>
+
+<tr>
+ <td>Tournament type</td>
+  <td>
+  <% {"League" => 'L', "Knockout" => 'K'}.each_pair{|key,val|
+    	 if val == @tournament.tournament_type %>
+     		<%= key%>
+   		<% end 
+	}%>
+   
+</td>
+</tr>
+
+<tr>
+ <td>Kind of tournament</td>
+  <td>
+  <% {"Organised" => 'O', "Self" => 'S'}.each_pair{|key,val|
+    	 if val == @tournament.kind_of_tournament %>
+     		<%= key%>
+   		<% end 
+	}%>
+   
+  </td>
+</tr>
+
+<tr>
+ <td>Registration start date</td>
+  <td>
+      <%= Time.at(@tournament.registration_starts).strftime("%m/%d/%y") %>
+</td>
+</tr>
+
+<tr>
+ <td>Registration end date</td>
+  <td>
+    <%= Time.at(@tournament.registration_ends).strftime("%m/%d/%y") %>
+</td>
+</tr>
+
+<tr>
+ <td>Tournament start date</td>
+  <td>
+    <%= Time.at(@tournament.tournament_starts).strftime("%m/%d/%y") %>
+</td>
+</tr>
+
+
+<tr>
+ <td>Player Level</td>
+  <td>
+ <select name="tournament[player_level]" id="tournament_player_level" >
+ <%@player_levels.each do |c|
+   if  c.id == @level_id
+  %>
+   <option value="<%= c.id%>" selected><%= c.name%></option>
+	<% else %>
+	<option value="<%= c.id%>" ><%= c.name%></option>
+ <%
+  end
+ end%>
+ </select>
+</td>
+</tr>
+
+<tr>
+ <td>Category</td>
+  <td>
+ <select size=3 name="tournament[category][]" id="tournament_category" multiple="multiple">
+ <%@category.each do |c|%>
+ <option value="<%= c.id%>" ><%= c.name%></option>
+ <%end%>
+ </select> 
+ 
+ </select>
+</td>
+</tr>
+
+
+<tr>
+	<td>
+	<%= submit_tag "Submit" %>
+	<%= submit_tag "Cancel" %>
+	</td>
+</tr>
+
+</table>
+<%end%>
+</div>
+
+</div>

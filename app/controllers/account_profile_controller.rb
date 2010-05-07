@@ -18,4 +18,29 @@ layout "player"
       render :action => "myprofile"
     end
   end
+  
+  def home
+  
+  end
+  
+  def list
+    puts "*****id******"
+    puts params[:month]
+    puts params[:year]
+    puts params[:id]
+    
+     date =  params[:year] + "-" + params[:month] + "-" + params[:id]
+     puts date
+     puts "***res***"
+     puts  res = Time.parse(date).to_i
+     
+    @tournament = Tournament.find(:all, :conditions => ["tournament_starts=?", res])
+    
+   if @tournament.nil?
+     flash[:notice] = "No such tournament"
+     redirect_to :action => 'home', controller => 'account_profile'
+  end     
+  
+  end
+  
 end

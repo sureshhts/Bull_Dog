@@ -85,7 +85,13 @@ layout 'default'
   	 redirect_to :controller => 'tournaments', :action => 'index'
   end
   
+  def league_division
+    @players = Tournament.list_of_tournament_players(params[:id])
+  end
 
+  def knockout_points
+    @players = Tournament.find(params[:id]).tournament_players
+  end
   
   
 end

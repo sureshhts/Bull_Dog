@@ -85,9 +85,7 @@ layout 'default'
   	 redirect_to :controller => 'tournaments', :action => 'index'
   end
   
-  def list
-   
-  end
+
   
   
 end

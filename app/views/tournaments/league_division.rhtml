@@ -4,14 +4,22 @@
 
 	<div id="dhtmlgoodies_listOfItems">
 		<div>
-			<p>Available students</p>
+			<p align="center">Players List</p>
 		<ul id="allItems">
                 <% for player in @players %>
-			<li id="<%= player.player_id %>"><%= player.name %></li>
+			<li id="<%= player.player_id %>"><%= player.name %><br/>
+                          - Category:<br/>
+                          - Level:<br/>
+                          - Facility:<br/>
+                        </li>
                 <% end %>
 		</ul>
 		</div>
 	</div>
+
+        <ul id="dragContent"></ul>
+        <div id="dragDropIndicator"></div>
+        
 	<div id="dhtmlgoodies_mainContainer">
 		<!-- ONE <UL> for each "room" -->
 		<div>
@@ -22,11 +30,16 @@
 			<p>Team B</p>
 			<ul id="div2"></ul>
 		</div>
-		
+                
+                <table>
+                  <tr>
+                    <td>                      
+                      <form action="aPage.html" method="post"><input type="button" onclick="saveDragDropNodes()" value="Save"/></form>                      
+                    </td>
+                  </tr>
+                </table>
+                
 	</div>
 </div>
-<div id="footer">
-	<form action="aPage.html" method="post"><input type="button" onclick="saveDragDropNodes()" value="Save"/></form>
-</div>
-<ul id="dragContent"></ul>
-<div id="dragDropIndicator"></div>
+
+

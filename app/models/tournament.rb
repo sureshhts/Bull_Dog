@@ -30,7 +30,7 @@ class Tournament < ActiveRecord::Base
  end
 
  def self.list_of_tournament_players(tournament_id)
-   query = %Q{  SELECT tp.id as player_id, acp.user_id as user_id, concat(acp.first_name,' ',acp.last_name) as name
+   query = %Q{  SELECT tp.id as player_id, acp.user_id as user_id, acp.first_name as name
                 from tournaments t
                 join tournament_players tp on tp.tournament_id = t.id
                 join account_profiles acp on acp.user_id = tp.user_id

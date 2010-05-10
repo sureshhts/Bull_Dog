@@ -1,0 +1,32 @@
+<link href="/stylesheets/dragndrop.css" rel="stylesheet" type="text/css"/>
+<script src="/javascripts/dragndrop.js" type="text/javascript"></script>
+<div id="dhtmlgoodies_dragDropContainer">
+
+	<div id="dhtmlgoodies_listOfItems">
+		<div>
+			<p>Available students</p>
+		<ul id="allItems">
+                <% for player in @players %>
+			<li id="<%= player.player_id %>"><%= player.name %></li>
+                <% end %>
+		</ul>
+		</div>
+	</div>
+	<div id="dhtmlgoodies_mainContainer">
+		<!-- ONE <UL> for each "room" -->
+		<div>
+			<p align="center">Team a</p>
+			<ul id="div1"></ul>
+		</div>
+		<div>
+			<p>Team B</p>
+			<ul id="div2"></ul>
+		</div>
+		
+	</div>
+</div>
+<div id="footer">
+	<form action="aPage.html" method="post"><input type="button" onclick="saveDragDropNodes()" value="Save"/></form>
+</div>
+<ul id="dragContent"></ul>
+<div id="dragDropIndicator"></div>

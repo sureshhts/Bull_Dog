@@ -69,7 +69,33 @@ layout 'default'
   end
 
   def league_division
-    @players = Tournament.list_of_tournament_players(params[:id])
+    per_page = (params[:per_page].blank?)? 10 : params[:per_page]
+    sort = case params['sort']
+      when "name"  then "name"
+      when "name_reverse"  then "name DESC"
+      when "user_id"  then "user_id"
+      when "user_id_reverse"  then "user_id DESC"
+      when "category_name"  then "category_name"
+      when "category_name_reverse"  then "category_name DESC"
+      when "player_level"  then "player_level"
+      when "player_level_reverse"  then "player_level DESC"
+      when "facility_name"  then "facility_name"
+      when "facility_name_reverse"  then "facility_name DESC"
+    end
+    sort = "name" if sort.blank?
+    @players = Tournament.tournament_players_summary(params[:id], sort)
+    @players = @players.paginate(:page=>params[:page],:per_page => per_page)
+    if request.xml_http_request?
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'ldm',:partial => "league_division_summary"
+          end
+        }
+      end
+    end
+    @tournament = Tournament.find(params[:id])
   end
 
   def knockout_points

@@ -20,4 +20,21 @@ class Tournament < ActiveRecord::Base
    end
    return applicable_tournaments
  end
+
+ def self.tournament_summary
+   query = %Q{  select t.id, t.name, t.registration_starts, t.registration_ends, t.tournament_type, count(tp.tournament_id) as players
+                from tournaments t
+                left outer join tournament_players tp on t.id = tp.tournament_id
+                group by t.id  }
+   find_by_sql(query)
+ end
+
+ def self.list_of_tournament_players(tournament_id)
+   query = %Q{  SELECT tp.id as player_id, acp.user_id as user_id, concat(acp.first_name,' ',acp.last_name) as name
+                from tournaments t
+                join tournament_players tp on tp.tournament_id = t.id
+                join account_profiles acp on acp.user_id = tp.user_id
+                where t.id = #{tournament_id} }
+    find_by_sql(query)
+ end
 end

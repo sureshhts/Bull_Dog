@@ -38,6 +38,9 @@ layout 'player'
 	end
  
  end
- 
+
+ def index
+   @summary = Tournament.tournament_summary
+ end
  
 end

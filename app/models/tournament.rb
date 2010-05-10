@@ -30,11 +30,29 @@ class Tournament < ActiveRecord::Base
  end
 
  def self.list_of_tournament_players(tournament_id)
-   query = %Q{  SELECT tp.id as player_id, acp.user_id as user_id, concat(acp.first_name,' ',acp.last_name) as name
+   query = %Q{  SELECT tp.id as player_id, acp.user_id as user_id, concat(acp.first_name,' ',acp.last_name) as name, tc.name as category_name, pl.name as player_level, f.name as facility_name
                 from tournaments t
                 join tournament_players tp on tp.tournament_id = t.id
                 join account_profiles acp on acp.user_id = tp.user_id
+                join tournament_categories tc on tc.id = tp.tournament_category_id
+                join player_levels pl on pl.id = tp.player_level_id
+                join account_playing_details apd on apd.user_id = tp.user_id
+                join facilities f on f.id = apd.facility_id
                 where t.id = #{tournament_id} }
+    find_by_sql(query)
+ end
+
+ def self.tournament_players_summary(tournament_id, sort)
+   query = %Q{  SELECT tp.id as player_id, acp.user_id as user_id, concat(acp.first_name,' ',acp.last_name) as name, tc.name as category_name, pl.name as player_level, f.name as facility_name
+                from tournaments t
+                join tournament_players tp on tp.tournament_id = t.id
+                join account_profiles acp on acp.user_id = tp.user_id
+                join tournament_categories tc on tc.id = tp.tournament_category_id
+                join player_levels pl on pl.id = tp.player_level_id
+                join account_playing_details apd on apd.user_id = tp.user_id
+                join facilities f on f.id = apd.facility_id
+                where t.id = #{tournament_id}
+                order by #{sort}}
     find_by_sql(query)
  end
 end

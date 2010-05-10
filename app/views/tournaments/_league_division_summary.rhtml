@@ -1,0 +1,72 @@
+<style>
+ .oddrow
+{
+  background: #ffbd73;
+}
+
+.evenrow
+{
+  background: #ffe0be;
+}
+
+</style>
+<table width="100%" cellpadding="3" cellspacing="0">
+  <thead>
+    <tr bgcolor="#f38001">
+      <th>
+        <span>#</span>
+      </th>
+      <th>
+        <span><%= sort_table_header("Name", "name", "league_division") %></span>
+      </th>
+      <th>
+        <span><%= sort_table_header("UserID", "user_id", "league_division") %></span>
+      </th>
+      <th>
+        <span><%= sort_table_header("Category", "category_name", "league_division") %></span>
+      </th>
+      <th>
+        <span><%= sort_table_header("Level", "player_level", "league_division") %></span>
+      </th>
+      <th>
+        <span><%= sort_table_header("Facility", "facility_name", "league_division") %></span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% i = 1
+       for player in @players %>
+    <tr class="<%= cycle('oddrow', 'evenrow') %>">
+      <td>
+        <%= i %>
+      </td>
+      <td>
+        <%= player.name %>
+      </td>
+      <td>
+        <%= player.user_id %>
+      </td>
+      <td>
+        <%= player.category_name %>
+      </td>
+      <td>
+        <%= player.player_level %>
+      </td>
+      <td>
+        <%= player.facility_name %>
+      </td>
+    </tr>
+    <% i+=1
+       end %>
+    <tr>
+      <td colspan="6"><%= will_paginate(@players, :remote => {:action=> "league_division"}, :id => 'pagination_lds') %></td>
+    </tr>
+  </tbody>
+</table>
+<br/>
+<div id="display_header1" style="width: 230px;"><h4>Tournament Divisions Summary</h4></div>
+<div align="right"><h5><a href="">Create New Division</a>&nbsp;&nbsp;</h5></div>
+<br/>
+<div id="lp_divisions">
+  <%= render :partial => "divisions_summary" %>
+</div>

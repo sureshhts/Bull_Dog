@@ -1,0 +1,61 @@
+<style>
+ .oddrow
+{
+  background: #ffbd73;
+}
+
+.evenrow
+{
+  background: #ffe0be;
+}
+
+</style>
+<div style="margin-left:20px;">
+ <h3>Tournament Summary</h3>
+</div>
+
+<div>&nbsp</div>
+
+<div align="center">
+<table  width="95%" cellspacing="1" cellpadding="0" align="center">
+<thead>
+ <tr bgcolor="#f38001">
+   <th>#</th>
+   <th>Name</th>
+   <th>Type </th>
+   <th>#Players</th>
+   <th>Status</th>
+   <th>Action</th>
+ </tr>
+</thead>
+<tbody>
+<%
+i = 1
+for tournament in @summary
+%>
+<tr class="<%= cycle('oddrow', 'evenrow') %>">
+  <td valign="top">&nbsp;<%=h i%> </td>
+  <td valign="top">&nbsp;<%=h tournament.name%> </td>
+  <td valign="top">&nbsp;
+  <% tournament_types = {"L" => 'League', "K" => 'Knockout'} %>
+  <%=h tournament_types[tournament.tournament_type]%>
+  </td>
+  <td valign="top">&nbsp;<%=h tournament.players%> </td>
+  <td valign="top">&nbsp;
+    <% if Time.now.to_i > tournament.registration_starts && Time.now.to_i < tournament.registration_ends %>
+    Started
+    <% elsif Time.now.to_i < tournament.registration_starts %>
+    Yet to Start
+    <% elsif Time.now.to_i > tournament.registration_ends %>
+    Closed
+    <% end %>
+  </td>
+  <td valign="top"><a href="/tournaments/<%=tournament_next_action(tournament.id)%>/<%=tournament.id%>">Draw</a> </td>
+ </tr>
+<%
+i+=1
+end
+%>
+  </tbody>
+ </table>
+ </div>

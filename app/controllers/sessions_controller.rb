@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
       else 
           session[:user_name]= current_user.login
           session[:user_id] = current_user.id
-	      redirect_to :action => "myprofile", :controller => "account_profile", :id => current_user.id
+	      redirect_to :action => "home", :controller => "account_profile", :id => current_user.id
 	      flash[:notice] = "Logged in successfully"
       end
     else

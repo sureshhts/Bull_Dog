@@ -8,7 +8,6 @@ class Tournament < ActiveRecord::Base
    query1 = %Q{ SELECT *
                 FROM tournaments t
                 where t.registration_starts < #{Time.now.to_i} and t.registration_ends > #{Time.now.to_i}}
-
    available_tournaments = find_by_sql(query1)
    user_tournaments = User.find(user).tournament_players.collect{|rec| rec.tournament_id}
    applicable_tournaments = Array.new

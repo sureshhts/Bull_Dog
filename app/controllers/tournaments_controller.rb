@@ -99,7 +99,22 @@ layout 'default'
   end
 
   def knockout_points
-    @players = Tournament.find(params[:id]).tournament_players
+    @players = Tournament.list_of_tournament_players(params[:id])
+   
   end
+  
+  def add_points
+ 
+    
+     @players = Tournament.list_of_tournament_players(params[:id])
+    
+     for t in @players
+         tp = TournamentPlayer.find(t.player_id)
+	     tp.update_attributes(:points => params["point#{t.player_id}"]) 
+	 end
+     redirect_to :controller => 'tournaments', :action => "index"
+   end
+  
+  
 
 end

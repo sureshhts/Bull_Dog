@@ -1,3 +1,21 @@
+        #display_header{
+		height:25px;
+		vertical-align:middle;
+		text-align:left;
+		clear:both;
+		padding-left:3px;
+		background-color:#f38001;
+		margin-top:2px;
+		width:790px;
+	}
+        #display_header1{
+		vertical-align:middle;
+		text-align:left;
+		clear:both;
+		padding-left:3px;
+		background-color:#f38001;
+		margin-top:2px;
+	}
         #footer{
 		height:30px;
 		vertical-align:middle;
@@ -50,15 +68,13 @@
 		padding-left:10px;
 		padding-right:10px;
 
-		/* CSS HACK */
 		width: 180px;	/* IE 5.x */
-		width/* */:/**/160px;	/* Other browsers */
-		width: /**/160px;
+width/* */:/**/160px;	/* Other browsers */
+width: /**/160px;
 
 	}
 	#dhtmlgoodies_listOfItems ul{	/* Left(Sources) column <ul> */
-		height:560px;
-                padding-right: 10px;
+		padding-right: 10px;
 	}
 
 	div#dhtmlgoodies_listOfItems div{
@@ -161,3 +177,15 @@
 		margin:0px;
 		padding:0px;
 	}
+        
+#image,#blank {
+position:absolute;
+width: 180px;	/* IE 5.x */
+width/* */:/**/160px;	/* Other browsers */
+width: /**/160px;
+height:560px;
+                
+}
+#blank {
+z-index:2;
+}

@@ -26,7 +26,7 @@ layout 'player'
      
     
      for cat in params[:tournament][:category]
-  	    @reg= TournamentPlayer.create(:user_id=> params[:tournament][:user_id], :tournament_id => tour_id, :player_level_id => level_id,  		:category_id => cat)	
+  	    @reg= TournamentPlayer.create(:user_id=> params[:tournament][:user_id], :tournament_id => tour_id, :player_level_id => level_id,  			:tournament_category_id => cat)	
   	 end
     
  	

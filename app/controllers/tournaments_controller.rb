@@ -113,9 +113,18 @@ protect_from_forgery :only => [:destroy]
          tp = TournamentPlayer.find(t.player_id)
 	     tp.update_attributes(:points => params["point#{t.player_id}"]) 
 	 end
-     redirect_to :controller => 'tournaments', :action => "index"
+     redirect_to :controller => 'tournaments', :action => "ratings", :id => params[:id]
+   end
+   
+   def ratings
+  
+     id = params[:id]
+     sort = "points desc"
+     @rating = Tournament.tournament_players_summary(id, sort)
+   
    end
   
+    
    def new_division
      @tournament_id = params[:id]
      @facilities = Facility.find(:all)

@@ -64,9 +64,9 @@
   </tbody>
 </table>
 <br/>
-<div id="display_header1" style="width: 230px;"><h4>Tournament Divisions Summary</h4></div>
-<div align="right"><h5><a href="#" onclick="new Ajax.Request('/tournaments/new_division?id=<%= @tournament.id %>', {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('f7451406a5f3527c920b15eb7f63840280305729')}); return false;">Create New Division</a>&nbsp;&nbsp;</h5></div>
-<br/>
+<table width="80%" cellpadding="3" cellspacing="0">
+  <tr><td><h4>Tournament Divisions Summary</h4></td><td><div align="right"><h5><a href="#" onclick="new Ajax.Request('/tournaments/new_division?id=<%= @tournament.id %>', {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('f7451406a5f3527c920b15eb7f63840280305729')}); return false;">Create New Division</a>&nbsp;&nbsp;</h5></div></td></tr>
+</table>
 <div id="lp_divisions">
   <%= render :partial => "divisions_summary" %>
 </div>

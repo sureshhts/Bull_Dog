@@ -1,1 +1,38 @@
-
+<table width="80%" cellpadding="3" cellspacing="0">
+  <thead>
+    <tr bgcolor="#f38001">
+      <th>
+        <span>#</span>
+      </th>
+      <th>
+        <span>Division Name</span>
+      </th>
+      <th>
+        <span>Facility</span>
+      </th>
+      <th>
+        <span># Players</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% i = 1
+       for division in @tournament_divisions %>
+    <tr class="<%= cycle('oddrow', 'evenrow') %>">
+      <td>
+        <%= i %>
+      </td>
+      <td>
+        <%= division.name %>
+      </td>
+      <td>
+        <%= "" %>
+      </td>
+      <td>
+        <%= division.no_of_players %>
+      </td>
+    </tr>
+    <% i+=1
+       end %>    
+  </tbody>
+</table>

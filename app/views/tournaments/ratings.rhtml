@@ -1,0 +1,42 @@
+<head>
+<style>
+ .oddrow
+{
+  background: #ffbd73; 
+}
+
+.evenrow
+{
+  background: #ffe0be; 
+}
+
+</style>
+</head>
+
+<div>
+<h3>Player Ratings</h3>
+
+	<table  width="95%" cellspacing="1" cellpadding="0" align="center">
+	<thead>
+    <tr bgcolor="#f38001">
+	<th>Name</td>
+	<th>Rating </th>
+	</tr>
+    </thead>
+    
+    <tbody>
+	<% 
+	i=1
+	@rating.each do |r| %>
+	<tr class="<%= cycle('oddrow', 'evenrow') %>">
+	<td align="center"><%= r.name %></td>
+	<td align="center"><%= i %> </td>
+	</tr>
+	
+	<%
+	i += 1
+	end%>
+	</tbody>
+	</table>
+
+</div>

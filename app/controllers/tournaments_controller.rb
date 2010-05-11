@@ -1,7 +1,7 @@
 class TournamentsController < ApplicationController
 
 layout 'default'
-
+protect_from_forgery :only => [:destroy]
   def index
     @tournament = Tournament.find(:all)
   end
@@ -115,6 +115,44 @@ layout 'default'
      redirect_to :controller => 'tournaments', :action => "index"
    end
   
-  
+   def new_division
+     @tournament_id = params[:id]
+     if request.xml_http_request?
+       respond_to do |format|
+         format.html
+         format.js {
+           render :update do |page|
+             page.replace_html 'lp_divisions',:partial => "new_division"
+           end
+         }
+       end
+     end
+   end
+
+   def add_new_division
+     if request.xml_http_request?
+       respond_to do |format|
+         format.html
+         format.js {
+           render :update do |page|
+             page.replace_html 'lp_divisions',:partial => "new_division"
+           end
+         }
+       end
+     end
+   end
+
+   def cancel_new_division
+     if request.xml_http_request?
+       respond_to do |format|
+         format.html
+         format.js {
+           render :update do |page|
+             page.replace_html 'lp_divisions',:partial => "divisions_summary"
+           end
+         }
+       end
+     end
+   end
 
 end

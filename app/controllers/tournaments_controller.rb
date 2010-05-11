@@ -96,6 +96,7 @@ protect_from_forgery :only => [:destroy]
       end
     end
     @tournament = Tournament.find(params[:id])
+    @tournament_divisions = @tournament.tournament_divisions
   end
 
   def knockout_points
@@ -117,6 +118,7 @@ protect_from_forgery :only => [:destroy]
   
    def new_division
      @tournament_id = params[:id]
+     @facilities = Facility.find(:all)
      if request.xml_http_request?
        respond_to do |format|
          format.html
@@ -130,12 +132,16 @@ protect_from_forgery :only => [:destroy]
    end
 
    def add_new_division
+     tournament = Tournament.find(params[:tournament])
+     division = TournamentDivision.create(:name => params[:d_name], :tournament_id => tournament.id, :no_of_players => params[:d_players])
+     division_facility = FacilitiesTournamentDivision.create(:tournament_division_id => division.id, :facility_id => params[:d_facility])
+     @tournament_divisions = tournament.tournament_divisions
      if request.xml_http_request?
        respond_to do |format|
          format.html
          format.js {
            render :update do |page|
-             page.replace_html 'lp_divisions',:partial => "new_division"
+             page.replace_html 'lp_divisions',:partial => "divisions_summary"
            end
          }
        end
@@ -143,6 +149,8 @@ protect_from_forgery :only => [:destroy]
    end
 
    def cancel_new_division
+     @tournament = Tournament.find(params[:id])
+     @tournament_divisions = @tournament.tournament_divisions
      if request.xml_http_request?
        respond_to do |format|
          format.html

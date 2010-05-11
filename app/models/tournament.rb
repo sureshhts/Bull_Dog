@@ -54,4 +54,15 @@ class Tournament < ActiveRecord::Base
                 order by #{sort}}
     find_by_sql(query)
  end
+
+ def tournament_divisions
+   query = %Q{  SELECT d.id, d.name, d.no_of_players, f.name as facility
+                from tournaments t
+                join tournament_divisions d on d.tournament_id = t.id
+                join facilities_tournament_divisions ftd on ftd.tournament_division_id = d.id
+                join facilities f on f.id = ftd.facility_id
+                where t.id = #{@id} }
+
+   find_by_sql(query)
+ end
 end

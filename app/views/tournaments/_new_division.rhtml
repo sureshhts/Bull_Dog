@@ -1,15 +1,28 @@
 <%= form_remote_tag(:url => {:controller => "tournaments", :action => "add_new_division", :html => {:id => "new_division_form", :style=> "padding:0;margin:0;"}})%>
 <input type="hidden" name="tournament" value="<%= @tournament_id %>"/>
-<table>
-  <tr><td>Name: <input type="text" name="d_name"/></td></tr>
-  <tr><td># of Players: <input type="text" name="d_players"/></td></tr>
-  <tr><td>Facility: <input type="text" name="d_facility"/></td></tr>
-  <tr><td></td></tr>
+<table width="80%" cellpadding="3" cellspacing="0">
+  <tr><td>Name: </td><td><input type="text" name="d_name"/></td></tr>
+  <tr><td># of Players: </td><td><input type="text" name="d_players"/></td></tr>
+  <tr><td>Facility: </td>
+    <td>
+      <select name="d_facility">
+        <% for facility in @facilities %>
+        <option value="<%= facility.id %>"><%= facility.name %></option>
+        <% end %>
+      </select>
+    </td></tr>
+  <tr><td></td><td></td></tr>
+  <tr>
+    <td>
+      <div onmouseover="buttonOver(this);" onmouseout="buttonOut(this)">
+      <div><input type="button" name="Cancel" value="cancel" onclick="new Ajax.Request('/tournaments/cancel_new_division?id=<%=@tournament_id%>', {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('f7451406a5f3527c920b15eb7f63840280305729')}); return false;"/></div>
+      </div>
+    </td>
+    <td>
+      <div onmouseover="buttonOver(this);" onmouseout="buttonOut(this)">
+      <div><input type="submit" value="OK"/></div>
+      </div>
+    </td>
+  </tr>
 </table>
-<div onmouseover="buttonOver(this);" onmouseout="buttonOut(this)">
-<div><input type="submit" value="OK"/></div>
-</div>
-<div onmouseover="buttonOver(this);" onmouseout="buttonOut(this)">
-  <div><input type="button" name="Cancel" value="cancel" onclick="new Ajax.Request('/tournaments/cancel_new_division?id=<%=@tournament_id%>', {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('f7451406a5f3527c920b15eb7f63840280305729')}); return false;"/></div>
-</div>
 </form>

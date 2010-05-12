@@ -13,6 +13,8 @@ class AddNewColumnsToTournamentDivisions < ActiveRecord::Migration
                     REFERENCES `player_levels` (`id`)
                     ON DELETE CASCADE
                     ON UPDATE CASCADE}
+
+    execute %Q{  ALTER TABLE `tournament_divisions` ADD COLUMN `area_name` VARCHAR(50) AFTER `player_level_id` }
   end
 
   def self.down

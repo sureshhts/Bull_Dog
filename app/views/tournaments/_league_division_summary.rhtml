@@ -17,56 +17,44 @@
         <span>#</span>
       </th>
       <th>
-        <span><%= sort_table_header("Name", "name", "league_division") %></span>
-      </th>
-      <th>
-        <span><%= sort_table_header("UserID", "user_id", "league_division") %></span>
-      </th>
-      <th>
-        <span><%= sort_table_header("Category", "category_name", "league_division") %></span>
-      </th>
+        <span><%= sort_table_header("Category", "category", "league_division") %></span>
+      </th>     
       <th>
         <span><%= sort_table_header("Level", "player_level", "league_division") %></span>
       </th>
       <th>
-        <span><%= sort_table_header("Facility", "facility_name", "league_division") %></span>
+        <span><%= sort_table_header("# Registered", "total_players", "league_division") %></span>
       </th>
+      <th>
+        <span><%= sort_table_header("# Allotted", "allotted_players", "league_division") %></span>
+      </th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
     <% i = 1
-       for player in @players %>
+       for cl in @categories_levels %>
     <tr class="<%= cycle('oddrow', 'evenrow') %>">
       <td>
         <%= i %>
       </td>
       <td>
-        <%= player.name %>
+        <%= cl.category %>
+      </td>          
+      <td>
+        <%= cl.player_level %>
       </td>
       <td>
-        <%= player.user_id %>
+        <%= cl.total_players %>
       </td>
       <td>
-        <%= player.category_name %>
+        <%= cl.allotted_players %>
       </td>
       <td>
-        <%= player.player_level %>
-      </td>
-      <td>
-        <%= player.facility_name %>
+        <a href="/tournaments/players_to_divisions?id=<%= @tournament.id %>&category=<%= cl.category_id %>&level=<%= cl.level_id %>">Allocate</a>
       </td>
     </tr>
     <% i+=1
        end %>
-    <tr>
-      <td colspan="6"><%= will_paginate(@players, :remote => {:action=> "league_division"}, :id => 'pagination_lds') %></td>
-    </tr>
   </tbody>
 </table>
-<br/>
-<table width="80%" cellpadding="3" cellspacing="0">
-  <tr><td><h4>Tournament Divisions Summary</h4></td><td><div align="right"><h5><a href="#" onclick="new Ajax.Request('/tournaments/new_division?id=<%= @tournament.id %>', {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('f7451406a5f3527c920b15eb7f63840280305729')}); return false;">Create New Division</a>&nbsp;&nbsp;</h5></div></td></tr>
-</table>
-<div id="lp_divisions">
-  <%= render :partial => "divisions_summary" %>
-</div>

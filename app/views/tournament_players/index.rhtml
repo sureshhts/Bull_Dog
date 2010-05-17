@@ -43,14 +43,14 @@ for tournament in @summary
   <td valign="top">&nbsp;<%=h tournament.players%> </td>
   <td valign="top">&nbsp;
     <% if Time.now.to_i > tournament.registration_starts && Time.now.to_i < tournament.registration_ends %>
-    Started
+    Open
     <% elsif Time.now.to_i < tournament.registration_starts %>
-    Yet to Start
+    Not Yey Open
     <% elsif Time.now.to_i > tournament.registration_ends %>
     Closed
     <% end %>
   </td>
-  <td valign="top"><a href="/tournaments/<%=tournament_next_action(tournament.id)%>/<%=tournament.id%>">Draw</a> </td>
+  <td valign="top" align="center"><a href="/tournaments/<%=tournament_next_action(tournament.id)%>/<%=tournament.id%>">View</a> </td>
  </tr>
 <%
 i+=1

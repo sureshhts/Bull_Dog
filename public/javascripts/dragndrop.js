@@ -1,24 +1,4 @@
-        /* VARIABLES YOU COULD MODIFY */
-	var boxSizeArray = [4,4,4,3,7,5];	// Array indicating how many items there is rooom for in the right column ULs
-
-	var arrow_offsetX = -5;	// Offset X - position of small arrow
-	var arrow_offsetY = 0;	// Offset Y - position of small arrow
-
-	var arrow_offsetX_firefox = -6;	// Firefox - offset X small arrow
-	var arrow_offsetY_firefox = -13; // Firefox - offset Y small arrow
-
-	var verticalSpaceBetweenListItems = 3;	// Pixels space between one <li> and next
-											// Same value or higher as margin bottom in CSS for #dhtmlgoodies_dragDropContainer ul li,#dragContent li
-
-
-	var indicateDestionationByUseOfArrow = false;	// Display arrow to indicate where object will be dropped(false = use rectangle)
-
-	var cloneSourceItems = false;	// Items picked from main container will be cloned(i.e. "copy" instead of "cut").
-	var cloneAllowDuplicates = true;	// Allow multiple instances of an item inside a small box(example: drag Student 1 to team A twice
-
-	/* END VARIABLES YOU COULD MODIFY */
-
-	var dragDropTopContainer = false;
+        var dragDropTopContainer = false;
 	var dragTimer = -1;
 	var dragContentObj = false;
 	var contentToBeDragged = false;	// Reference to dragged <li>
@@ -53,7 +33,7 @@
 	}
 
 	function cancelEvent()
-	{
+	{            
 		return false;
 	}
 	function initDrag(e)	// Mouse button is pressed down on a LI
@@ -96,7 +76,7 @@
 	}
 
 	function moveDragContent(e)
-	{
+	{            
 		if(dragTimer<10){
 			if(contentToBeDragged){
 				if(contentToBeDragged_next){
@@ -201,7 +181,7 @@
 	Put <LI> into a destination or back to where it came from.
 	*/
 	function dragDropEnd(e)
-	{
+	{            
 		if(dragTimer==-1)return;
 		if(dragTimer<10){
 			dragTimer = -1;
@@ -215,16 +195,20 @@
 			contentToBeDragged.parentNode.removeChild(contentToBeDragged);
 		}else{
 
-			if(destinationObj){
+			if(destinationObj){                            
 				if(destinationObj.tagName=='UL'){
 					destinationObj.appendChild(contentToBeDragged);
 				}else{
 					destinationObj.parentNode.insertBefore(contentToBeDragged,destinationObj);
 				}
+                                
+                                /* Ajax call for tp updation */
+                                update_player_with_division(contentToBeDragged.id , destinationObj.id);
+
 				mouseoverObj.className='';
 				destinationObj = false;
 				dragDropIndicator.style.display='none';
-				if(indicateDestinationBox){
+				if(indicateDestinationBox){                                    
 					indicateDestinationBox.style.display='none';
 					document.body.appendChild(indicateDestinationBox);
 				}
@@ -239,7 +223,7 @@
 		}
 		contentToBeDragged = false;
 		dragDropIndicator.style.display='none';
-		if(indicateDestinationBox){
+		if(indicateDestinationBox){                    
 			indicateDestinationBox.style.display='none';
 			document.body.appendChild(indicateDestinationBox);
 
@@ -247,6 +231,11 @@
 		mouseoverObj = false;
 
 	}
+
+        function update_player_with_division(player, division) {
+            new Ajax.Request('/tournaments/update_player_with_division?player='+player+'&division='+division, {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('f7451406a5f3527c920b15eb7f63840280305729')});
+            return false;
+        }
 
 	/*
 	Preparing data to be saved

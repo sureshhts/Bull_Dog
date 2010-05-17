@@ -11,4 +11,8 @@ module TournamentsHelper
     }
     link_to_remote(text, options, html_options)
   end
+
+  def tournament_division_players(division)
+    return Tournament.tournament_division_players(division)
+  end
 end

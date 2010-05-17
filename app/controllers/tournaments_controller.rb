@@ -70,21 +70,35 @@ protect_from_forgery :only => [:destroy]
 
   def league_division
     per_page = (params[:per_page].blank?)? 10 : params[:per_page]
+    
+    @tournament = Tournament.find(params[:id])
+#    @categories = @tournament.tournament_categories
+#    @levels = PlayerLevel.find(:all)
+#    conditions = nil
+#
+#    if params[:view_all].blank?
+#      session[:category] = (params[:category].blank?)? ((session[:category].blank?)? @categories[0].id : session[:category]) : params[:category]
+#      session[:level] = (params[:level].blank?)? ((session[:level].blank?)? @levels[0].id : session[:level]) : params[:level]
+#      conditions = session[:category], session[:level]
+#    else
+#      session[:category], session[:level] = nil, nil
+#    end
+
     sort = case params['sort']
-      when "name"  then "name"
-      when "name_reverse"  then "name DESC"
-      when "user_id"  then "user_id"
-      when "user_id_reverse"  then "user_id DESC"
-      when "category_name"  then "category_name"
-      when "category_name_reverse"  then "category_name DESC"
+      when "category"  then "category"
+      when "category_reverse"  then "category DESC"
       when "player_level"  then "player_level"
       when "player_level_reverse"  then "player_level DESC"
-      when "facility_name"  then "facility_name"
-      when "facility_name_reverse"  then "facility_name DESC"
+      when "total_players"  then "total_players"
+      when "total_players_reverse"  then "total_players DESC"
+      when "allotted_players"  then "allotted_players"
+      when "allotted_players_reverse"  then "allotted_players DESC"
     end
-    sort = "name" if sort.blank?
-    @players = Tournament.tournament_players_summary(params[:id], sort)
-    @players = @players.paginate(:page=>params[:page],:per_page => per_page)
+    sort = "category" if sort.blank?
+
+    @categories_levels = Tournament.tournament_categories_levels(params[:id], sort)
+#    @players = @players.paginate(:page=>params[:page],:per_page => per_page)
+
     if request.xml_http_request?
       respond_to do |format|
         format.html
@@ -94,9 +108,36 @@ protect_from_forgery :only => [:destroy]
           end
         }
       end
-    end
+    end        
+  end
+
+  def players_to_divisions
     @tournament = Tournament.find(params[:id])
-    @tournament_divisions = @tournament.tournament_divisions
+    @category = TournamentCategory.find(params[:category])
+    @level = PlayerLevel.find(params[:level])
+    conditions = params[:category], params[:level]
+    @players = Tournament.tournament_players_summary(params[:id], "name", conditions)
+    @facilities = Facility.find(:all)
+    @areas = AreaName.find(:all)
+
+    if request.post?
+      division = TournamentDivision.create(:name => params[:d_name], :tournament_id => @tournament.id, :no_of_players => params[:d_players], :tournament_category_id => params[:category], :player_level_id => params[:level], :area_name => params[:d_area])
+      division_facility = FacilitiesTournamentDivision.create(:tournament_division_id => division.id, :facility_id => params[:d_facility])
+    end
+    @tournament_divisions = Tournament.tournament_divisions(params[:id], conditions)
+    
+  end
+
+  def update_player_with_division
+    player = params[:player]
+    div, division = params[:division].split("_")
+    tp = TournamentPlayer.find(player)
+    if division.blank?
+      tp.update_attributes(:tournament_division_id => nil)
+    else
+      tp.update_attributes(:tournament_division_id => division)
+    end
+    render :text => ""
   end
 
   def knockout_points
@@ -141,10 +182,10 @@ protect_from_forgery :only => [:destroy]
    end
 
    def add_new_division
-     tournament = Tournament.find(params[:tournament])
-     division = TournamentDivision.create(:name => params[:d_name], :tournament_id => tournament.id, :no_of_players => params[:d_players])
+     @tournament = Tournament.find(params[:tournament])
+     division = TournamentDivision.create(:name => params[:d_name], :tournament_id => @tournament.id, :no_of_players => params[:d_players])
      division_facility = FacilitiesTournamentDivision.create(:tournament_division_id => division.id, :facility_id => params[:d_facility])
-     @tournament_divisions = tournament.tournament_divisions
+     @tournament_divisions = Tournament.tournament_divisions(params[:tournament])
      if request.xml_http_request?
        respond_to do |format|
          format.html
@@ -158,14 +199,29 @@ protect_from_forgery :only => [:destroy]
    end
 
    def cancel_new_division
+     @tournament_divisions = Tournament.tournament_divisions(params[:id])
      @tournament = Tournament.find(params[:id])
-     @tournament_divisions = @tournament.tournament_divisions
      if request.xml_http_request?
        respond_to do |format|
          format.html
          format.js {
            render :update do |page|
              page.replace_html 'lp_divisions',:partial => "divisions_summary"
+           end
+         }
+       end
+     end
+   end
+
+   def divide_players
+     @players = Tournament.tournament_players_summary(params[:id], "name")
+     @tournament_divisions = Tournament.tournament_divisions(params[:id])
+     if request.xml_http_request?
+       respond_to do |format|
+         format.html
+         format.js {
+           render :update do |page|
+             page.replace_html 'ldm',:partial => "divide_players"
            end
          }
        end

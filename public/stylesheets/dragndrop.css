@@ -46,7 +46,7 @@
 
 	#dhtmlgoodies_dragDropContainer li,#dragContent li,li#indicateDestination{	/* Movable items, i.e. <LI> */
 		list-style-type:none;
-		height:70px;
+		height:40px;
 		background-color:#ffbd73;
 		border:1px solid #f38001;
 		padding-left:2px;
@@ -69,8 +69,8 @@
 		padding-right:10px;
 
 		width: 180px;	/* IE 5.x */
-width/* */:/**/160px;	/* Other browsers */
-width: /**/160px;
+                width/* */:/**/160px;	/* Other browsers */
+                width: /**/160px;
 
 	}
 	#dhtmlgoodies_listOfItems ul{	/* Left(Sources) column <ul> */
@@ -178,14 +178,15 @@ width: /**/160px;
 		padding:0px;
 	}
         
-#image,#blank {
-position:absolute;
-width: 180px;	/* IE 5.x */
-width/* */:/**/160px;	/* Other browsers */
-width: /**/160px;
-height:560px;
-                
-}
-#blank {
-z-index:2;
-}
+        #popup_feedback1
+        {
+                width:            100%;
+                height:           500%;
+                position:         absolute;
+                top:              0;
+                left:             0;
+                z-index:          15;
+                background:       transparent url(/images/transparent.png) repeat top left;
+                display:          none;
+                padding:          200px 0 0 138px;
+        }

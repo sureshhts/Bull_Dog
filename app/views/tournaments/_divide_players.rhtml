@@ -1,0 +1,52 @@
+<div id="dhtmlgoodies_dragDropContainer">
+<div id="dhtmlgoodies_listOfItems">
+		<div>
+			<p align="center">Players List</p>
+
+                <ul id="allItems">
+                <% for player in @players
+                     if player.division_name.blank?
+                %>
+			<li id="<%= player.player_id %>"><%= player.name %><br/>
+                          (Area Name)
+                        </li>
+                   <%
+                     end
+                   end  %>
+		</ul>
+		</div>
+	</div>
+
+        <ul id="dragContent"></ul>
+        <div id="dragDropIndicator"></div>
+
+	<div id="dhtmlgoodies_mainContainer">
+                <table>
+                  <tr>
+                    <td>
+                      <a href="#" onclick="showElt('popup_feedback1');">New Division</a>
+                    </td>
+                  </tr>
+                </table>
+
+		<% for division in @tournament_divisions %>
+		<div>
+			<p align="center"><%= division.area_name %><br/><%= division.name %></p>
+			<ul id="d_<%= division.id %>">
+                        <% if division.players.to_i > 0
+                             d_players = tournament_division_players(division.id)
+                             for dp in d_players
+                        %>
+                         <li id="<%= dp.player_id %>"><%= dp.name %><br/>
+                          (Area Name)
+                         </li>
+                        <%   end
+                           end  %>
+                        </ul>
+		</div>
+                <% end %>		                
+	</div>
+</div>
+
+
+

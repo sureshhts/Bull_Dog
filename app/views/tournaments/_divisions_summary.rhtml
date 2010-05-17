@@ -26,7 +26,7 @@
         <%= division.name %>
       </td>
       <td>
-        <%= "" %>
+        <%= division.facility %>
       </td>
       <td>
         <%= division.no_of_players %>
@@ -36,3 +36,8 @@
        end %>    
   </tbody>
 </table>
+<% if @tournament_divisions.length > 0 %>
+<table width="100%" cellpadding="3" cellspacing="0">
+  <tr><td><div align="right"><h5><a href="#" onclick="new Ajax.Request('/tournaments/divide_players?id=<%= @tournament.id %>', {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('f7451406a5f3527c920b15eb7f63840280305729')}); return false;">Next</a>&nbsp;&nbsp;</h5></div></td></tr>
+</table>
+<% end %>

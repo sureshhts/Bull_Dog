@@ -32,11 +32,10 @@
 	}
 	#dhtmlgoodies_dragDropContainer{	/* Main container for this script */
 		width:790px;
-		height:720px;
 		border:0px;
 		background-color:#FFF;
 		-moz-user-select:none;
-	}
+	}        
 	#dhtmlgoodies_dragDropContainer ul{	/* General rules for all <ul> */
 		margin-top:0px;
 		margin-left:0px;
@@ -150,6 +149,47 @@
 	}
 
 	#dhtmlgoodies_mainContainer ul{	/* Small box in right column ,i.e <ul> */
+		width:152px;
+		height:80px;
+		border:0px;
+		margin-bottom:0px;
+		overflow:hidden;
+
+	}
+
+        div#dhtmlgoodies_verticalContainer{	/* Right column DIV */
+		width:175px;
+		float:left;
+	}
+	#dhtmlgoodies_verticalContainer div{	/* Parent <div> of small boxes */
+		float:left;
+		margin-right:10px;
+		margin-bottom:10px;
+		margin-top:0px;
+		border:1px solid #ffbd73;
+
+		/* CSS HACK */
+		width: 172px;	/* IE 5.x */
+		width/* */:/**/170px;	/* Other browsers */
+		width: /**/170px;
+
+	}
+
+	#dhtmlgoodies_verticalContainer div ul{
+		margin-left:10px;
+	}
+
+	#dhtmlgoodies_verticalContainer div p{	/* Heading above small boxes */
+		margin:0px;
+		padding:0px;
+		padding-left:12px;
+		font-weight:bold;
+		background-color:#f38001;
+		color:#000;
+		margin-bottom:5px;
+	}
+
+	#dhtmlgoodies_verticalContainer ul{	/* Small box in right column ,i.e <ul> */
 		width:152px;
 		height:80px;
 		border:0px;

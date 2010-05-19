@@ -128,6 +128,21 @@ protect_from_forgery :only => [:destroy]
     
   end
 
+  def create_draws_for_divisions
+    @category = TournamentCategory.find(params[:category])
+    @level = PlayerLevel.find(params[:level])
+    @total = params[:total]
+    @tournament = Tournament.find(params[:id])
+    conditions = params[:category], params[:level], "players desc"
+    @tournament_divisions = Tournament.tournament_divisions(params[:id], conditions)
+    #8,7,1,4
+    @no_of_players = @tournament_divisions[0].players
+    @weeks = @no_of_players.to_i - 1
+    @matches_per_week_per_player = 1
+    @max_matches_per_week = (@no_of_players.to_f/2.to_f).ceil
+    @games = @no_of_players.to_i - 1
+  end
+
   def update_player_with_division
     player = params[:player]
     div, division = params[:division].split("_")

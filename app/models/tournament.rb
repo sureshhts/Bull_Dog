@@ -62,8 +62,12 @@ class Tournament < ActiveRecord::Base
 
  def self.tournament_divisions(tournament_id, *conditions)
    condition = ""
+   sort = ""
    if !conditions[0].blank?
      condition = " and tc.id = #{conditions[0][0]} and pl.id = #{conditions[0][1]}"
+   end
+   if !conditions[0][2].blank?
+     sort = " order by #{conditions[0][2]}"
    end
    query = %Q{  SELECT d.id, d.name, d.no_of_players, f.name as facility, d.area_name, count(tp.id) as players
                 from tournaments t
@@ -74,7 +78,7 @@ class Tournament < ActiveRecord::Base
                 join player_levels pl on pl.id = d.player_level_id
                 left outer join tournament_players tp on tp.tournament_division_id = d.id
                 where t.id = #{tournament_id} #{condition}
-                group by d.id }
+                group by d.id #{sort}}
 
    find_by_sql(query)
  end

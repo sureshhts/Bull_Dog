@@ -52,6 +52,9 @@
       </td>
       <td>
         <a href="/tournaments/players_to_divisions?id=<%= @tournament.id %>&category=<%= cl.category_id %>&level=<%= cl.level_id %>">Allocate</a>
+        <% if cl.allotted_players.to_i == cl.total_players.to_i %>
+        <a href="/tournaments/create_draws_for_divisions?id=<%= @tournament.id %>&category=<%= cl.category_id %>&level=<%= cl.level_id %>&total=<%= cl.total_players %>">Draw</a>
+        <% end %>
       </td>
     </tr>
     <% i+=1

@@ -104,4 +104,22 @@ class Tournament < ActiveRecord::Base
                 order by #{sort} }
    find_by_sql(query)
  end
+
+ def self.create_draw?(tournament_id, level_id, category_id)
+   flag = false
+   query = %Q{  select count(tp.id) as total_players, count(case when tp.tournament_division_id > 0 then 1 end ) as allotted_players
+                from tournaments t
+                join tournament_players tp on tp.tournament_id = t.id
+                left outer join tournament_categories tc on tc.id = tp.tournament_category_id
+                left outer join player_levels pl on pl.id = tp.player_level_id
+                where t.id = #{tournament_id} and pl.id = #{level_id} and tc.id = #{category_id}
+                group by tc.id, pl.id}
+   result = find_by_sql(query)[0]
+   total = result.total_players.to_i
+   allotted = result.allotted_players.to_i
+   if total == allotted
+     flag = true
+   end
+   return flag
+ end
 end

@@ -44,9 +44,18 @@
                            end  %>
                         </ul>
 		</div>
-                <% end %>		                
+                <% end %>
+                <table>
+                    <tr>
+                     <td align="right" id="upwd">
+                       <a href="/tournaments/league_division/<%= @tournament.id %>">Back</a>&nbsp;
+                       <% if @draw %>
+                       <a href="/tournaments/tournament_category_level_draw?id=<%= @tournament.id %>&lid=<%= @level.id %>&cid=<%= @category.id %>">Create Draw</a>
+                       <% end %>
+                     </td>
+                    </tr>
+                </table>
 	</div>
 </div>
-
 
 

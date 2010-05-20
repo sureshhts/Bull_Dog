@@ -125,34 +125,45 @@ protect_from_forgery :only => [:destroy]
       division_facility = FacilitiesTournamentDivision.create(:tournament_division_id => division.id, :facility_id => params[:d_facility])
     end
     @tournament_divisions = Tournament.tournament_divisions(params[:id], conditions)
-    
+    @draw = Tournament.create_draw?(@tournament.id, @level.id, @category.id)
   end
 
-  def create_draws_for_divisions
-    @category = TournamentCategory.find(params[:category])
-    @level = PlayerLevel.find(params[:level])
-    @total = params[:total]
+  def tournament_category_level_draw
+    @category = TournamentCategory.find(params[:cid])
+    @level = PlayerLevel.find(params[:lid])
     @tournament = Tournament.find(params[:id])
-    conditions = params[:category], params[:level], "players desc"
+    conditions = params[:cid], params[:lid], "players desc"
     @tournament_divisions = Tournament.tournament_divisions(params[:id], conditions)
-    #8,7,1,4
-    @no_of_players = @tournament_divisions[0].players
-    @weeks = @no_of_players.to_i - 1
-    @matches_per_week_per_player = 1
-    @max_matches_per_week = (@no_of_players.to_f/2.to_f).ceil
-    @games = @no_of_players.to_i - 1
+
+    max_count = TournamentDivision.division_with_max_players(@tournament.id, @level.id, @category.id)
+    for division in @tournament_divisions
+      d_players = tournament_division_players(division.id)
+      players_arr = d_players.collect{|dp| dp.player_id}
+      league_draw = LeagueDraw::RoundRobin.new(players_arr, max_count)
+      league_draw.draw
+      league_draw_result = league_draw.result
+      league_draw_result.each_pair{|key, value|
+        tdls = TournamentDivisionLeagueSchedule.create(:week_number => key, :tournament_division_id => division.id)
+        lsg = LeagueScheduleGame.create(:tournament_division_league_schedule_id => tdls.id)
+        for val in value
+          if val != "bye"
+            LeagueGamePlayer.create(:league_schedule_game_id => lsg.id, :tournament_player_id => val)
+          end
+        end
+      }
+    end
   end
 
   def update_player_with_division
     player = params[:player]
     div, division = params[:division].split("_")
-    tp = TournamentPlayer.find(player)
+    @tp = TournamentPlayer.find(player)
     if division.blank?
-      tp.update_attributes(:tournament_division_id => nil)
+      @tp.update_attributes(:tournament_division_id => nil)
     else
-      tp.update_attributes(:tournament_division_id => division)
+      @tp.update_attributes(:tournament_division_id => division)
     end
-    render :text => ""
+    @draw = Tournament.create_draw?(@tp.tournament_id, @tp.player_level_id, @tp.tournament_category_id)
   end
 
   def knockout_points

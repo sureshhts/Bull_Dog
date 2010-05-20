@@ -1,0 +1,5 @@
+if @draw
+  page.replace_html "upwd", "<a href='/tournaments/league_division/#{@tp.tournament_id}'>Back</a>&nbsp;<a href='/tournaments/tournament_category_level_draw?id=#{@tp.tournament_id}&lid=#{@tp.player_level_id}&cid=#{@tp.tournament_category_id}'>Create Draw</a>"
+else
+  page.replace_html "upwd", "<a href='/tournaments/league_division/#{@tp.tournament_id}'>Back</a>"
+end

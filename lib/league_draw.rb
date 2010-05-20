@@ -1,16 +1,21 @@
 module LeagueDraw
   class RoundRobin
-    attr_accessor :week_games, :highest_division_players, :players, :actual_players
+    attr_accessor :week_games, :highest_division_players, :players, :actual_players, :result
 
     def initialize(players, highest_division_players)
       @week_games = Hash.new
-      @players = @actual_players = players
+      @players = players
+      @actual_players = Array.new
+      for pl in @players
+        @actual_players.push(pl)
+      end
       @highest_division_players = highest_division_players
+      @result = Hash.new
     end
 
     def draw
-      if @highest_division_players-@players.length > 0
-        (@highest_division_players-@players.length).times do
+      if @highest_division_players-@actual_players.length > 0
+        (@highest_division_players-@actual_players.length).times do
           @players.push("rand")
         end
       end
@@ -42,13 +47,34 @@ module LeagueDraw
         i+=1
       end while i < weeks
 
-      allocate_random_players if @highest_division_players-@players.length > 0
+      if @highest_division_players-@actual_players.length > 0
+        allocate_random_players
+        clean_week_games
+      else
+        @result = @week_games
+      end
     end
 
     def check_for_even_count
       if @players.length%2 != 0
         @players.push("bye")
       end
+    end
+
+    def clean_week_games
+      @week_games.each_pair{|key,value|
+        games = Array.new
+        for val in value
+          if val[0] != "rand" && val[1] != "rand"
+            if val[0] == "bye" && val[1] == "bye"
+            else
+              game = [val[0], val[1]]
+              games.push(game)
+            end
+          end
+        end
+        @result[key] = games
+      }
     end
 
     def allocate_random_players

@@ -1,0 +1,63 @@
+<style>
+ .oddrow
+{
+  background: #ffbd73;
+}
+
+.evenrow
+{
+  background: #ffe0be;
+}
+
+</style>
+<%  for division in @tournament_divisions
+      d_players = Tournament.tournament_division_players(division.id)
+      schedules = TournamentDivision.find(division.id).tournament_division_league_schedules
+      total_weeks = schedules.length
+%>
+<span><h3><%= division.name %></h3></span>
+<table width="100%" cellpadding="3" cellspacing="0">
+  <thead>
+    <tr bgcolor="#f38001">
+      <th>
+        <span>Name\weeks</span>
+      </th>
+      <% for week in schedules %>
+      <th>
+        <span>Week <%= week.week_number %></span>
+      </th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% for player in d_players
+          tp = TournamentPlayer.find(player.player_id)
+          lsg = tp.league_schedule_games
+    %>
+    <tr class="<%= cycle('oddrow', 'evenrow') %>">
+      <td>
+       <%= player.name %>
+      </td>
+      <% for wk in schedules
+            for game in lsg
+              if game.tournament_division_league_schedule_id == wk.id
+                g_pls = game.league_game_players.collect{|rc| rc.tournament_player_id.to_s}
+                puts g_pls.include?(player.player_id)
+                if g_pls.include?(player.player_id)
+                  pl_pos = g_pls.index(player.player_id)
+                  g_pls.delete_at(pl_pos)                  
+                  opponent = (g_pls.length > 0)? TournamentPlayer.find(g_pls[0]).user.account_profile.first_name : "bye"
+      %>
+      <td>
+        <%= opponent %>
+      </td>
+      <%        end
+              end
+            end
+         end %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<br/>
+<% end %>

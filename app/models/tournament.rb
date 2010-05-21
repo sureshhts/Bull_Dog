@@ -69,7 +69,7 @@ class Tournament < ActiveRecord::Base
    if !conditions[0][2].blank?
      sort = " order by #{conditions[0][2]}"
    end
-   query = %Q{  SELECT d.id, d.name, d.no_of_players, f.name as facility, d.area_name, count(tp.id) as players
+   query = %Q{  SELECT d.id, d.name, d.no_of_players, f.name as facility, d.area_name, count(tp.id) as players, d.draw_created
                 from tournaments t
                 join tournament_divisions d on d.tournament_id = t.id
                 join facilities_tournament_divisions ftd on ftd.tournament_division_id = d.id

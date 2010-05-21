@@ -28,13 +28,12 @@
       <th>
         <span><%= sort_table_header("# Allotted", "allotted_players", "league_division") %></span>
       </th>
-      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
     <% i = 1
        for cl in @categories_levels %>
-    <tr class="<%= cycle('oddrow', 'evenrow') %>">
+    <tr class="<%= cycle('oddrow', 'evenrow') %>" style="cursor: pointer;" onclick="window.location='/tournaments/players_to_divisions?id=<%= @tournament.id %>&category=<%= cl.category_id %>&level=<%= cl.level_id %>'">
       <td>
         <%= i %>
       </td>
@@ -49,12 +48,6 @@
       </td>
       <td>
         <%= cl.allotted_players %>
-      </td>
-      <td>
-        <a href="/tournaments/players_to_divisions?id=<%= @tournament.id %>&category=<%= cl.category_id %>&level=<%= cl.level_id %>">Allocate</a>
-        <% if cl.allotted_players.to_i == cl.total_players.to_i %>
-        <a href="/tournaments/create_draws_for_divisions?id=<%= @tournament.id %>&category=<%= cl.category_id %>&level=<%= cl.level_id %>&total=<%= cl.total_players %>">Draw</a>
-        <% end %>
       </td>
     </tr>
     <% i+=1

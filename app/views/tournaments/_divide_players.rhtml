@@ -15,10 +15,7 @@
                    end  %>
 		</ul>
 		</div>
-	</div>
-
-        <ul id="dragContent"></ul>
-        <div id="dragDropIndicator"></div>
+	</div>        
 
 	<div id="dhtmlgoodies_mainContainer">
                 <table>
@@ -28,8 +25,12 @@
                     </td>
                   </tr>
                 </table>
-
-		<% for division in @tournament_divisions %>
+                <% draw_created = false
+		   for division in @tournament_divisions
+                     if division.draw_created == "1"
+                       draw_created = true
+                     end
+                %>
 		<div>
 			<p align="center"><%= division.area_name %><br/><%= division.name %></p>
 			<ul id="d_<%= division.id %>">
@@ -49,13 +50,20 @@
                     <tr>
                      <td align="right" id="upwd">
                        <a href="/tournaments/league_division/<%= @tournament.id %>">Back</a>&nbsp;
-                       <% if @draw %>
+                       <% if @draw && !draw_created %>
                        <a href="/tournaments/tournament_category_level_draw?id=<%= @tournament.id %>&lid=<%= @level.id %>&cid=<%= @category.id %>">Create Draw</a>
+                       <% end %>
+                       <% if draw_created %>
+                       <a href="/tournaments/category_level_draw_schedules?id=<%= @tournament.id %>&lid=<%= @level.id %>&cid=<%= @category.id %>">View Draw</a>
                        <% end %>
                      </td>
                     </tr>
                 </table>
 	</div>
+        <% if !draw_created %>
+        <ul id="dragContent"></ul>
+        <div id="dragDropIndicator"></div>
+        <% end %>
 </div>
 
 

@@ -1,0 +1,29 @@
+<style>
+ .oddrow
+{
+  background: #ffbd73;
+}
+
+.evenrow
+{
+  background: #ffe0be;
+}
+
+</style>
+<table width="100%" cellpadding="3" cellspacing="0">
+  <thead>
+    <tr bgcolor="#f38001">
+      <th>
+        <span>Name\weeks</span>
+      </th>
+      
+    </tr>
+  </thead>
+  <tbody>    
+    <tr class="<%= cycle('oddrow', 'evenrow') %>">
+      <td>
+       Draw Created
+      </td>     
+    </tr>    
+  </tbody>
+</table>

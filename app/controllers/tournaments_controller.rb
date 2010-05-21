@@ -159,6 +159,14 @@ protect_from_forgery :only => [:destroy]
     end
   end
 
+  def category_level_draw_schedules
+    @category = TournamentCategory.find(params[:cid])
+    @level = PlayerLevel.find(params[:lid])
+    @tournament = Tournament.find(params[:id])
+    conditions = params[:cid], params[:lid], "players desc"
+    @tournament_divisions = Tournament.tournament_divisions(params[:id], conditions)
+  end
+
   def update_player_with_division
     player = params[:player]
     div, division = params[:division].split("_")

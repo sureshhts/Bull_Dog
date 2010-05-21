@@ -137,20 +137,25 @@ protect_from_forgery :only => [:destroy]
 
     max_count = TournamentDivision.division_with_max_players(@tournament.id, @level.id, @category.id)
     for division in @tournament_divisions
-      d_players = tournament_division_players(division.id)
+      d_players = Tournament.tournament_division_players(division.id)
       players_arr = d_players.collect{|dp| dp.player_id}
-      league_draw = LeagueDraw::RoundRobin.new(players_arr, max_count)
+      league_draw = LeagueDraw::RoundRobin.new(players_arr, max_count.to_i)
       league_draw.draw
       league_draw_result = league_draw.result
       league_draw_result.each_pair{|key, value|
-        tdls = TournamentDivisionLeagueSchedule.create(:week_number => key, :tournament_division_id => division.id)
-        lsg = LeagueScheduleGame.create(:tournament_division_league_schedule_id => tdls.id)
+        tdls = TournamentDivisionLeagueSchedule.create(:week_number => key, :tournament_division_id => division.id)        
         for val in value
-          if val != "bye"
-            LeagueGamePlayer.create(:league_schedule_game_id => lsg.id, :tournament_player_id => val)
+          lsg = LeagueScheduleGame.create(:tournament_division_league_schedule_id => tdls.id)
+          if val[0] != "bye"
+            LeagueGamePlayer.create(:league_schedule_game_id => lsg.id, :tournament_player_id => val[0])
+          end
+          if val[1] != "bye"
+            LeagueGamePlayer.create(:league_schedule_game_id => lsg.id, :tournament_player_id => val[1])
           end
         end
       }
+      t_div = TournamentDivision.find(division.id)
+      t_div.update_attributes(:draw_created => "1")
     end
   end
 

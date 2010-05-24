@@ -48,8 +48,8 @@
                   g_pls.delete_at(pl_pos)                  
                   opponent = (g_pls.length > 0)? TournamentPlayer.find(g_pls[0]).user.account_profile.first_name : "bye"
       %>
-      <td>
-        <%= opponent %>
+      <td onmouseout="hideTooltip()" onmouseover="showTooltip(event,'vs <%= opponent %>');return false" align="center">
+        
       </td>
       <%        end
               end

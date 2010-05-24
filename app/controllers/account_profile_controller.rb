@@ -24,15 +24,10 @@ layout "player"
   end
   
   def list
-    puts "*****id******"
-    puts params[:month]
-    puts params[:year]
-    puts params[:id]
-    
+   
      date =  params[:year] + "-" + params[:month] + "-" + params[:id]
-     puts date
-     puts "***res***"
-     puts  res = Time.parse(date).to_i
+    
+     res = Time.parse(date).to_i
      
     @tournament = Tournament.find(:all, :conditions => ["tournament_starts=?", res])
     

@@ -51,7 +51,7 @@
                      <td align="right" id="upwd">
                        <a href="/tournaments/league_division/<%= @tournament.id %>">Back</a>&nbsp;
                        <% if @draw && !draw_created %>
-                       <a href="/tournaments/tournament_category_level_draw?id=<%= @tournament.id %>&lid=<%= @level.id %>&cid=<%= @category.id %>">Create Draw</a>
+                       <a onclick="showElt('popup_feedback2');" href="#">Create Draw</a>
                        <% end %>
                        <% if draw_created %>
                        <a href="/tournaments/category_level_draw_schedules?id=<%= @tournament.id %>&lid=<%= @level.id %>&cid=<%= @category.id %>">View Draw</a>

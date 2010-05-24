@@ -80,15 +80,9 @@
  <td>Player Level</td>
   <td>
  <select name="tournament[player_level]" id="tournament_player_level" >
- <%@player_levels.each do |c|
-   if  c.id == @level_id
-  %>
-   <option value="<%= c.id%>" selected><%= c.name%></option>
-	<% else %>
-	<option value="<%= c.id%>" ><%= c.name%></option>
- <%
-  end
- end%>
+ <%@player_levels.each do |c| %>
+   <option value="<%= c.id%>"><%= c.name%></option>
+ <% end%>
  </select>
 </td>
 </tr>
@@ -102,6 +96,17 @@
  <%end%>
  </select> 
  
+ </select>
+</td>
+</tr>
+
+<tr>
+ <td>Area</td>
+  <td>
+ <select name="tournament[area]" id="tournament_area" >
+ <%@area.each do |a| %>
+   <option value="<%= a.id%>"><%= a.area_name%></option>
+ <% end%>
  </select>
 </td>
 </tr>

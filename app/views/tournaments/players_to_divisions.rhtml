@@ -93,16 +93,9 @@
                 <input type="hidden" name="category" value="<%= @category.id %>" />
                 <input type="hidden" name="level" value="<%= @level.id %>" />
                 <table width="80%" cellpadding="3" cellspacing="0" align="center" >
+                  <tr><td colspan="2">Create Division: </td></tr>
                   <tr><td width="40%">Name: </td><td><input type="text" name="d_name"/></td></tr>
-                  <tr><td># of Players: </td><td><input type="text" name="d_players"/></td></tr>
-                  <tr><td>Facility: </td>
-                    <td>
-                      <select name="d_facility">
-                        <% for facility in @facilities %>
-                        <option value="<%= facility.id %>"><%= facility.name %></option>
-                        <% end %>
-                      </select>
-                    </td></tr>
+                  <tr><td># of Players: </td><td><input type="text" name="d_players"/></td></tr>                  
                   <tr><td>Area: </td>
                     <td>
                       <select name="d_area">
@@ -130,5 +123,8 @@
           </table>
           </div>
           </form>
+</div>
+<div id="popup_feedback2">
+  <%= render :partial => "create_draw" %>
 </div>
 

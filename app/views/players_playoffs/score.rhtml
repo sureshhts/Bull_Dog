@@ -1,0 +1,202 @@
+<script>
+
+ function score()
+ {
+    if(document.forms[0].score_sets.value== 'won3')
+    {
+      Effect.Appear('winner_score');
+      Effect.Appear('p1g1');
+      Effect.Appear('p1g2');
+      Effect.Appear('p1g3');
+      Effect.Appear('looser_score');
+      Effect.Appear('p2g1');
+      Effect.Appear('p2g2');
+      Effect.Appear('p2g3');
+      return false;
+    }
+    if(document.forms[0].score_sets.value=='won')
+    {
+      Effect.Appear('winner_score');
+      Effect.Appear('p1g1');
+      Effect.Appear('p1g2');
+      Effect.Appear('looser_score');
+      Effect.Appear('p2g1');
+      Effect.Appear('p2g2');
+      document.getElementById("p1g3").style.display="none";
+      document.getElementById("p2g3").style.display="none";
+      return false;
+    }
+   return true;
+ 
+ }
+ 
+ function validate()
+ {
+    
+   if(document.forms[0].score_sets.value=='won3')  
+   {    
+         
+	   if(document.forms[0].p1g3.value=='' && document.forms[0].p2g3.value=='')
+	   {
+	    alert("Enter the 3rd game");
+	    document.forms[0].p1g3.focus();
+	    return false;
+	   }
+	   else if(document.forms[0].p1g1.value < document.forms[0].p2g1.value)
+	   {
+	    alert("Enter correct winner game");
+	    document.forms[0].p1g1.focus();
+	    return false;
+	   }
+	   else if(document.forms[0].p1g2.value < document.forms[0].p2g2.value)
+	   {
+	    alert("Enter correct winner game");
+	    document.forms[0].p1g2.focus();
+	    return false;
+	   }
+	   else if(document.forms[0].p1g3.value < document.forms[0].p2g3.value)
+	   {
+	    alert("Enter correct winner game");
+	    document.forms[0].p1g3.focus();
+	    return false;
+	   }
+	   
+	   else if(document.forms[0].p1g3.value=='')
+	   {
+	    alert("Enter the 3rd game");
+	    document.forms[0].p1g3.focus();
+	    return false;
+	   }
+	   
+	   else if(document.forms[0].p2g3.value=='')
+	   {
+	    alert("Enter the 3rd game");
+	    document.forms[0].p2g3.focus();
+	    return false;
+	   }
+	   else
+	   {
+	    return true;
+	   } 
+	  	    
+  }
+  if(document.forms[0].score_sets.value=='won')  
+  { 
+    if(document.forms[0].p1g2.value=='' && document.forms[0].p2g2.value=='')
+	{
+	  alert("Enter the 2nd game");
+	  document.forms[0].p1g2.focus();
+	  return false;
+	}
+	else if(document.forms[0].p1g1.value < document.forms[0].p2g1.value)
+	{
+	  alert("Enter correct winner game");
+	  document.forms[0].p1g1.focus();
+	  return false;
+	}
+	else if(document.forms[0].p1g2.value < document.forms[0].p2g2.value)
+	{
+	  alert("Enter correct winner game");
+	  document.forms[0].p1g2.focus();
+	  return false;
+	}
+	else
+	{
+	  return true;
+	}   
+  }
+ } 
+</script>
+
+
+<div>
+<h3>Score</h3>
+</div>
+
+<div>
+<% form_for(:score, :url => {:controller => 'players_playoffs', :action => 'playoff_scores'}, :html => { :multipart => true }) do |f| %>
+<table width="95%">
+
+<tr>
+<td>Select Category</td>
+<td>
+ <select name="score[category]" id="score_category" >
+  <option value="#">Select Category</option>
+  <%  @categories.each do |c| %>
+   <option value="<%= c.id %>"><%= c.name %> </option>
+  <%  end %> 
+ </select>
+</td> 
+</tr>
+
+
+<tr>
+<td>Select the set</td>
+<td>
+ <select name="score[sets]" id="score_sets" onchange="score();">
+ <option value="#">Select </option>
+ <option value="won">I/We won in straight sets</option>
+ <option value="won3"> Won in 3 sets</option>
+ <option value="lost"> Lost in straight sets</option>
+ <option value="lost3"> Lost in 3 sets</option>
+ <option value="default"> I/We defaulted</option>
+ <option value="opp_default">Opponent defaulted</option>
+ <option value="tie">Tie</option>
+ </select>
+</td> 
+</tr>
+
+
+<tr>
+<td>
+  <div id="winner_score" style="display:none;">Enter Winner score<br/>
+  
+  </div>
+  <input id="p1g1" name="p1g1" size="1" style="display:none;"/>
+  <input id="p1g2" name="p1g2" size="1" style="display:none;"/>
+  <input id="p1g3" name="p1g3" size="1" style="display:none;"/>
+  
+  <br/><br/>
+  <div id="looser_score" style="display:none;">Enter Looser score<br/>
+  
+  </div>
+  <input id="p2g1" name="p2g1" size="1" style="display:none;"/>
+  <input id="p2g2" name="p2g2" size="1" style="display:none;"/>
+  <input id="p2g3" name="p2g3" size="1" style="display:none;"/>
+ 
+
+</td>
+</tr>
+
+
+<tr>
+<td>
+<div id="score1" style="display:none;">
+  <p>Enter the scores</p>
+  <input id="s1g1" name="s1g1" size="1"/>
+  <input id="s1g2" name="s1g2" size="1"/>
+  
+   <br/><br/>
+  
+  <input id="s2g1" name="s2g1" size="1"/>
+  <input id="s2g2" name="s2g2" size="1"/>
+</div> 
+</td>
+</tr>
+
+<tr>
+ <td>Status</td>
+  <td><%= f.text_field :status %></td>
+</tr>
+
+<tr>
+	<td>
+	<%= submit_tag "Submit", :onClick => 'return validate();' %>
+	<%= submit_tag "Cancel" %>
+	</td>
+</tr>
+
+
+</table>
+<%end%>
+</div>

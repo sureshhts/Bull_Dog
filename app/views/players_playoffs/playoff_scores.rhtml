@@ -1,0 +1,32 @@
+<head>
+<style>
+ .oddrow
+{
+  background: #ffbd73; 
+}
+
+.evenrow
+{
+  background: #ffe0be; 
+}
+
+</style>
+</head>
+<div align="center">
+<table  width="95%" cellspacing="1" cellpadding="0" align="center">
+<thead>
+
+ <tr bgcolor="#f38001">
+ <th>Tournament Name</th>
+ <th>Winner Point</th>
+ <th>Looser Point</th>
+ </tr>
+</thead>
+<tbody>
+ 
+ <tr class="<%= cycle('oddrow', 'evenrow') %>">
+ <td> </td>
+ <td valign="top"><%= @winner_points %>  </td>
+ <td valign="top"><%= @looser_points %>  </td>
+ </tbody> 
+</div> 

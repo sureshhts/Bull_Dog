@@ -22,7 +22,7 @@ layout 'default'
     @facility= Facility.create(params[:facility])
  	
   	if @facility.save
-	   flash[:notice] =  'New Faciltiy Created Successfully'
+	   flash[:notice] =  'New Facility Created Successfully'
 	   redirect_to :action => 'index', :controller => 'facility'
 	else
 	   render :action => 'new'

@@ -6,9 +6,10 @@ layout 'player'
     @id = session[:user_id]
     id = params[:id]
     @tournament = Tournament.find(id)
-    @level_id = User.find(session[:user_id]).account_playing_detail.player_level_id
+   # @level_id = User.find(session[:user_id]).account_playing_detail.player_level_id
     @player_levels = PlayerLevel.find(:all)
     @category = @tournament.tournament_categories
+    @area = AreaName.find(:all)
   end
  
  def create

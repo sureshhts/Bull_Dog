@@ -1,0 +1,35 @@
+<form action="/tournaments/tournament_category_level_draw" method="post" name="feedback2" id="feedback2">
+        <div id='popup_center' style="height: 472px; width: 604px; padding-left: 210px; display: block;margin-top:-10px;">
+          <table align="center" width="100%" cellspacing="3px" style="border:1px solid;" BACKGROUND="/images/bg_white.jpg">
+            <tr>
+              <td align="right"><a href="#" onclick="hideElt('popup_feedback2');" >X</a></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td><input type="hidden" name="id" value="<%= @tournament.id %>" />
+                <input type="hidden" name="cid" value="<%= @category.id %>" />
+                <input type="hidden" name="lid" value="<%= @level.id %>" />
+                <table width="80%" cellpadding="3" cellspacing="0" align="center" >
+                  <tr><td colspan="2">Create Draw: </td></tr>
+                  <tr><td># of Games: </td><td><input type="text" name="games" value="<%= @max_players.to_i-1 %>"/></td></tr>
+                  <tr><td></td><td></td></tr>
+                  <tr>
+                    <td>
+                      <div onmouseover="buttonOver(this);" onmouseout="buttonOut(this)">
+                      <div><input type="button" name="Cancel" value="cancel" onclick="hideElt('popup_feedback2');"/></div>
+                      </div>
+                    </td>
+                    <td>
+                      <div onmouseover="buttonOver(this);" onmouseout="buttonOut(this)">
+                      <div><input type="submit" value="OK"/></div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          </div>
+          </form>

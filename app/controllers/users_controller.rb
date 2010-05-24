@@ -13,13 +13,15 @@ class UsersController < ApplicationController
  
   def create
     logout_keeping_session!
+   
     @user = User.new(params[:user])
+    
     @user.account_type = params[:user][:account_type]
   
     @user.time_created = Time.now.to_i
     success = @user && @user.save
     if success && @user.errors.empty?
-            # Protects against session fixation attacks, causes request forgery
+      # Protects against session fixation attacks, causes request forgery
       # protection if visitor resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
       # reset session
@@ -132,7 +134,7 @@ class UsersController < ApplicationController
       end
    else  
     
-	    @playing_details = AccountPlayingDetail.create(:player_level_id => params[:account][:level_id], :facility_id => params[:account][:facility_id],         	:user_id => params[:playing_details][:user_id])
+	    @playing_details = AccountPlayingDetail.create(:player_level_id => params[:account][:level_id], :facility_id => params[:account][:facility_id], :user_id => params[:playing_details][:user_id])
 	 
 		
 		if @playing_details.save

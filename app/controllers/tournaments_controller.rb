@@ -122,10 +122,11 @@ protect_from_forgery :only => [:destroy]
 
     if request.post?
       division = TournamentDivision.create(:name => params[:d_name], :tournament_id => @tournament.id, :no_of_players => params[:d_players], :tournament_category_id => params[:category], :player_level_id => params[:level], :area_name => params[:d_area])
-      division_facility = FacilitiesTournamentDivision.create(:tournament_division_id => division.id, :facility_id => params[:d_facility])
+      #division_facility = FacilitiesTournamentDivision.create(:tournament_division_id => division.id, :facility_id => params[:d_facility])
     end
     @tournament_divisions = Tournament.tournament_divisions(params[:id], conditions)
     @draw = Tournament.create_draw?(@tournament.id, @level.id, @category.id)
+    @max_players = TournamentDivision.division_with_max_players(@tournament.id, @level.id, @category.id)
   end
 
   def tournament_category_level_draw
@@ -134,22 +135,21 @@ protect_from_forgery :only => [:destroy]
     @tournament = Tournament.find(params[:id])
     conditions = params[:cid], params[:lid], "players desc"
     @tournament_divisions = Tournament.tournament_divisions(params[:id], conditions)
-
-    max_count = TournamentDivision.division_with_max_players(@tournament.id, @level.id, @category.id)
+    
     for division in @tournament_divisions
       d_players = Tournament.tournament_division_players(division.id)
       players_arr = d_players.collect{|dp| dp.player_id}
-      league_draw = LeagueDraw::RoundRobin.new(players_arr, max_count.to_i)
+      league_draw = LeagueDraw::RoundRobin.new(players_arr, params[:games].to_i)
       league_draw.draw
       league_draw_result = league_draw.result
       league_draw_result.each_pair{|key, value|
         tdls = TournamentDivisionLeagueSchedule.create(:week_number => key, :tournament_division_id => division.id)        
         for val in value
           lsg = LeagueScheduleGame.create(:tournament_division_league_schedule_id => tdls.id)
-          if val[0] != "bye"
+          if val[0] != "rand"
             LeagueGamePlayer.create(:league_schedule_game_id => lsg.id, :tournament_player_id => val[0])
           end
-          if val[1] != "bye"
+          if val[1] != "rand"
             LeagueGamePlayer.create(:league_schedule_game_id => lsg.id, :tournament_player_id => val[1])
           end
         end
@@ -177,6 +177,11 @@ protect_from_forgery :only => [:destroy]
       @tp.update_attributes(:tournament_division_id => division)
     end
     @draw = Tournament.create_draw?(@tp.tournament_id, @tp.player_level_id, @tp.tournament_category_id)
+
+    @category = TournamentCategory.find(@tp.tournament_category_id)
+    @level = PlayerLevel.find(@tp.player_level_id)
+    @tournament = Tournament.find(@tp.tournament_id)
+    @max_players = TournamentDivision.division_with_max_players(@tournament.id, @level.id, @category.id)
   end
 
   def knockout_points

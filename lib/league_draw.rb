@@ -1,34 +1,22 @@
 module LeagueDraw
   class RoundRobin
-    attr_accessor :week_games, :highest_division_players, :players, :actual_players, :result
+    attr_accessor :week_games, :total_games, :players, :result
 
-    def initialize(players, highest_division_players)
+    def initialize(players, total_games)
       @week_games = Hash.new
       @players = players
-      @actual_players = Array.new
-      for pl in @players
-        @actual_players.push(pl)
-      end
-      @highest_division_players = highest_division_players
+      check_for_even_count
+      @total_games = total_games
       @result = Hash.new
     end
 
     def draw
-      if @highest_division_players-@actual_players.length > 0
-        (@highest_division_players-@actual_players.length).times do
-          @players.push("rand")
-        end
-      end
-
-      check_for_even_count
-
-      weeks = @players.length - 1
       i = 0
       player = Array.new
       player.push(@players[0])
       other_players = @players[1..@players.length]
 
-      begin
+      @total_games.times do
         round = player+other_players.unshift(other_players.pop)
         team_a = round[0..(round.length-1)/2]
         team_b = round[(round.length-1)/2+1..round.length].reverse
@@ -45,107 +33,18 @@ module LeagueDraw
 
         @week_games[i] = teams
         i+=1
-      end while i < weeks
-
-      if @highest_division_players-@actual_players.length > 0
-        allocate_random_players
-        clean_week_games
-      else
-        @result = @week_games
       end
+
+      @result = @week_games
     end
 
     def check_for_even_count
       if @players.length%2 != 0
-        @players.push("bye")
+        @players.push("rand")
       end
-    end
-
-    def clean_week_games
-      @week_games.each_pair{|key,value|
-        games = Array.new
-        for val in value
-          if val[0] != "rand" && val[1] != "rand"
-            if val[0] == "bye" && val[1] == "bye"
-            else
-              game = [val[0], val[1]]
-              games.push(game)
-            end
-          end
-        end
-        @result[key] = games
-      }
-    end
-
-    def allocate_random_players
-      no_of_games = @week_games.size
-      team_a = @actual_players[1..(@actual_players.length-1)/2]
-      insert_team_b = @actual_players[(@actual_players.length-1)/2+1..@actual_players.length]
-
-      actual_count = @actual_players.length - 1
-      freq_players = Hash.new
-
-      for ap in @actual_players
-        freq_players[ap] = actual_count
-      end
-
-      #allocate first to player 1
-      i = 0
-      @week_games.each_pair{|key, value|
-        if value[0][1] == "rand"
-          @week_games[key][0][1] = team_a[i]
-          freq_players[@actual_players[0]] += 1
-          freq_players[team_a[i]] += 1
-          i += 1
-        end
-      }
-
-      week_values = @week_games.values
-
-      for t_a in team_a
-          i = 0
-          for week in week_values
-            j = 0
-            for game in week
-              if game.include?("rand") && game.include?(t_a) && freq_players[t_a] < no_of_games
-                rand_pos = game.index("rand")
-                t_b = insert_team_b.push(insert_team_b.shift)[0]
-                @week_games[@week_games.keys[i]][j][rand_pos] = t_b
-                freq_players[t_a] += 1
-                freq_players[t_b] += 1
-              end
-              j += 1
-            end
-            i += 1
-          end
-      end
-
-      i = 0
-      for week in week_values
-        j = 0
-        for game in week
-          if game[0] == "rand" && game[1] == "rand"
-            @week_games[@week_games.keys[i]][j][0] = "bye"
-            @week_games[@week_games.keys[i]][j][1] = "bye"
-            for tb in insert_team_b
-              if freq_players[tb] < no_of_games
-                @week_games[@week_games.keys[i]][j][0] = tb
-                freq_players[tb] += 1
-              end
-            end
-            for tb in insert_team_b
-              if freq_players[tb] < no_of_games
-                @week_games[@week_games.keys[i]][j][1] = tb
-                freq_players[tb] += 1
-              end
-            end
-          end
-          j += 1
-        end
-        i += 1
-      end
-    end
+    end 
   end
+
 
   class Draw
     attr_accessor :players, :weeks, :matches_per_week_per_player, :max_matches_per_week, :result, :warnings, :games

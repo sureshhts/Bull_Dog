@@ -1,0 +1,28 @@
+<table width="100%">
+<tr>
+<td>Select Week: </td>
+<td>
+ <select name="schedule" id="schedule" >
+  <option value="0">Select Week</option>
+  <%  @tp_division_schedules.each do |s| %>
+   <option value="<%= @tp.id %>:<%= s.id %>">Week<%= s.week_number.to_i + 1 %> </option>
+  <%  end %>
+ </select>
+  <%=observe_field "schedule",
+      :url => {:controller => 'players_playoffs', :action => 'playoff_tournament_schedule'},
+      :on => 'change',
+      :with => "schedule"%>
+</td>
+</tr>
+<tr>
+  <td colspan="2">
+    <div id="div2">
+    </div>
+  </td>
+</tr>
+
+
+
+
+
+</table>

@@ -1,0 +1,98 @@
+<table width="100%">
+<tr>
+<td width="45%">Opponent:  <input type="hidden" name="opponent" value="<%= @opponent.id %>" /></td>
+<td>
+  <table width="100%">
+    <tr>
+      <td>
+        Name:
+      </td>
+      <td>
+        <%= @opponent_profile.first_name %> <%= @opponent_profile.last_name %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        E-mail:
+      </td>
+      <td>
+        <%= @opponent_profile.email_address %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Contact Number:
+      </td>
+      <td>
+        <%= @opponent_profile.contact_number %>
+      </td>
+    </tr>
+  </table>
+</td>
+</tr>
+<tr>
+<td>Select the set</td>
+<td>
+ <select name="score[sets]" id="score_sets" onchange="score();">
+ <option value="#">Select </option>
+ <option value="won">I/We won in straight sets</option>
+ <option value="won3"> Won in 3 sets</option>
+ <option value="lost"> Lost in straight sets</option>
+ <option value="lost3"> Lost in 3 sets</option>
+ <option value="default"> I/We defaulted</option>
+ <option value="opp_default">Opponent defaulted</option>
+ <option value="tie">Tie</option>
+ </select>
+</td>
+</tr>
+
+
+<tr>
+<td>
+  <div id="winner_score" style="display:none;">Enter Winner score<br/>
+
+  </div>
+  <input id="p1g1" name="p1g1" size="1" style="display:none;"/>
+  <input id="p1g2" name="p1g2" size="1" style="display:none;"/>
+  <input id="p1g3" name="p1g3" size="1" style="display:none;"/>
+
+  <br/><br/>
+  <div id="looser_score" style="display:none;">Enter Looser score<br/>
+
+  </div>
+  <input id="p2g1" name="p2g1" size="1" style="display:none;"/>
+  <input id="p2g2" name="p2g2" size="1" style="display:none;"/>
+  <input id="p2g3" name="p2g3" size="1" style="display:none;"/>
+
+
+</td>
+</tr>
+
+
+<tr>
+<td>
+<div id="score1" style="display:none;">
+  <p>Enter the scores</p>
+  <input id="s1g1" name="s1g1" size="1"/>
+  <input id="s1g2" name="s1g2" size="1"/>
+
+   <br/><br/>
+
+  <input id="s2g1" name="s2g1" size="1"/>
+  <input id="s2g2" name="s2g2" size="1"/>
+</div>
+</td>
+</tr>
+
+<tr>
+  <td colspan="2">
+    <div id="div2">
+    </div>
+  </td>
+</tr>
+
+
+
+
+
+</table>

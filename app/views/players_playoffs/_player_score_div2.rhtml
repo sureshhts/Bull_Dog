@@ -1,6 +1,6 @@
 <table width="100%">
 <tr>
-<td width="45%">Opponent:  <input type="hidden" name="opponent" value="<%= @opponent.id %>" /></td>
+<td width="45%">Opponent:  <input type="hidden" name="player" value="<%= @tp.id %>" /><input type="hidden" name="opponent" value="<%= @opponent.id %>" /><input type="hidden" name="lsg" value="<%= @selected_lsg.id %>" /></td>
 <td>
   <table width="100%">
     <tr>
@@ -86,8 +86,7 @@
 
 <tr>
   <td colspan="2">
-    <div id="div2">
-    </div>
+    <input type="submit" name="Submit" />
   </td>
 </tr>
 

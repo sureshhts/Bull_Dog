@@ -42,7 +42,7 @@
             for game in lsg
               if game.tournament_division_league_schedule_id == wk.id
                 g_pls = game.league_game_players.collect{|rc| rc.tournament_player_id.to_s}
-                if g_pls.include?(player.player_id)
+                if g_pls.include?(player.player_id.to_s)
                   pl_pos = g_pls.index(player.player_id)
                   g_pls.delete_at(pl_pos)
                   
@@ -60,4 +60,3 @@
   </tbody>
 </table>
 <br/>
-<% end %>

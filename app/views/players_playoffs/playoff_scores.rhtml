@@ -1,32 +1,43 @@
-<head>
-<style>
- .oddrow
-{
-  background: #ffbd73; 
-}
+<div style="text-align: center; border-width: 5px; border-color: #f38001; border-style:double;"><h3>Tournament Draw Summary</h3></div>
+  <table width="95%">
+    <tr>
+     <td width="30%">Tournament Name: </td>
+      <td>
+       <%= @tournament.name %>
+    </td>
+    </tr>
+    <tr>
+     <td>City: </td>
+      <td>
+       <%= @tournament.city %>
+    </td>
+    </tr>
+    <tr>
+     <td>Tournament Type: </td>
+      <td>
+      <% {"League" => 'L', "Knockout" => 'K'}.each_pair{|key,val|
+             if val == @tournament.tournament_type %>
+                    <%= key%>
+                    <% end
+            }%>
+    </td>
+    </tr>
+    <tr>
+     <td>Kind of Tournament: </td>
+      <td>
+      <% {"Organised" => 'O', "Self" => 'S'}.each_pair{|key,val|
+             if val == @tournament.kind_of_tournament %>
+                    <%= key%>
+                    <% end
+            }%>
 
-.evenrow
-{
-  background: #ffe0be; 
-}
+      </td>
+    </tr>    
+    <tr><td>Category: </td><td><%= @category.name %></td></tr>
+    <tr><td>Level: </td><td><%= @level.name %></td></tr>
+  </table>
+ <br/>
 
-</style>
-</head>
-<div align="center">
-<table  width="95%" cellspacing="1" cellpadding="0" align="center">
-<thead>
-
- <tr bgcolor="#f38001">
- <th>Tournament Name</th>
- <th>Winner Point</th>
- <th>Looser Point</th>
- </tr>
-</thead>
-<tbody>
- 
- <tr class="<%= cycle('oddrow', 'evenrow') %>">
- <td> </td>
- <td valign="top"><%= @winner_points %>  </td>
- <td valign="top"><%= @looser_points %>  </td>
- </tbody> 
-</div> 
+<div id="d_schedules">
+  <%= render :partial => "division_schedules" %>
+</div>

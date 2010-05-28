@@ -1,5 +1,7 @@
 class TournamentDivision < ActiveRecord::Base
  belongs_to :tournament
+ belongs_to :tournament_category
+ belongs_to :player_level
  has_many :tournament_player
  has_many :tournament_division_league_schedules
  has_many :facilties_tournament_division

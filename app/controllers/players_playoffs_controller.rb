@@ -58,31 +58,60 @@ layout 'player'
   end
   
   def playoff_scores
-   
-      userid = session[:user_id]
-      sets = params[:score][:sets]
+    player = TournamentPlayer.find(params[:player])
+    opponent = TournamentPlayer.find(params[:opponent])
+    league_schedule_game = LeagueScheduleGame.find(params[:lsg])
+    td_league_schedule = league_schedule_game.tournament_division_league_schedule
+    @tournament_division = td_league_schedule.tournament_division
+    @tournament = @tournament_division.tournament
+    @category = @tournament_division.tournament_category
+    @level = @tournament_division.player_level
     
-  if( !params[:p1g3].blank? and !params[:p2g3].blank? )
-  
-     @winner_points = 8;
-     @looser_points = 6;
-     
- 
-  else        
-      	if(params[:p1g1].to_i >= 6 and params[:p1g2].to_i >= 6 and params[:p1g1].to_i > params[:p2g1].to_i and params[:p1g2].to_i > params[:p2g2].to_i )
-		   puts "Straight win"
-		    @winner_points = 10
-		    looser_game = params[:p2g1].to_i + params[:p2g2].to_i
-		    @looser_points = lookup(looser_game)
-		    
-	   end
-  
+    case params[:score][:sets]
+      when "won"  then
+        opponent_points = lookup(params[:p2g1].to_i + params[:p2g2].to_i)
+        league_schedule_game.update_attributes(:winner => player.id, :loser => opponent.id, :winner_set_1 => params[:p1g1], :winner_set_2 => params[:p1g2], :loser_set_1 => params[:p2g1], :loser_set_2 => params[:p2g2], :winner_score => 10, :loser_score => opponent_points)
+        pl_points = ((player.points.blank?)? 0 : player.points.to_i) + 10
+        op_points = ((opponent.points.blank?)? 0 : opponent.points.to_i) + opponent_points
+        player.update_attributes(:points => pl_points)
+        opponent.update_attributes(:points => op_points)
+      when "won3"  then 
+        league_schedule_game.update_attributes(:winner => player.id, :loser => opponent.id, :winner_set_1 => params[:p1g1], :winner_set_2 => params[:p1g2], :winner_set_3 => params[:p1g3], :loser_set_1 => params[:p2g1], :loser_set_2 => params[:p2g2], :loser_set_3 => params[:p2g3], :winner_score => 8, :loser_score => 6)
+        pl_points = ((player.points.blank?)? 0 : player.points.to_i) + 8
+        op_points = ((opponent.points.blank?)? 0 : opponent.points.to_i) + 6
+        player.update_attributes(:points => pl_points)
+        opponent.update_attributes(:points => op_points)
+      when "lost"  then
+        player_points = lookup(params[:p1g1].to_i + params[:p1g2].to_i)
+        league_schedule_game.update_attributes(:loser => player.id, :winner => opponent.id, :winner_set_1 => params[:p2g1], :winner_set_2 => params[:p2g2], :loser_set_1 => params[:p1g1], :loser_set_2 => params[:p1g2], :winner_score => 10, :loser_score => player_points)
+        pl_points = ((player.points.blank?)? 0 : player.points.to_i) + player_points
+        op_points = ((opponent.points.blank?)? 0 : opponent.points.to_i) + 10
+        player.update_attributes(:points => pl_points)
+        opponent.update_attributes(:points => op_points)
+      when "lost3"  then
+        league_schedule_game.update_attributes(:loser => player.id, :winner => opponent.id, :winner_set_1 => params[:p2g1], :winner_set_2 => params[:p2g2], :winner_set_3 => params[:p2g3], :loser_set_1 => params[:p1g1], :loser_set_2 => params[:p1g2], :loser_set_3 => params[:p1g3], :winner_score => 6, :loser_score => 8)
+        pl_points = ((player.points.blank?)? 0 : player.points.to_i) + 6
+        op_points = ((opponent.points.blank?)? 0 : opponent.points.to_i) + 8
+        player.update_attributes(:points => pl_points)
+        opponent.update_attributes(:points => op_points)
+      when "default" then
+        league_schedule_game.update_attributes(:loser => player.id, :winner => opponent.id, :winner_set_1 => 1, :winner_set_2 => 1, :winner_set_3 => 1, :loser_set_1 => 0, :loser_set_2 => 0, :loser_set_3 => 0, :winner_score => 7, :loser_score => 0)
+        op_points = ((opponent.points.blank?)? 0 : opponent.points.to_i) + 7
+        opponent.update_attributes(:points => op_points)
+      when "opp_default"  then
+        league_schedule_game.update_attributes(:loser => opponent.id, :winner => player.id, :winner_set_1 => 1, :winner_set_2 => 1, :winner_set_3 => 1, :loser_set_1 => 0, :loser_set_2 => 0, :loser_set_3 => 0, :winner_score => 7, :loser_score => 0)
+        pl_points = ((player.points.blank?)? 0 : player.points.to_i) + 7
+        player.update_attributes(:points => pl_points)
+      when "tie"  then "allotted_players"
+        league_schedule_game.update_attributes(:loser => player.id, :winner => opponent.id, :winner_set_1 => 1, :winner_set_2 => 1, :winner_set_3 => 1, :loser_set_1 => 1, :loser_set_2 => 1, :loser_set_3 => 1, :winner_score => 5, :loser_score => 5)
+        pl_points = ((player.points.blank?)? 0 : player.points.to_i) + 5
+        op_points = ((opponent.points.blank?)? 0 : opponent.points.to_i) + 5
+        player.update_attributes(:points => pl_points)
+        opponent.update_attributes(:points => op_points)
+    end        	   
   end
-  	   
-  end
   
-  def lookup(game)
-  
+  def lookup(game)  
    if game >= 9
      return 5
    elsif game >=7
@@ -95,10 +124,6 @@ layout 'player'
      return 1
    else
             
-   end
-   
-  end
-  
-
-  
+   end   
+  end  
 end

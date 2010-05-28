@@ -42,13 +42,13 @@
             for game in lsg
               if game.tournament_division_league_schedule_id == wk.id
                 g_pls = game.league_game_players.collect{|rc| rc.tournament_player_id.to_s}
-                if g_pls.include?(player.player_id)
+                if g_pls.include?(player.player_id.to_s)
                   pl_pos = g_pls.index(player.player_id)
                   g_pls.delete_at(pl_pos)                  
-                  opponent = (g_pls.length > 0)? TournamentPlayer.find(g_pls[0]).user.account_profile.first_name : "bye"
+                  points, display_text = player_opponent_score_display(tp, g_pls, game)
       %>
-      <td onmouseout="hideTooltip()" onmouseover="showTooltip(event,'vs <%= opponent %>');return false" align="center">
-        
+      <td onmouseout="hideTooltip()" onmouseover="showTooltip(event,'<%= display_text %>');return false" align="center">
+        <%= points %>
       </td>
       <%        end
               end

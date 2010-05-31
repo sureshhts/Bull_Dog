@@ -1,4 +1,13 @@
 <table width="100%">
+<% if @selected_lsg == nil %>
+  <tr>
+    <td>No league game this week.</td>
+  </tr>
+<% elsif @selected_lsg != nil && @selected_lsg.winner_score != nil && @selected_lsg.loser_score != nil %>
+  <tr>
+    <td>The score for the league game this week is also provided.</td>
+  </tr>
+<% else %>
 <tr>
 <td width="45%">Opponent:  <input type="hidden" name="player" value="<%= @tp.id %>" /><input type="hidden" name="opponent" value="<%= @opponent.id %>" /><input type="hidden" name="lsg" value="<%= @selected_lsg.id %>" /></td>
 <td>
@@ -89,9 +98,5 @@
     <input type="submit" name="Submit" />
   </td>
 </tr>
-
-
-
-
-
+<% end %>
 </table>

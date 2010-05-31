@@ -1,0 +1,35 @@
+<style>
+ .oddrow
+{
+  background: #ffbd73;
+}
+
+.evenrow
+{
+  background: #ffe0be;
+}
+
+</style>
+<table width="100%">
+  <tr>
+    <td width="50%" id="league_standings">
+      <%= render :partial => "league_players" %>
+    </td>
+    <td style="vertical-align: top;">
+      <form action="/players_playoffs/tournament_league_standings" id="playoff_form" method="post" onsubmit="new Ajax.Request('/players_playoffs/tournament_league_standings', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;">
+      <table>
+        <tr>
+          <td>% age Players</td><td><input type="text" name="percentage" value="<%= @selected_percent %>"/><input type="hidden" name="id" value="<%= @tournament.id %>" /></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="button" name="Knockout Selection" value="Knockout Selection" onclick="$('playoff_form').onsubmit();return false;"/>
+            &nbsp;
+            <input type="button" name="Freeze Knockout Selection" value="Freeze Knockout Selection" onclick="window.location='/players_playoffs/selected_knockout_players/<%= @tournament.id %>'"/>
+          </td>
+        </tr>
+      </table>
+      </form>
+    </td>
+  </tr>
+</table>

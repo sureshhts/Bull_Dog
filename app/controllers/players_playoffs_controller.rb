@@ -84,6 +84,41 @@ protect_from_forgery :only => [:destroy]
     end
   end
 
+  def my_league_standings
+    @tournaments = Tournament.find(:all)
+    if request.xml_http_request?      
+      @tournament = Tournament.find_by_sql("select * from tournaments where id='#{params[:tournament]}'")[0]
+      @tp = TournamentPlayer.find_by_sql("select * from tournament_players where tournament_id='#{params[:tournament]}' and user_id='#{session[:user_id]}'")[0]
+      if !@tp.blank?
+        @players = TournamentPlayer.tournament_players_league_standings(params[:tournament])
+      end
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'mls',:partial => "my_league_standings"
+          end
+        }
+      end
+    end
+  end
+
+  def change_my_availability
+    tp = TournamentPlayer.find(params[:id])
+    available_tp = TournamentPlayer.available_knockout_non_selected_player(tp.tournament_id, tp.points)
+    tp.update_attributes(:knockout => '0')
+    available_tp.update_attributes(:knockout => '1')
+    @players = TournamentPlayer.tournament_players_league_standings(tp.tournament_id)
+    respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'm_l_s',:partial => "league_knockout_selected"
+          end
+        }
+      end
+  end
+
   def selected_knockout_players
     @tournament = Tournament.find(params[:id])
     if @tournament.knockout_selected.blank?

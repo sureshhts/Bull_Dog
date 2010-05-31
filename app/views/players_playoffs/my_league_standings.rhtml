@@ -1,0 +1,32 @@
+<div>
+<h3>My League Standings</h3>
+</div>
+
+<div>
+<form action="/players_playoffs/my_league_standings" enctype="multipart/form-data" method="post">
+<table width="95%">
+
+<tr>
+<td>Select Tournament</td>
+<td>
+ <select name="tournament" id="tournament" >
+  <option value="0">Select Tournament</option>
+  <%  @tournaments.each do |t| %>
+   <option value="<%= t.id %>"><%= t.name %> </option>
+  <%  end %>
+ </select>
+  <%=observe_field "tournament",
+      :url => {:controller => 'players_playoffs', :action => 'my_league_standings'},
+      :on => 'change',
+      :with => "tournament"%>
+</td>
+</tr>
+<tr>
+  <td colspan="2">
+    <div id="mls">
+    </div>
+  </td>
+</tr>
+</table>
+</form>
+</div>

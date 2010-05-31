@@ -8,6 +8,8 @@ class AddKnockoutCutoffColumsToTournaments < ActiveRecord::Migration
 
     execute %Q{ ALTER TABLE `tournaments` ADD COLUMN `knockout_selected` ENUM('1','0') AFTER `knockout_count` }
 
+    execute %Q{ ALTER TABLE `tournament_players` MODIFY COLUMN `points` INT(11) UNSIGNED DEFAULT 0 }
+
   end
 
   def self.down

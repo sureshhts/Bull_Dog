@@ -50,7 +50,14 @@ for tournament in @summary
     Closed
     <% end %>
   </td>
-  <td valign="top" align="center"><a href="/tournaments/<%=tournament_next_action(tournament.id)%>/<%=tournament.id%>">View</a> </td>
+  <td valign="top" align="center">
+    <a href="/tournaments/<%=tournament_next_action(tournament.id)%>/<%=tournament.id%>">View</a> &nbsp;
+    <% if tournament.knockout_selected.to_s == "1" %>
+      <a href="/players_playoffs/selected_knockout_players/<%=tournament.id%>">Standings</a>
+    <% else %>
+      <a href="/players_playoffs/tournament_league_standings/<%=tournament.id%>">Standings</a>
+    <% end %>
+  </td>
  </tr>
 <%
 i+=1

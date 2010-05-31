@@ -21,7 +21,7 @@ class Tournament < ActiveRecord::Base
  end
 
  def self.tournament_summary
-   query = %Q{  select t.id, t.name, t.registration_starts, t.registration_ends, t.tournament_type, count(tp.tournament_id) as players
+   query = %Q{  select t.id, t.name, t.registration_starts, t.registration_ends, t.tournament_type, count(tp.tournament_id) as players, t.knockout_selected
                 from tournaments t
                 left outer join tournament_players tp on t.id = tp.tournament_id
                 group by t.id  }

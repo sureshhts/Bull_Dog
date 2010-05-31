@@ -12,8 +12,12 @@ protect_from_forgery :only => [:destroy]
 
   def playoff_tournament
     @tp = TournamentPlayer.find_by_sql("select * from tournament_players where tournament_id='#{params[:tournament]}' and user_id='#{session[:user_id]}'")[0]
-    @tp_division = @tp.tournament_division
-    @tp_division_schedules = @tp_division.tournament_division_league_schedules
+    if @tp != nil
+      if @tp.tournament_division_id != nil
+        @tp_division = @tp.tournament_division
+        @tp_division_schedules = @tp_division.tournament_division_league_schedules
+      end
+    end
     if request.xml_http_request?
       respond_to do |format|
         format.html
@@ -37,14 +41,16 @@ protect_from_forgery :only => [:destroy]
         break
       end
     end
-    stps = @selected_lsg.tournament_players
-    @opponent = nil
-    for stp in stps
-      if stp.id != @tp.id
-        @opponent = stp
+    if @selected_lsg != nil
+      stps = @selected_lsg.tournament_players
+      @opponent = nil
+      for stp in stps
+        if stp.id != @tp.id
+          @opponent = stp
+        end
       end
+      @opponent_profile = @opponent.user.account_profile
     end
-    @opponent_profile = @opponent.user.account_profile
     if request.xml_http_request?
       respond_to do |format|
         format.html
@@ -55,6 +61,46 @@ protect_from_forgery :only => [:destroy]
         }
       end
     end
+  end
+
+  def tournament_league_standings
+    @tournament = Tournament.find(params[:id])
+    @players = TournamentPlayer.tournament_players_league_standings(params[:id])
+    @selected = 0
+
+    if request.get?
+      @selected_percent, @selected = (@tournament.knockout_cutoff_percentage.blank?)? ["",0] : [@tournament.knockout_cutoff_percentage, @tournament.knockout_count.to_i]
+    elsif request.xml_http_request?
+      @selected = ((params[:percentage].to_f/100.to_f)*@players.length.to_f).ceil
+      @tournament.update_attributes(:knockout_cutoff_percentage => params[:percentage], :knockout_count => @selected)
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'league_standings',:partial => "league_players"
+          end
+        }
+      end
+    end
+  end
+
+  def selected_knockout_players
+    @tournament = Tournament.find(params[:id])
+    if @tournament.knockout_selected.blank?
+      @tournament.update_attributes(:knockout_selected => '1')
+      @players = TournamentPlayer.tournament_players_league_standings(params[:id])
+      selected = @tournament.knockout_count.to_i
+      i = 1
+      for player in @players
+        if i <= selected
+          TournamentPlayer.find(player.id).update_attributes(:knockout => '1')
+        else
+          TournamentPlayer.find(player.id).update_attributes(:knockout => '0')
+        end
+        i += 1
+      end
+    end
+    @players = TournamentPlayer.tournament_players_league_standings(params[:id])
   end
 
   def division_playoff_scores

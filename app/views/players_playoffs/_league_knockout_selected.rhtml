@@ -1,0 +1,58 @@
+<style>
+ .oddrow
+{
+  background: #ffbd73;
+}
+
+.evenrow
+{
+  background: #ffe0be;
+}
+
+</style>
+<table width="100%" cellpadding="3" cellspacing="0">
+  <thead>
+    <tr bgcolor="#f38001">
+      <th>
+        <span>#</span>
+      </th>
+      <th>
+        <span>Name</span>
+      </th>
+      <th>
+        <span>Points</span>
+      </th>
+      <th>
+        <span>Availability</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <%
+      i = 1
+      for player in @players
+    %>
+    <tr class="<%= cycle('oddrow', 'evenrow') %>">
+      <td>
+       <%= i %>
+      </td>
+      <td>
+       <%= player.name %>
+      </td>
+      <td align="center">
+       <%= player.points %>
+      </td>
+      <td align="center">
+        <% if player.knockout.to_s == "1" %>
+        <input TYPE="checkbox" NAME="<%= player.id %>" VALUE="<%= player.knockout %>" CHECKED disabled />
+        <% else %>
+        <input TYPE="checkbox" NAME="<%= player.id %>" VALUE="<%= player.knockout %>" disabled />
+        <% end %>
+      </td>
+    </tr>
+    <%
+    i += 1
+    end
+    %>
+  </tbody>
+</table>

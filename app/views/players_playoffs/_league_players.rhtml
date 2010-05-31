@@ -1,0 +1,42 @@
+<table width="100%" cellpadding="3" cellspacing="0">
+  <thead>
+    <tr bgcolor="#f38001">
+      <th>
+        <span>#</span>
+      </th>
+      <th>
+        <span>Name</span>
+      </th>
+      <th>
+        <span>Points</span>
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%
+      i = 1
+      for player in @players
+    %>
+    <tr class="<%= cycle('oddrow', 'evenrow') %>">
+      <td>
+       <%= i %>
+      </td>
+      <td>
+       <%= player.name %>
+      </td>
+      <td>
+       <%= player.points %>
+      </td>
+      <td>
+        <% if i <= @selected %>
+        <img src="/images/check_green.gif" />
+        <% end %>
+      </td>
+    </tr>
+    <%
+    i += 1
+    end
+    %>
+  </tbody>
+</table>

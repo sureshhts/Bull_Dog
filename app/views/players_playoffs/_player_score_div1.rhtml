@@ -1,4 +1,11 @@
 <table width="100%">
+<% if @tp.blank? %>
+  <tr>
+    <td>You have not registered for this tournament.</td>
+  </tr>
+<% elsif @tp.tournament_division_id == nil %>
+  <td>The tournament has not yet started.</td>
+<% else %>
 <tr>
 <td>Select Week: </td>
 <td>
@@ -20,7 +27,7 @@
     </div>
   </td>
 </tr>
-
+<% end %>
 
 
 

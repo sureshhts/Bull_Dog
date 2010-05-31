@@ -1,0 +1,11 @@
+<% if @tp.blank? %>
+You have not registered for this Tournament.
+<% else %>
+<% if @tournament.knockout_selected.blank? %>
+<%= render :partial => "league_players" %>
+<% else %>
+<div id="m_l_s">
+<%= render :partial => "league_knockout_selected" %>
+</div>
+<% end %>
+<% end %>

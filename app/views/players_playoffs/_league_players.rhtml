@@ -16,6 +16,7 @@
   <tbody>
     <%
       i = 1
+      @selected = (@selected.blank?)? 0 : @selected
       for player in @players
     %>
     <tr class="<%= cycle('oddrow', 'evenrow') %>">

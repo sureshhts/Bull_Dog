@@ -17,250 +17,261 @@ body {
 <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
 <script src="/javascripts/tooltip.js" type="text/javascript"></script>
 <link href="/stylesheets/tooltip.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+<!--
+.style2 {font-size: 18px}
+-->
+</style>
+<style type="text/css">
+.slideshow { height: 120px; width: 170px; margin: auto }
+
+</style>
+<!-- include jQuery library -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+
+<!-- include Cycle plugin -->
+<script type="text/javascript" src="http://cloud.github.com/downloads/malsup/cycle/jquery.cycle.all.2.74.js"></script>
+
+<!--  initialize the slideshow when the DOM is ready -->
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.slideshow').cycle({
+		fx: 'turnDown' // choose your transition type, ex: fade, scrollUp, shuffle, etc...
+	});
+});
+</script>
 </head>
 
 <body>
-<table width="987" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+<table width="1000px"  border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr >
+    <td colspan="3" background="/images/top_bg.jpg"><table width="950" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
-        <td width="17%"><img src="/images/logo.jpg" width="171" height="135"></td>
-        <td width="63%">&nbsp;</td>
-        <td width="20%" align="right"><a href="/users/new"><img src="/images/register_img.jpg" width="259" height="135"></a></td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td height="34" background="/images/menu_bg.jpg"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td width="1%">&nbsp;</td>
-        <td width="98%"><a href="/users/home" class="main_link">Home</a> <span class="main_link">|</span> <a href="#" class="main_link">My Info</a> <span class="main_link">|</span> <a href="#" class="main_link">Registration</a> <span class="main_link">|</span> <a href="#" class="main_link">Report Scores</a> <span class="main_link">|</span> <a href="#" class="main_link">Standings</a> <span class="main_link">|</span> <a href="#" class="main_link">Playoffs</a> <span class="main_link">|</span> <a href="#" class="main_link">Verification</a> <span class="main_link">|</span> <a href="#" class="main_link">Contact Us</a></td>
-        <td width="1%">&nbsp;</td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td height="5"></td>
-  </tr>
-  <tr>
-    <td>
-   
-    <table width="100%"  border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td width="720"><img src="/images/banner.jpg" width="720" height="204"></td>
-        <td width="7">&nbsp;</td>
-        <td width="259" valign="top" background="/images/login_bg.jpg"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+        <td width="116"><img src="/images/logo.png" width="168" height="194"></td>
+        <td width="834"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td width="4%" height="34">&nbsp;</td>
-            <td width="92%" class="red_text2">Members Log In </td>
-            <td width="4%">&nbsp;</td>
-          </tr>
-          <tr>
-            <td height="1"></td>
-            <td height="1" bgcolor="#000000"></td>
-            <td height="1"></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>
-            <% form_tag session_path do -%>
-            <table width="100%"  border="0" cellspacing="2" cellpadding="0">
-              <tr>
-                <td collspan="2" height="1"></td>
-              </tr>
-             
-              <tr>
-                <td width="35%" align="right" class="black_text">Userid</td>
-                <td width="65%">
-                  <%= text_field_tag 'login', @login %>
-                </form></td>
-              </tr>
-              <tr>
-                <td align="right" class="black_text">Password</td>
-                <td>
-                 <%= password_field_tag 'password', nil %>
-                </td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>
-                  <%= check_box_tag 'remember_me', '1', @remember_me %>
-                  <span class="text">Remember  me</span>              
-                </td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td><a href="#" class="content_red_text">Forgot your password?</a></td>
-              </tr>
-              <tr align="center">
-                <td height="37" colspan="2">
-                  <p><%= submit_tag 'Log in', :class => 'login_button' %></p>
-                </td>
+            <td width="479" align="right"><img src="/images/wherewinning_text.png" width="300" height="87"></td>
+            <td width="25">&nbsp;</td>
+            <td width="278" height="182" background="/images/login_bg.png" style="background-repeat:no-repeat;">
+              <% form_tag session_path do -%>
+              <table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="4%" height="34">&nbsp;</td>
+                  <td width="92%" class="white_text2">Members Log In </td>
+                  <td width="4%">&nbsp;</td>
                 </tr>
-            </table>
-           <%end%>
-            </td>
-            <td>&nbsp;</td>
+                <tr>
+                  <td height="1"></td>
+                  <td height="1" bgcolor="#ffffff"></td>
+                  <td height="1"></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><table width="100%"  border="0" cellspacing="1" cellpadding="0">
+                      <tr>
+                        <td height="10" colspan="2"></td>
+                        </tr>
+                      <tr>
+                        <td width="35%" align="right" class="black_text">UserId:</td>
+                        <td width="65%">
+                            <%= text_field_tag 'login', @login, :size => '22' %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right" class="black_text">Password:</td>
+                        <td>
+                            <%= password_field_tag 'password', nil, :size => '22'  %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <input type="checkbox" name="checkbox" value="checkbox">
+                            <span class="text">Remember me</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td><a href="#" class="content_red_text">Forgot your password?</a></td>
+                      </tr>
+                      <tr align="center">
+                        <td height="30" colspan="2">
+                           <%= submit_tag 'Log in', :class => 'login_button' %>
+                        </td>
+                      </tr>
+                  </table>
+                   <%end%>
+                  </td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>              </td>
           </tr>
         </table></td>
       </tr>
+      <tr>
+      <td> &nbsp;</td>
+      <td height="35" align="right"><a href="#" class="main_link_highlight">Home</a> <span class="main_link">|</span>  <a href="/about_us" class="main_link">About Us</a> <span class="main_link">|</span> <a href="/contact_us" class="main_link">Contact Us</a></td>
+
+      </tr>
     </table></td>
   </tr>
   <tr>
-    <td height="5"></td>
-  </tr>
-  <tr>
-    <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+    <td width="26">&nbsp;</td>
+    
+    <td width="948"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width="73%" rowspan="2" valign="top"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+        <td width="56%">&nbsp;</td>
+        <td width="1%">&nbsp;</td>
+        <td width="43%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td height="26" align="left" class="headertext">Welcome to Bulldog Tennis League</td>
-          </tr>
-          <tr>
-            <td height="2" bgcolor="#f3f3f3"></td>
-          </tr>
-          <tr>
-            <td class="content_text"><br>
-              Bulldog Tennis Academy (BTA) is a professionally run tennis training academy, whose goal is to help players achieve a balance in their tennis training and their daily activities. With a limited number of players during each session, BTA will personalize each player's program of training to create successful outcomes.
-              <p>BTA was founded on August 12th 1996 with the mission to foster the spirit of tennis among the Indian youth. The Coaches at BTA have over 10 years of experience in playing competetive National and International tournaments, which gives them the experience to coach and train young blood physically and mentally for the game.</p></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
+            <td><img src="/images/bulldog_text_header.jpg" width="533" height="34"></td>
           </tr>
           <tr>
             <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td width="230" height="206" valign="top" background="/images/box_bg.jpg"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td width="5%" height="30">&nbsp;</td>
-                    <td width="90%" valign="bottom" class="graytext_big4">Upcoming Events</td>
-                    <td width="5%">&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td height="10" colspan="3"></td>
-                    </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td><img src="/images/event_img.jpg" width="207" height="70"></td>
-                    <td>&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td height="10" colspan="3"></td>
-                    </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td valign="top" class="content_text1"><span class="red_text1">NewCentre:</span>KanakapuraRoad,Behind Metro. New Registration:Coaching Kids and Adults. Southern Tennis League- Weekend competetive Tennis for Adults.</td>
-                    <td>&nbsp;</td>
-                  </tr>
-                </table></td>
-                <td>&nbsp;</td>
-                 <td width="230" height="206" valign="top" background="/images/box_bg.jpg"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
-                   <tr>
-                     <td width="5%" height="30">&nbsp;</td>
-                     <td width="90%" valign="bottom" class="graytext_big4">Fitness Tips by Sam</td>
-                     <td width="5%">&nbsp;</td>
-                   </tr>
-                   <tr>
-                     <td height="10" colspan="3"></td>
-                   </tr>
-                   <tr>
-                     <td>&nbsp;</td>
-                     <td><img src="/images/fitness_img.jpg" width="207" height="70"></td>
-                     <td>&nbsp;</td>
-                   </tr>
-                   <tr>
-                     <td height="10" colspan="3"></td>
-                   </tr>
-                   <tr>
-                     <td>&nbsp;</td>
-                     <td valign="top" class="content_text1">In addition to world class tennis instruction, we also integrate daily fitness training into the club.</td>
-                     <td>&nbsp;</td>
-                   </tr>
-                 </table></td>
-                <td>&nbsp;</td>
-                 <td width="230" height="206" valign="top" background="/images/box_bg.jpg"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
-                   <tr>
-                     <td width="5%" height="30">&nbsp;</td>
-                     <td width="90%" valign="bottom" class="graytext_big4">News/Articles</td>
-                     <td width="5%">&nbsp;</td>
-                   </tr>
-                   <tr>
-                     <td height="10" colspan="3"></td>
-                   </tr>
-                   <tr>
-                     <td>&nbsp;</td>
-                     <td><img src="/images/news_img.jpg" width="207" height="70"></td>
-                     <td>&nbsp;</td>
-                   </tr>
-                   <tr>
-                     <td height="10" colspan="3"></td>
-                   </tr>
-                   <tr>
-                     <td>&nbsp;</td>
-                     <td class="content_text1">This year's <span class="red_text1">NCAA men's and women's</span> tennis will be held at the Taube Tennis Center November 18-29. </td>
-                     <td>&nbsp;</td>
-                   </tr>
-                 </table></td>
+                <td width="24%"><img src="/images/tennis_img.jpg" width="131" height="102"></td>
+                <td width="76%"><span class="content_text"> Bulldog Tennis Academy (BTA) is a professionally run tennis training academy, whose goal is to help players achieve a balance in their tennis training and their daily activities. With a limited number of players during each session, BTA will personalize each player's program of training to create successful outcomes. </span></td>
               </tr>
-            </table></td>
-          </tr>
-        </table></td>
-        <td width="1%">&nbsp;</td>
-        <td width="26%" rowspan="2" valign="top"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td height="177" bgcolor="#f3f3f3"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td width="4%" height="20">&nbsp;</td>
-                <td width="92%" align="center" class="graytext_big4">Important League Dates</td>
-                <td width="4%">&nbsp;</td>
-              </tr>
-              <tr>
-                <td height="5" colspan="3"></td>
-                </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td align="center"><img src="/images/calander.jpg" width="201" height="142"></td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td height="8" colspan="3"></td>
-                </tr>
             </table></td>
           </tr>
           <tr>
             <td height="10"></td>
           </tr>
           <tr>
-            <td><img src="/images/ad1.jpg" width="259" height="204"></td>
+            <td style="border:2px solid #fb9f10;"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td height="120" align="center">
+                
+                <table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="85%" bgcolor="#adc20d" class="header">
+                    <div class="slideshow" style="width:300px;">
+                    <%@tournament.each do |t|%>
+                    
+                    <a href="/tournaments/index" style="text-decoration:none;margin-top:5px;color:white;"><%=h t.name %> : <%=h t.city.to_s.capitalize%><br/>
+                    Tournament Type : <% {"League" => 'L', "Knockout" => 'K'}.each_pair{|key,val|
+    	 								if val == t.tournament_type %>
+     									<%= key%>
+   									<% end 
+									}%> <br/> 
+								Tournament Date : <%= Time.at(t.tournament_starts).strftime("%d/%m/%Y") %> <br/>
+									<p  style="font-size:11px;"> Bulldog Tennis Academy (BTA) is a professionally run tennis training academy, whose goal is to help players achieve a balance.</p>
+                    </a>
+				   <%end%>
+				    </div>
+				    </td>
+                    <td width="15%"><div class="slideshow">
+              
+				<a href=""><img src="/images/tournament_img1.jpg" width="170" height="120" /></a>
+				<a href=""><img src="/images/tournament_img2.jpg" width="170" height="120" /></a>
+						
+	         </div></td>
+                  </tr>
+                </table>
+                
+                
+                
+                
+               
+                </td>
+              </tr>
+              <tr>
+                <td height="2" bgcolor="#fd9e10"></td>
+              </tr>
+              <tr>
+                <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="288" height="180" align="center"><img src="/images/ad1.jpg" width="288" height="144"></td>
+                    <td width="2" bgcolor="#fd9e0e"></td>
+                    <td width="231"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td align="center"><span class="graytext_big4">Important League Dates</span></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><img src="/images/calander.jpg" width="201" height="142"></td>
+                      </tr>
+                    </table></td>
+                  </tr>
+                </table></td>
+              </tr>
+            </table></td>
+          </tr>
+          
+        </table></td>
+        <td>&nbsp;</td>
+        <td valign="top"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="395" height="128" align="center" background="/images/bg1.jpg"><a href="/users/new"><img src="/images/new_register.jpg" width="224" height="127" border="0"></a></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #cfcf9d; background-color:#fbfae5;"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="3%">&nbsp;</td>
+                <td width="34%" height="100"><img src="/images/events_img.gif" width="137" height="68"></td>
+                <td width="2%">&nbsp;</td>
+                <td width="58%"><span class="red_text1">Upcoming Events</span><br>
+                  <span class="content_text_green">NewCentre:KanakapuraRoad,Behind Metro. New Registration:Coaching Kids and Adults. Southern Tennis League- Weekend competetive Tennis for Adults.</span></td>
+                <td width="3%">&nbsp;</td>
+              </tr>
+              <tr>
+                <td height="1"></td>
+                <td height="1" colspan="3" bgcolor="#cece9c"></td>
+                <td height="1"></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td height="100"><img src="/images/news_article_img.gif" width="137" height="67"></td>
+                <td>&nbsp;</td>
+                <td><span class="red_text1">News/Articles</span><br>
+                  <span class="content_text_green">This year's NCAA men's and women's tennis will be held at the Taube Tennis Center November 18-29.</span></td>
+                <td>&nbsp;</td>
+              </tr>
+               <tr>
+                <td height="1"></td>
+                <td height="1" colspan="3" bgcolor="#cece9c"></td>
+                <td height="1"></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td height="100"><img src="/images/sam_img.gif" width="137" height="67"></td>
+                <td>&nbsp;</td>
+                <td><span class="red_text1">Fitness Tips by Sam</span><br>
+                  <span class="content_text_green">In addition to world class tennis instruction, we also integrate daily fitness training into the club.</span></td>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
           </tr>
         </table></td>
       </tr>
       <tr>
         <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+    <td width="26">&nbsp;</td>
+  </tr>
+  <tr>
+    <td bgcolor="#666666">&nbsp;</td>
+    <td height="41" bgcolor="#666666"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="10" colspan="2"></td>
+      </tr>
+      <tr>
+       <td width="64%" align="left"> <a href="/home" class="footer_link">Home</a> <span class="footer_link">|</span>  <a href="/about_us" class="footer_link">About Us</a> <span class="footer_link">|</span> <a href="/contact_us" class="footer_link">Contact Us</a></td>
+        <td width="32%" align="center" class="copyright_text">Copyright &copy; 2009, Bulldog Tennis League. </td>
         </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td height="4" bgcolor="#929191"></td>
-  </tr>
-  <tr>
-    <td><table width="100%"  border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td height="10" colspan="4"></td>
-      </tr>
-      <tr>
-        <td width="2%">&nbsp;</td>
-        <td width="64%" align="left"><a href="#" class="footer_link">Home</a> <span class="footer_link">|</span> <a href="#" class="footer_link">My Info</a> <span class="footer_link">|</span> <a href="#" class="footer_link">Registration</a> <span class="footer_link">|</span> <a href="#" class="footer_link">Report Scores</a> <span class="footer_link">|</span> <a href="#" class="footer_link">Standings</a> <span class="footer_link">|</span> <a href="#" class="footer_link">Playoffs</a> <span class="footer_link">|</span> <a href="#" class="footer_link">Verification</a> <span class="footer_link">|</span> <a href="#" class="footer_link">Contact Us</a></td>
-        <td width="32%" align="right" class="copyright_text">Copyright &copy; 2009, Bulldog Tennis League. </td>
-        <td width="2%">&nbsp;</td>
-      </tr>
-      <tr>
-        <td height="10" colspan="4"></td>
+        <td height="10" colspan="2"></td>
       </tr>
     </table></td>
+    <td bgcolor="#666666">&nbsp;</td>
   </tr>
 </table>
 </body>

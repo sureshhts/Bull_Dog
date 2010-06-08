@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   
-  layout 'default'
+ 
   include AuthenticatedSystem
   
    # render new.rhtml
@@ -9,6 +9,15 @@ class UsersController < ApplicationController
     @user = User.new
     
      render :layout => 'default'
+  end
+  
+  def about_us
+  
+   
+  end
+  
+  def contact_us
+  
   end
  
   def create
@@ -36,7 +45,8 @@ class UsersController < ApplicationController
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
       redirect_to :action => 'new'
     end
-     
+    
+    render :layout => 'default' 
   end
   
   def forgot_password
@@ -94,7 +104,7 @@ class UsersController < ApplicationController
 	   render :action => 'new'
 	end
   
-   
+   render :layout => 'default'
   end
   
   
@@ -144,10 +154,12 @@ class UsersController < ApplicationController
 			render :action => 'new'
 		end
 	end
+	
+	render :layout => 'default'
   end
   
   def home
-  	
+  	@tournament = Tournament.find(:all)
   	render :layout => 'home'
   end
   

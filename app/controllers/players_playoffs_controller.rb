@@ -1,4 +1,6 @@
+require 'tree'
 class PlayersPlayoffsController < ApplicationController
+end
 
 layout 'player'
 protect_from_forgery :only => [:destroy]
@@ -218,5 +220,78 @@ protect_from_forgery :only => [:destroy]
    else
             
    end   
-  end  
+  end
+
+  def create_knockout_draw
+    @tournament = Tournament.find(params[:id])
+    @tournament.update_attributes(:knockout_created => '1')
+    all_players = TournamentPlayer.tournament_players_league_standings(params[:id])
+    rank = 1
+    @ko_players = Hash.new
+    for player in all_players
+      @ko_players[rank.to_s] = player.id
+      rank += 1
+    end
+
+    pob = Bracket::PlayoffBracket.new(@ko_players.size)
+    pob.tournament_single_elimination_bracket
+    pob.bracket_players
+
+    pure, ko, n = pob.determine_pure_knockout_level
+    pob.levels = n-1
+    i = 0
+    (pob.levels).times do
+      level_name = "G:"
+      no_of_games_in_this_level = 2**i
+      j = 1
+      no_of_games_in_this_level.times do
+        ko_game = KnockoutGame.create(:tournament_id => @tournament.id)
+        pob.games.push("#{level_name}#{ko_game.id}")
+        j+=1
+      end
+      i += 1
+    end
+
+    pob.create_game_tree
+
+    leaves = Array.new
+    pob.root.each_leaf{|leaf|
+      leaves.push(leaf)
+    }
+
+    if pure
+      i = 0
+      for l in leaves
+        team = pob.teams[i]
+        l << Tree::TreeNode.new("#{team['player1']}", "Player1")
+        l << Tree::TreeNode.new("#{team['player2']}", "Player2")
+        i += 1
+      end
+    else
+      level_name = "G:"
+      i = 0
+      j = 1
+
+      for l in leaves
+        team = pob.teams[i]
+        l << Tree::TreeNode.new("#{team['player1']}", "Player1")
+        if !team["player2"].blank?
+          l << Tree::TreeNode.new("#{team['player2']}", "Player2")
+        elsif team["player2"].blank?
+          ko_game = KnockoutGame.create(:tournament_id => @tournament.id)
+          sub_node = l << Tree::TreeNode.new("#{level_name}#{ko_game.id}", "game")
+          j += 1
+          i += 1
+          team = pob.teams[i]
+          sub_node << Tree::TreeNode.new("#{team['player1']}", "Player1")
+          sub_node << Tree::TreeNode.new("#{team['player2']}", "Player2")
+        end
+        i += 1
+      end
+    end
+    
+    pob.root.each{|game|
+        puts node
+      }
+  end
 end

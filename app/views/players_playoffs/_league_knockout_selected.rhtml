@@ -59,5 +59,14 @@
     i += 1
     end
     %>
+    <% if isAdmin?(session[:user_id]) && @tournament.knockout_created.to_s == "0" %>
+    <tr><td colspan="4" align="right">
+        <input type="button" name="Create Knockout Draw" value="Create Knockout Draw" onclick="window.location='/players_playoffs/create_knockout_draw/<%= @tournament.id %>'"/>
+      </td></tr>
+    <% elsif isAdmin?(session[:user_id]) && @tournament.knockout_created.to_s == "1" %>
+    <tr><td colspan="4" align="right">
+        <input type="button" name="View Knockout Draw" value="View Knockout Draw" onclick="window.location='/players_playoffs/view_knockout_draw/<%= @tournament.id %>'"/>
+      </td></tr>
+    <% end %>
   </tbody>
 </table>

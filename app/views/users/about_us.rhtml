@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Bulldog Tennis League</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+-->
+</style>
+<link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="1000px"  border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr >
+    <td colspan="3" background="/images/top_bg.jpg"><table width="950" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="116"><img src="/images/logo.png" width="168" height="194"></td>
+        <td width="834"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="479" align="right"><img src="/images/wherewinning_text.png" width="300" height="87"></td>
+            <td width="25">&nbsp;</td>
+            <td width="278" height="182" background="/images/login_bg.png">
+             
+              <% form_tag session_path do -%>
+              <table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="4%" height="34">&nbsp;</td>
+                  <td width="92%" class="white_text2">Members Log In </td>
+                  <td width="4%">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td height="1"></td>
+                  <td height="1" bgcolor="#ffffff"></td>
+                  <td height="1"></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><table width="100%"  border="0" cellspacing="1" cellpadding="0">
+                      <tr>
+                        <td height="10" colspan="2"></td>
+                        </tr>
+                      <tr>
+                        <td width="35%" align="right" class="black_text">UserId:</td>
+                        <td width="65%">
+                             <%= text_field_tag 'login', @login, :size => '22' %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right" class="black_text">Password:</td>
+                        <td>
+                            <%= password_field_tag 'password', nil, :size => '22'  %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <input type="checkbox" name="checkbox" value="checkbox">
+                            <span class="text">Remember me</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td><a href="#" class="content_red_text">Forgot your password?</a></td>
+                      </tr>
+                      <tr align="center">
+                        <td height="30" colspan="2">
+                           <%= submit_tag 'Log in', :class => 'login_button' %>
+                        </td>
+                      </tr>
+                  </table></td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table> <%end%>    </td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td height="35" align="right"><a href="/home" class="main_link">Home</a> <span class="main_link">|</span> <a href="/about_us" class="main_link">About US</a> <span class="main_link">|</span> <a href="/contact_us" class="main_link">Contact Us</a> </td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td width="26">&nbsp;</td>
+    <td width="948"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="71%">&nbsp;</td>
+        <td width="2%">&nbsp;</td>
+        <td width="27%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="top"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><img src="/images/about_header.jpg" width="533" height="34"></td>
+          </tr>
+          <tr>
+            <td height="10"></td>
+          </tr>
+          <tr>
+            <td height="200" class="content_text" ><p><strong>Bulldog Tennis Academy (BTA)</strong> is a professionally run tennis training academy, whose goal is to help players achieve a balance in their tennis training and their daily activities. With a limited number of players during each session, BTA will personalize each player's program of training to create successful outcomes. </p>
+                <p>BTA was founded by Head Coach, Ronnie Sehgal , whose mission is to foster the spirit of tennis among the Indian youth. Ronnie has over 10 years of experience in playing competetive National and International tournaments, which gives him the experience to coach and train young blood physically and mentally for the game. </p>
+                <p>BTA has qualified coaches to help step up the challenge for players in the academy.BTA believes in associating with experienced players to train the youngsters. </p>
+                <p>At BTA we belive that its never too young never too late to enjoy the game of tennis; our trainees are between the ages of 4 and 40 years. </p>
+                <p>BTA is a member/affiliate of the <br>
+                    <strong><img src="/images/arrow1.jpg" width="9" height="6">Karnataka State Lawn Tennis Asociation (KSLTA) , <br>
+                    <img src="/images/arrow1.jpg" width="9" height="6">All India Tennis Association (AITA) , <br>
+                    <img src="/images/arrow1.jpg" width="9" height="6">United Stated Tennis Association (USTA) , <br>
+                    <img src="/images/arrow1.jpg" width="9" height="6">United States Tennis Professionals Registry (USTPR) , <br>
+                    <img src="/images/arrow1.jpg" width="9" height="6">Proffesional Tennis Registry(PTR)</strong> <br>
+        and several other tennis governing bodies. </p>
+                <p><strong>TEAM </strong></p>
+                <p>Each of our coaches has National Level match competition exposure and are ideal hitting partners for preparing for matches.This is the minimum requirement to train the BTA players,so they can lead the way to the younger players success. </p>
+                <p>BTA focuses on bringing out the best in our players.Installing the values of the 3D's-Determination,Descipline &amp; Dedication,before they can compete with others,they have to first compete with themselves. </p>
+                <p><strong>BULLDOG TENNIS ACADEMY: WHERE WINNING IS THE ONLY THING. </strong></p>
+                <p><strong>HEAD COACH : Ronnie Sehgal </strong></p>
+                <p>While graduating from the Florida State University Ronnie has competed in the NCAA University tennis leagues all over the US, including the prestigious NCAA Rolex Championships. </p>
+                <p>Ronnie is a Heath Consultant by profession, throught which he is able to educate his players about the right kind of food and nutrition required for an above average player physique. </p>
+                <p><strong><img src="/images/arrow1.jpg" width="9" height="6">Supreet:Tennis Pro </strong></p>
+                <p><strong><img src="/images/arrow1.jpg" width="9" height="6">Ravi:Tennis Pro <br>
+                      <br>
+                      <img src="/images/arrow1.jpg" width="9" height="6">Vijay:Tennis Pro </strong></p>
+                <p><strong><img src="/images/arrow1.jpg" width="9" height="6">Mithun:Tennis Pro </strong></p>
+                <p><strong><img src="/images/arrow1.jpg" width="9" height="6">Edwin:Tennis Pro </strong></p>
+                <p><strong><img src="/images/arrow1.jpg" width="9" height="6">Sidharth:Tennis Pro </strong></p>
+                <p><strong><img src="/images/arrow1.jpg" width="9" height="6">Suraj:Tennis Pro </strong></p></td>
+          </tr>
+        </table></td>
+        <td>&nbsp;</td>
+        <td valign="top"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="395" height="128" align="center" background="/images/bg1.jpg"><a href="/users/new"><img src="/images/new_register.jpg" width="224" height="127"></a></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><img src="/images/ad2.jpg" width="252" height="502"></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><img src="/images/ad3.jpg" width="252" height="140"></td>
+          </tr>
+        </table>
+          <blockquote>&nbsp;</blockquote></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+    <td width="26">&nbsp;</td>
+  </tr>
+  <tr>
+    <td bgcolor="#666666">&nbsp;</td>
+    <td height="41" bgcolor="#666666"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="10" colspan="2"></td>
+      </tr>
+      <tr>
+        <td width="64%" align="left"><a href="/home" class="footer_link">Home</a> <span class="footer_link">|</span>  <a href="/about_us" class="footer_link">About Us</a> <span class="footer_link">|</span> <a href="/contact_us" class="footer_link">Contact Us</a></td>
+        <td width="32%" align="right" class="copyright_text">Copyright &copy; 2009, Bulldog Tennis League. </td>
+        </tr>
+      <tr>
+        <td height="10" colspan="2"></td>
+      </tr>
+    </table></td>
+    <td bgcolor="#666666">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

@@ -59,6 +59,8 @@ class CreateKnockoutTables < ActiveRecord::Migration
               ENGINE = InnoDB
               }
     execute %Q{ ALTER TABLE `tournaments` ADD COLUMN `knockout_created` ENUM('1','0') NOT NULL DEFAULT 0 AFTER `knockout_selected`}
+
+    execute %Q{ ALTER TABLE `knockout_games` ADD COLUMN `round` INT(11) UNSIGNED AFTER `parent_game_id`}
   end
 
   def self.down

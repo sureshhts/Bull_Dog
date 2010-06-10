@@ -1,6 +1,5 @@
 require 'tree'
 class PlayersPlayoffsController < ApplicationController
-end
 
 layout 'player'
 protect_from_forgery :only => [:destroy]
@@ -229,8 +228,10 @@ protect_from_forgery :only => [:destroy]
     rank = 1
     @ko_players = Hash.new
     for player in all_players
-      @ko_players[rank.to_s] = player.id
-      rank += 1
+      if player.knockout.to_s == "1"
+        @ko_players[rank.to_s] = player.id
+        rank += 1
+      end
     end
 
     pob = Bracket::PlayoffBracket.new(@ko_players.size)
@@ -245,7 +246,7 @@ protect_from_forgery :only => [:destroy]
       no_of_games_in_this_level = 2**i
       j = 1
       no_of_games_in_this_level.times do
-        ko_game = KnockoutGame.create(:tournament_id => @tournament.id)
+        ko_game = KnockoutGame.create(:tournament_id => @tournament.id, :round => i+1)
         pob.games.push("#{level_name}#{ko_game.id}")
         j+=1
       end
@@ -263,35 +264,68 @@ protect_from_forgery :only => [:destroy]
       i = 0
       for l in leaves
         team = pob.teams[i]
-        l << Tree::TreeNode.new("#{team['player1']}", "Player1")
-        l << Tree::TreeNode.new("#{team['player2']}", "Player2")
+        l << Tree::TreeNode.new("#{@ko_players[team['player1']]}", "player")
+        l << Tree::TreeNode.new("#{@ko_players[team['player2']]}", "player")
         i += 1
       end
     else
+      level = i+1
       level_name = "G:"
       i = 0
       j = 1
 
       for l in leaves
         team = pob.teams[i]
-        l << Tree::TreeNode.new("#{team['player1']}", "Player1")
+        l << Tree::TreeNode.new("#{@ko_players[team['player1']]}", "player")
         if !team["player2"].blank?
-          l << Tree::TreeNode.new("#{team['player2']}", "Player2")
+          l << Tree::TreeNode.new("#{@ko_players[team['player2']]}", "player")
         elsif team["player2"].blank?
-          ko_game = KnockoutGame.create(:tournament_id => @tournament.id)
+          ko_game = KnockoutGame.create(:tournament_id => @tournament.id, :round => level)
           sub_node = l << Tree::TreeNode.new("#{level_name}#{ko_game.id}", "game")
           j += 1
           i += 1
           team = pob.teams[i]
-          sub_node << Tree::TreeNode.new("#{team['player1']}", "Player1")
-          sub_node << Tree::TreeNode.new("#{team['player2']}", "Player2")
+          sub_node << Tree::TreeNode.new("#{@ko_players[team['player1']]}", "player")
+          sub_node << Tree::TreeNode.new("#{@ko_players[team['player2']]}", "player")
         end
         i += 1
       end
     end
-    
+
     pob.root.each{|game|
-        puts node
-      }
+      if game.content == "game"
+        ko_game_id = game.name.split(":")[1]
+        ko_game = KnockoutGame.find(ko_game_id)
+        if game.parent != nil
+          ko_game_parent_id = game.parent.name.split(":")[1]
+          ko_game.update_attributes(:parent_game_id => ko_game_parent_id)
+        end
+      elsif game.content == "player"
+        ko_game_player_id = game.name
+        ko_game_id = game.parent.name.split(":")[1]
+        KnockoutGamePlayer.create(:knockout_game_id => ko_game_id, :tournament_player_id => ko_game_player_id)
+      end
+    }
+    
   end
+
+  def view_knockout_draw
+    @tournament = Tournament.find(params[:id])
+    all_players = TournamentPlayer.tournament_players_league_standings(params[:id])
+    rank = 1
+    @ko_players = Hash.new
+    for player in all_players
+      if player.knockout.to_s == "1"
+        @ko_players[rank.to_s] = player.id
+        rank += 1
+      end
+    end
+
+    @pob = Bracket::PlayoffBracket.new(@ko_players.size)
+    @pob.tournament_single_elimination_bracket
+    @pob.bracket_players
+
+    @level_ko_games = KnockoutGame.level_knockout_games(@tournament.id, @pob.rounds - 1)
+  end
+  
 end

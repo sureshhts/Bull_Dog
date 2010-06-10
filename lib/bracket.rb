@@ -8,6 +8,7 @@ module Bracket
       @rounds = 0
       @players = Array.new
       @teams = Array.new
+      @games = Array.new
     end
 
     def knockout_brackets
@@ -25,30 +26,15 @@ module Bracket
       return nil
     end
 
-    def create_game_tree
-      pure, ko, n = determine_pure_knockout_level
-      @games = Array.new
-      @levels = n-1
-      i = 0
-      (@levels).times do
-        level_name = "L#{i}"
-        no_of_games_in_this_level = 2**i
-        j = 1
-        no_of_games_in_this_level.times do
-          @games.push("#{level_name}#{j}")
-          j+=1
-        end
-        i += 1
-      end
-
+    def create_game_tree      
       @games = @games.reverse
-      @root = Tree::TreeNode.new("#{@games.pop}", "")
+      @root = Tree::TreeNode.new("#{@games.pop}", "game")
 
       (@levels-1).times do
         add_childs
       end
 
-      complete_the_knockout_tree
+#      complete_the_knockout_tree
       return nil
     end
 
@@ -75,45 +61,45 @@ module Bracket
       return pure, prev, n
     end
 
-    def complete_the_knockout_tree
-      pure, ko, n = determine_pure_knockout_level
-
-      leaves = Array.new
-      @root.each_leaf{|leaf|
-        leaves.push(leaf)
-      }
-      
-      if pure        
-        i = 0
-        for l in leaves
-          team = @teams[i]
-          l << Tree::TreeNode.new("#{team['player1']}", "Player1")
-          l << Tree::TreeNode.new("#{team['player2']}", "Player2")
-          i += 1
-        end
-      else
-        level_name = "L#{@rounds - 2}"
-        i = 0
-        j = 1
-        
-        for l in leaves
-          team = @teams[i]
-          l << Tree::TreeNode.new("#{team['player1']}", "Player1")
-          if !team["player2"].blank?            
-            l << Tree::TreeNode.new("#{team['player2']}", "Player2")
-          elsif team["player2"].blank?
-            sub_node = l << Tree::TreeNode.new("#{level_name}#{j}", "")
-            j += 1
-            i += 1
-            team = @teams[i]
-            sub_node << Tree::TreeNode.new("#{team['player1']}", "Player1")
-            sub_node << Tree::TreeNode.new("#{team['player2']}", "Player2")
-          end
-          i += 1
-        end
-      end
-      return nil
-    end
+#    def complete_the_knockout_tree
+#      pure, ko, n = determine_pure_knockout_level
+#
+#      leaves = Array.new
+#      @root.each_leaf{|leaf|
+#        leaves.push(leaf)
+#      }
+#
+#      if pure
+#        i = 0
+#        for l in leaves
+#          team = @teams[i]
+#          l << Tree::TreeNode.new("#{team['player1']}", "Player1")
+#          l << Tree::TreeNode.new("#{team['player2']}", "Player2")
+#          i += 1
+#        end
+#      else
+#        level_name = "L#{@rounds - 2}"
+#        i = 0
+#        j = 1
+#
+#        for l in leaves
+#          team = @teams[i]
+#          l << Tree::TreeNode.new("#{team['player1']}", "Player1")
+#          if !team["player2"].blank?
+#            l << Tree::TreeNode.new("#{team['player2']}", "Player2")
+#          elsif team["player2"].blank?
+#            sub_node = l << Tree::TreeNode.new("#{level_name}#{j}", "")
+#            j += 1
+#            i += 1
+#            team = @teams[i]
+#            sub_node << Tree::TreeNode.new("#{team['player1']}", "Player1")
+#            sub_node << Tree::TreeNode.new("#{team['player2']}", "Player2")
+#          end
+#          i += 1
+#        end
+#      end
+#      return nil
+#    end
 
     def add_childs
       leaves = Array.new
@@ -122,8 +108,8 @@ module Bracket
       }
 
       for l in leaves
-        l << Tree::TreeNode.new("#{@games.pop}", "")
-        l << Tree::TreeNode.new("#{@games.pop}", "")
+        l << Tree::TreeNode.new("#{@games.pop}", "game")
+        l << Tree::TreeNode.new("#{@games.pop}", "game")
       end
       return nil
     end

@@ -35,25 +35,36 @@
     
    if(document.forms[0].score_sets.value=='won3')  
    {    
-         
-	   if(document.forms[0].p1g3.value=='' && document.forms[0].p2g3.value=='')
-	   {
+      if(document.forms[0].p1g1.value=='' && document.forms[0].p2g1.value=='')
+      {
+	    alert("Enter the game");
+	    document.forms[0].p1g1.focus();
+	    return false;
+	  } 
+	  else if(document.forms[0].p1g2.value=='' && document.forms[0].p2g2.value=='')
+      {
+	    alert("Enter the game");
+	    document.forms[0].p1g1.focus();
+	    return false;
+	  } 
+	  else if(document.forms[0].p1g3.value=='' && document.forms[0].p2g3.value=='')
+	  {
 	    alert("Enter the 3rd game");
 	    document.forms[0].p1g3.focus();
 	    return false;
-	   }
-	   else if(document.forms[0].p1g1.value < document.forms[0].p2g1.value)
-	   {
+	  }
+	  else if(document.forms[0].p1g1.value < document.forms[0].p2g1.value)
+	  {
 	    alert("Enter correct winner game");
 	    document.forms[0].p1g1.focus();
 	    return false;
-	   }
-	   else if(document.forms[0].p1g2.value < document.forms[0].p2g2.value)
-	   {
+	  }
+	  else if(document.forms[0].p1g2.value < document.forms[0].p2g2.value)
+	  {
 	    alert("Enter correct winner game");
 	    document.forms[0].p1g2.focus();
 	    return false;
-	   }
+	  }
 	   else if(document.forms[0].p1g3.value < document.forms[0].p2g3.value)
 	   {
 	    alert("Enter correct winner game");
@@ -82,7 +93,15 @@
   }
   if(document.forms[0].score_sets.value=='won')  
   { 
-    if(document.forms[0].p1g2.value=='' && document.forms[0].p2g2.value=='')
+  
+    if(document.forms[0].p1g1.value=='' && document.forms[0].p2g1.value=='')
+      {
+	    alert("Enter the game");
+	    document.forms[0].p1g1.focus();
+	    return false;
+	  } 
+	  
+    else if(document.forms[0].p1g2.value=='' && document.forms[0].p2g2.value=='')
 	{
 	  alert("Enter the 2nd game");
 	  document.forms[0].p1g2.focus();
@@ -114,6 +133,7 @@
 </div>
 
 <div>
+
 <form action="/players_playoffs/playoff_scores" enctype="multipart/form-data" method="post">
 <table width="95%">
 

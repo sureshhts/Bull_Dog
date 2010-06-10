@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     
-     render :layout => 'default'
+     render :layout => 'registration'
   end
   
   def about_us
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
       redirect_to :action => 'new'
     end
     
-    render :layout => 'default' 
+   
   end
   
   def forgot_password
@@ -84,7 +84,7 @@ class UsersController < ApplicationController
   
   def profile
   
-    render :layout => 'default'
+    render :layout => 'registration'
   end
   
   def create_profile
@@ -104,7 +104,7 @@ class UsersController < ApplicationController
 	   render :action => 'new'
 	end
   
-   render :layout => 'default'
+   
   end
   
   
@@ -112,7 +112,7 @@ class UsersController < ApplicationController
     @facilties = Facility.find(:all)
     @level = PlayerLevel.find(:all)
   
-   render :layout => 'default'
+   render :layout => 'registration'
   end
   
   def create_playing_details
@@ -155,7 +155,7 @@ class UsersController < ApplicationController
 		end
 	end
 	
-	render :layout => 'default'
+	
   end
   
   def home

@@ -42,20 +42,22 @@ body {
                 </tr>
                 <tr>
                   <td>&nbsp;</td>
-                  <td><table width="100%"  border="0" cellspacing="1" cellpadding="0">
+                  <td>
+                   <% form_tag session_path do -%>
+                  <table width="100%"  border="0" cellspacing="1" cellpadding="0">
                       <tr>
                         <td height="10" colspan="2"></td>
                         </tr>
                       <tr>
                         <td width="35%" align="right" class="black_text">UserId:</td>
                         <td width="65%">
-                            <input type="text" name="textfield">
+                             <%= text_field_tag 'login', @login, :size => '22' %>
                         </td>
                       </tr>
                       <tr>
                         <td align="right" class="black_text">Password:</td>
                         <td>
-                            <input type="text" name="textfield2">
+                          <%= password_field_tag 'password', nil, :size => '22'  %>
                         </td>
                       </tr>
                       <tr>
@@ -71,13 +73,13 @@ body {
                       </tr>
                       <tr align="center">
                         <td height="30" colspan="2">
-                            <input name="Submit" type="submit" class="login_button" value="LOG IN">
+                            <%= submit_tag 'Log in', :class => 'login_button' %>
                         </td>
                       </tr>
                   </table></td>
                   <td>&nbsp;</td>
                 </tr>
-              </table>              </td>
+              </table>   <%end%>   </td>
           </tr>
         </table></td>
       </tr>

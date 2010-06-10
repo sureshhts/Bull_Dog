@@ -1,3 +1,4 @@
+<head>
 <script>
 
 function Show()
@@ -26,12 +27,11 @@ function validate()
 }
 
 </script>
+</head>
 
-<div>
 
+<div style="margin-left:30px;">
 <h3>Account Playing Details </h3>
-
-<div>
 <% form_for(:playing_details, :url => {:controller => 'users', :action => 'create_playing_details'}, :html => { :multipart => true }) do |f| %>
 <table width="95%">
 

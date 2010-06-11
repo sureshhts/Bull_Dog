@@ -4,7 +4,7 @@
 		text-align:left;
 		clear:both;
 		padding-left:3px;
-		background-color:#f38001;
+		background-color:#8d904f;
 		margin-top:2px;
 		width:790px;
 	}
@@ -13,7 +13,7 @@
 		text-align:left;
 		clear:both;
 		padding-left:3px;
-		background-color:#f38001;
+		background-color:#8d904f;
 		margin-top:2px;
 	}
         #footer{
@@ -22,7 +22,7 @@
 		text-align:right;
 		clear:both;
 		padding-right:3px;
-		background-color:#f38001;
+		background-color:#8d904f;
 		margin-top:2px;
 		width:790px;
 	}
@@ -46,8 +46,8 @@
 	#dhtmlgoodies_dragDropContainer li,#dragContent li,li#indicateDestination{	/* Movable items, i.e. <LI> */
 		list-style-type:none;
 		height:40px;
-		background-color:#ffbd73;
-		border:1px solid #f38001;
+		background-color:#cbcfac;
+		border:1px solid #8d904f;
 		padding-left:2px;
 		margin-bottom:2px;
 		cursor:pointer;
@@ -55,7 +55,7 @@
 	}
 
 	li#indicateDestination{	/* Box indicating where content will be dropped - i.e. the one you use if you don't use arrow */
-		border:1px dotted #f38001;
+		border:1px dotted #8d904f;
 		background-color:#FFF;
 	}
 
@@ -77,7 +77,7 @@
 	}
 
 	div#dhtmlgoodies_listOfItems div{
-		border:1px solid #ffbd73;
+		border:1px solid #cbcfac;
 	}
 	div#dhtmlgoodies_listOfItems div ul{	/* Left column <ul> */
 		margin-left:10px;	/* Space at the left of list - the arrow will be positioned there */
@@ -86,15 +86,15 @@
 		margin:0px;
 		font-weight:bold;
 		padding-left:12px;                
-		background-color:#f38001;
+		background-color:#8d904f;
 		color:#000;
 		margin-bottom:5px;
 	}
 	/* END LEFT COLUMN CSS */
 
 	#dhtmlgoodies_dragDropContainer .mouseover{	/* Mouse over effect DIV box in right column */
-		background-color:#ffe0be;
-		border:1px solid #ffbd73;
+		background-color:#dcdcc4;
+		border:1px solid #cbcfac;
 	}
 
 	/* Start main container CSS */
@@ -108,7 +108,7 @@
 		margin-right:10px;
 		margin-bottom:10px;
 		margin-top:0px;
-		border:1px solid #ffbd73;
+		border:1px solid #cbcfac;
 
 		/* CSS HACK */
 		width: 172px;	/* IE 5.x */
@@ -131,7 +131,7 @@
 		text-align:right;
 		clear:both;
 		padding-right:3px;
-		background-color:#f38001;
+		background-color:#8d904f;
 		margin-top:2px;
 	}
 	#dhtmlgoodies_mainContainer div ul{
@@ -143,7 +143,7 @@
 		padding:0px;
 		padding-left:12px;
 		font-weight:bold;
-		background-color:#f38001;
+		background-color:#8d904f;
 		color:#000;
 		margin-bottom:5px;                
 	}
@@ -166,7 +166,7 @@
 		margin-right:10px;
 		margin-bottom:10px;
 		margin-top:0px;
-		border:1px solid #ffbd73;
+		border:1px solid #cbcfac;
 
 		/* CSS HACK */
 		width: 172px;	/* IE 5.x */
@@ -184,7 +184,7 @@
 		padding:0px;
 		padding-left:12px;
 		font-weight:bold;
-		background-color:#f38001;
+		background-color:#8d904f;
 		color:#000;
 		margin-bottom:5px;
 	}

@@ -1,12 +1,12 @@
 <style>
- .oddrow
+.oddrow
 {
-  background: #ffbd73;
+  background: #cbcfac; 
 }
 
 .evenrow
 {
-  background: #ffe0be;
+  background: #dcdcc4; 
 }
 
 </style>
@@ -23,9 +23,9 @@
         </tr>
         <tr>
           <td colspan="2">
-            <input type="button" name="Knockout Selection" value="Knockout Selection" onclick="$('playoff_form').onsubmit();return false;"/>
+            <input type="button" name="Knockout Selection" class="button" value="Knockout Selection" onclick="$('playoff_form').onsubmit();return false;"/>
             &nbsp;
-            <input type="button" name="Freeze Knockout Selection" value="Freeze Knockout Selection" onclick="window.location='/players_playoffs/selected_knockout_players/<%= @tournament.id %>'"/>
+            <input type="button" name="Freeze Knockout Selection" class="button" value="Freeze Knockout Selection" onclick="window.location='/players_playoffs/selected_knockout_players/<%= @tournament.id %>'"/>
           </td>
         </tr>
       </table>

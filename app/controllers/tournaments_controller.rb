@@ -190,16 +190,16 @@ protect_from_forgery :only => [:destroy]
   end
   
   def add_points
- 
-    
-     @players = Tournament.list_of_tournament_players(params[:id])
-    
-     for t in @players
-         tp = TournamentPlayer.find(t.player_id)
-	     tp.update_attributes(:points => params["point#{t.player_id}"]) 
-	 end
-     redirect_to :controller => 'tournaments', :action => "ratings", :id => params[:id]
-   end
+    @tournament = Tournament.find(params[:id])
+    @players = Tournament.list_of_tournament_players(params[:id])
+
+    @tournament.update_attributes(:knockout_cutoff_percentage => 100, :knockout_count => @players.length, :knockout_selected => '1')
+    for t in @players
+      tp = TournamentPlayer.find(t.player_id)
+	    tp.update_attributes(:points => params["point#{t.player_id}"], :knockout => '1')
+	  end
+    redirect_to :controller => 'players_playoffs', :action => "selected_knockout_players", :id => params[:id]
+  end
    
    def ratings
   

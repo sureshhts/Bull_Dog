@@ -61,7 +61,7 @@
 	<td>Tournament Category</td>
 	<td>
 	<select name="tournament[category_id][]" id="tournament_category_id" onChange="Show();" multiple="multiple">
-	<option value="">Select Recipient</option>
+	<option value="">Select Category</option>
 	<%@tour_category.each do |c| %>
 	<option value="<%=c.id%>"><%=c.name%></option>
 	<%end%>
@@ -71,8 +71,8 @@
 
 <tr>
 	<td>
-	<%= submit_tag "Submit" %>
-	<%= submit_tag "Cancel" %>
+	<%= submit_tag "Submit" , :class => "button"%>
+	<%= submit_tag "Cancel" , :class => "button"%>
 	</td>
 </tr>
 

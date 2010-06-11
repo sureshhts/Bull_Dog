@@ -158,6 +158,16 @@ protect_from_forgery :only => [:destroy]
       t_div.update_attributes(:draw_created => "1")
     end
   end
+  
+  def tour_date(week,date)
+    @weeks =  week
+    for w in @weeks
+       puts  startdate = Time.at(date)
+       puts  enddate = Time.at(startdate.to_i+60*60*24*6)
+	   day = Time.at(enddate.to_i+60*60*24*1)
+	   date = day.to_i
+	end
+   end
 
   def category_level_draw_schedules
     @category = TournamentCategory.find(params[:cid])

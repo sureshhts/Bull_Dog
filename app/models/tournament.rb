@@ -21,6 +21,13 @@ class Tournament < ActiveRecord::Base
    return applicable_tournaments
  end
 
+ def self.open_tournaments
+   query1 = %Q{ SELECT *
+                FROM tournaments t
+                where t.registration_starts < #{Time.now.to_i} and t.registration_ends > #{Time.now.to_i}}
+   find_by_sql(query1)
+ end
+
  def self.tournament_summary
    query = %Q{  select t.id, t.name, t.registration_starts, t.registration_ends, t.tournament_type, count(tp.tournament_id) as players, t.knockout_selected
                 from tournaments t

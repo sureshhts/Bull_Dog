@@ -142,8 +142,9 @@ protect_from_forgery :only => [:destroy]
       league_draw = LeagueDraw::RoundRobin.new(players_arr, params[:games].to_i)
       league_draw.draw
       league_draw_result = league_draw.result
+      l_schedule_dates = league_schedule_dates(league_draw_result.keys, @tournament.tournament_starts.to_i)
       league_draw_result.each_pair{|key, value|
-        tdls = TournamentDivisionLeagueSchedule.create(:week_number => key, :tournament_division_id => division.id)        
+        tdls = TournamentDivisionLeagueSchedule.create(:week_number => key, :tournament_division_id => division.id, :start_date => l_schedule_dates[key.to_s][0], :end_date => l_schedule_dates[key.to_s][1])
         for val in value
           lsg = LeagueScheduleGame.create(:tournament_division_league_schedule_id => tdls.id)
           if val[0] != "rand"
@@ -159,15 +160,18 @@ protect_from_forgery :only => [:destroy]
     end
   end
   
-  def tour_date(week,date)
-    @weeks =  week
-    for w in @weeks
-       puts  startdate = Time.at(date)
-       puts  enddate = Time.at(startdate.to_i+60*60*24*6)
-	   day = Time.at(enddate.to_i+60*60*24*1)
-	   date = day.to_i
-	end
-   end
+  def league_schedule_dates(weeks,date)
+    schedules = Hash.new
+    start = date
+    for w in weeks
+      startdate = Time.at(start)
+      enddate = Time.at(startdate.to_i+60*60*24*6)
+      schedules[w.to_s] = [startdate.to_i, enddate.to_i]
+	    day = Time.at(enddate.to_i+60*60*24*1)
+	    start = day.to_i
+    end
+    return schedules
+  end
 
   def category_level_draw_schedules
     @category = TournamentCategory.find(params[:cid])

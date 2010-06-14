@@ -159,7 +159,7 @@ class UsersController < ApplicationController
   end
   
   def home
-  	@tournament = Tournament.find(:all)
+  	@tournament = Tournament.open_tournaments
   	render :layout => 'home'
   end
   

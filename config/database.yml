@@ -5,9 +5,9 @@
 
 development:
   adapter: mysql
-  database: bulldog_dev
+  database: manju_bulldog_dev
   username: root
-  password: password  
+  password: relton
   host: localhost
   #socket: /opt/lampp/var/mysql/mysql.sock
 

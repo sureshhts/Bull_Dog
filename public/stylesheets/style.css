@@ -18,6 +18,14 @@
 	color: #fefb00;
 	text-decoration: underline;
 }
+.orange_text {
+	font-family: Arial;
+	font-size: 14px;
+	color: #ff9200;
+	text-decoration: none;
+	font-weight: bold;
+	
+}
 .orange_link {
 	font-family: Arial;
 	font-size: 13px;
@@ -30,8 +38,7 @@
 	font-size: 13px;
 	color: #ff7300;
 	text-decoration: underline;
-	
-	
+
 }
 
 .more {
@@ -55,20 +62,28 @@
 	color: #ffffff;
 	font-weight: bold;
 	text-decoration: none;
+	height:30px;
 }
 .main_link:hover {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
-	color: #fdb612;
+	color: #eb3d00;
 	font-weight: bold;
 	text-decoration: none;
+	background-color:#FFFFFF;
+	height:30px;
+	
+	
+	
 }
 .main_link_highlight {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
-	color: #fdb612;
+	color: #eb3d00;
 	font-weight: bold;
 	text-decoration: none;
+	height:30px;
+	background-color:#FFFFFF;
 }
 .main_link1 {
 	font-family: Arial, Helvetica, sans-serif;
@@ -142,7 +157,7 @@
 .copyright_text {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	color: #898989;
+	color: #fbb04b;
 	text-decoration: none;
 	
 }
@@ -161,13 +176,13 @@
 .footer_link {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	color: #000000;
+	color: #ffffff;
 	text-decoration: none;
 }
 .footer_link:hover {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	color: #000000;
+	color: #ffffff;
 	text-decoration: underline;
 }
 .top_link {
@@ -196,6 +211,13 @@
 	text-decoration: none;
 	
 	
+}
+.content_text_green {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #586f4c;
+	text-decoration: none;
+	font-weight:none;
 }
 .content_text {
 	font-family: Arial, Helvetica, sans-serif;
@@ -243,7 +265,7 @@
 .red_text1 {
 	font-family: Arial;
 	font-size: 12px;
-	color: #f62f18;
+	color: #bc1213;
 	font-weight: bold;
 	text-decoration: none;
 }
@@ -251,6 +273,13 @@
 	font-family: Arial;
 	font-size: 14px;
 	color: #f62f18;
+	font-weight: bold;
+	text-decoration: none;
+}
+.white_text2 {
+	font-family: Arial;
+	font-size: 14px;
+	color: #ffffff;
 	font-weight: bold;
 	text-decoration: none;
 }
@@ -288,20 +317,21 @@
     color:#000000;
     font-weight:none;
     padding: 1px 3px;
-    background:url(images_ror/go1_bg.jpg) repeat-x left top;
+    background:url/(images_ror/go1_bg.jpg) repeat-x left top;
 	}
  .login_button {
 	font-family: Arial;
-	font-size: 16px;
+	font-size: 14px;
 	cursor: hand;
-    width:112px;
+    width:69px;
     border:none;
     border-style:none;
-    height: 30px;
+    height: 22px;
+    
     color:#FFFFFF;
 	font-weight:900;
     padding: 1px 3px;
-    background-image:url(/images/login_img.png);
+    background-image:url(/images/login_button.png);
 	}
 
 .header {
@@ -458,3 +488,31 @@
 	font-weight: bold;
 	text-decoration: none;
 }
+.button
+{
+    font-family: Arial;
+    font-size: 14px;
+    cursor: hand;
+    width: auto;
+    border:none;
+    border-style:none;
+    height: auto;
+    color:#000000;
+    font-weight:bold;
+    padding: 1px 3px;
+    background-image:url(/images/btn_bg.jpg);
+}
+.button: hover
+ {
+    font-family: Arial;
+    font-size: 14px;
+    cursor: hand;
+    width: auto;
+    border:none;
+    border-style:none;
+    height: auto;
+    color:#000000;
+    font-weight:bold;
+    padding: 1px 3px;
+    background-image:url(/images/btn_bg.jpg);
+    }

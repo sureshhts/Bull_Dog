@@ -2,17 +2,18 @@
 <h3>Create Knockout Points</h3>
 <% form_for(:tournament, :url => {:controller => 'tournaments', :action => 'add_points', :id => params[:id]}, :html => { :multipart => true }) do |f| %>
  <table>
-   <% for player in @players %>  
-   <tr>
-     <td> <b>Player Name:</b>
-     <%= player.name %><input id="" name="point<%= player.player_id %>" type="text"/>
-     </td>
-    </tr> 
+   <tr><td width="20"><b>Player Name</b></td></tr>
+    <% for player in @players %> 
+    <tr>
+    <td width="50"> <%= player.name %></td>
+    <td><input id="" name="point<%= player.player_id %>" type="text"/></td>
+    </tr>
     <% end %>
-    
-   <tr>
-   <td><%= submit_tag "Submit" %> </td>
-   <tr>
+   
+    <tr>
+    <td>&nbsp;</td>
+    <td><%= submit_tag "Submit", :class => "button" %> </td>
+    <tr>
  </table>
 <%end%>
 </div>

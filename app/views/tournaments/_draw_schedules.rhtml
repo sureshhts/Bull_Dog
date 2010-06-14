@@ -1,14 +1,13 @@
 <style>
- .oddrow
+  .oddrow
 {
-  background: #ffbd73;
+  background: #cbcfac; 
 }
 
 .evenrow
 {
-  background: #ffe0be;
+  background: #dcdcc4; 
 }
-
 </style>
 <%  for division in @tournament_divisions
       d_players = Tournament.tournament_division_players(division.id)
@@ -18,7 +17,7 @@
 <span><h3><%= division.name %></h3></span>
 <table width="100%" cellpadding="3" cellspacing="0">
   <thead>
-    <tr bgcolor="#f38001">
+    <tr bgcolor="#b8ba89">
       <th>
         <span>Name\weeks</span>
       </th>

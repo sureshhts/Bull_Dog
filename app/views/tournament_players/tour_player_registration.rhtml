@@ -95,8 +95,6 @@
  <option value="<%= c.id%>" ><%= c.name%></option>
  <%end%>
  </select> 
- 
- </select>
 </td>
 </tr>
 
@@ -114,8 +112,8 @@
 
 <tr>
 	<td>
-	<%= submit_tag "Submit", :class => "button" %>
-	<%= submit_tag "Cancel", :class => "button" %>
+	<%= submit_tag "Submit" %>
+          <a href="/account_profile/home">Cancel</a>
 	</td>
 </tr>
 

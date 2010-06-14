@@ -21,6 +21,7 @@ layout "player"
   
   def home
     @tournaments = Tournament.tournaments_for_registration(session[:user_id])
+    @month, @year, @schedules = all_tournaments_for_this_month
   end
   
   def list

@@ -110,7 +110,7 @@ module CalendarHelper
       else
         colspan=7
       end
-      cal << %(<th colspan="#{colspan}" class="#{options[:month_name_class]}">#{Date::MONTHNAMES[options[:month]]}</th>)
+      cal << %(<th colspan="#{colspan}" class="#{options[:month_name_class]}"></th>)
       cal << %(<th colspan="2">#{options[:next_month_text]}</th>) if options[:next_month_text]
       cal << %(</tr>)
     end
@@ -119,7 +119,7 @@ module CalendarHelper
     
     day_names.each do |d|
       unless d[options[:abbrev]].eql? d
-        cal << "<th scope='col'><abbr title='#{d}'>#{d[options[:abbrev]]}</abbr></th>"
+        cal << "<th scope='col' align='center'><abbr title='#{d}'>#{d[options[:abbrev]]}</abbr></th>"
       else
         cal << "<th scope='col'>#{d[options[:abbrev]]}</th>"
       end

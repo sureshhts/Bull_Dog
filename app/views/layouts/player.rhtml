@@ -74,81 +74,42 @@ $(document).ready(function() {
         <td height="30" ><ul class="menu" id="menu">
 
                   <!--1 menu -->
-                  <li> <a href="/account_profile/home/<%= session[:user_id] %>" class="menulink">Home</a> </li>
-                  
-                  
-                  <!--2 menu -->
-                  <li> <a href="/account_profile/myprofile/<%= session[:user_id] %>" class="menulink ">My Info</a>
+                  <li> <a href="/account_profile/home" class="menulink">Home</a> </li>
+                                                      
+                  <li> <a href="/account_profile/myprofile" class="menulink ">My Info</a>
                       <ul style="overflow: hidden; display: block; z-index: 67; opacity: 0.0208333; height: 0pt;">
-                        <li> <a href="#" class="sub">Overview</a> </li>
-                        <li> <a href="#" class="sub">Products</a>
-                            <ul style="overflow: hidden; display: block; height: 0px; z-index: 118; opacity: 0.00833333;">
-                              <li><a href="#">Overview</a></li>
-                              <li><a href="#">TeleView ™</a></li>
-                              <li><a href="#">MI</a></li>
-                            </ul>
-                        </li>
-                        <li> <a href="#" class="sub">Solutions and Services</a>
-                            <ul style="overflow: hidden; display: block; height: 0px; z-index: 120; opacity: 0.0138889;">
-                              <li><a href="#">Overview</a></li>
-                              <li><a href="#">Data Warehousing and Datamart</a></li>
-                              <li><a href="#">EDI</a></li>
-                            </ul>
-                        </li>
-                        <li> <a href="#" class="sub">Consulting</a>
-                            <ul style="overflow: hidden; display: block; height: 0px; z-index: 120; opacity: 0.0138889;">
-                              <li><a href="#">BI Strategy &amp; Implementation</a></li>
-                            </ul>
-                        </li>
+                        <li> <a href="/account_profile/my_schedule" class="sub">My Schedule</a> </li>
+                        <li> <a href="#" class="sub">My Division Standings</a></li>
+                        <li> <a href="#" class="sub">My PlayOff Standings</a></li>                                                
                       </ul>
                   </li>
-                  <!--3 menu -->
+                 
                   <li> <a href="/registration/index" class="menulink">Registration</a>
                       <ul style="overflow: hidden; display: block; z-index: 68; opacity: 0.0138889; height: 0px;">
-                        <li> <a href="#" class="sub">Overview</a> </li>
-                        <li> <a href="#" class="sub     ">Products</a>
-                            <ul style="overflow: hidden; display: block; z-index: 58; opacity: 0.0138889; height: 0px;">
-                              <li><a href="#">Overview</a></li>
-                              <li><a href="#">Champion™</a></li>
-                              <li><a href="#">PI Miner</a></li>
-                            </ul>
-                        </li>
-                        <li> <a href="#" class="sub">Solutions and Services</a>
-                            <ul style="overflow: hidden; display: block; z-index: 60; opacity: 0.00740741; height: 0px;">
-                              <li><a href="#">Overview</a></li>
-                              <li><a href="#">Churn Analytics &amp; Prediction </a></li>
-                              <li><a href="#">Response Modeling</a></li>
-                              <li><a href="#">Segmentation &amp; Profiling </a></li>
-                              <li><a href="#">Risk Analytics</a></li>
-                            </ul>
-                        </li>
+                        <li> <a href="#" class="sub">Registration</a> </li>
+                        <li> <a href="#" class="sub">Rules</a> </li>
+                        <li> <a href="#" class="sub">FAQ's</a></li>
+                        <li> <a href="#" class="sub">Calendar</a></li>
                       </ul>
                   </li>
-                  <!-- 4 menu -->
-                   <!--2 menu -->
+                  
                   <li> <a href="/players_playoffs/score" class="menulink ">Register Score</a>
                       <ul style="overflow: hidden; display: block; z-index: 67; opacity: 0.0208333; height: 0pt;">
-                        <li> <a href="#" class="sub">Overview</a> </li>
-                        <li> <a href="#" class="sub">Products</a>
-                            <ul style="overflow: hidden; display: block; height: 0px; z-index: 118; opacity: 0.00833333;">
-                              <li><a href="#">Overview</a></li>
-                              <li><a href="#">TeleView ™</a></li>
-                              <li><a href="#">MI</a></li>
-                            </ul>
-                        </li>
-                        <li> <a href="#" class="sub">Solutions and Services</a>
-                            <ul style="overflow: hidden; display: block; height: 0px; z-index: 120; opacity: 0.0138889;">
-                              <li><a href="#">Overview</a></li>
-                              <li><a href="#">Data Warehousing and Datamart</a></li>
-                              <li><a href="#">EDI</a></li>
-                            </ul>
-                        </li>
-                        <li> <a href="#" class="sub">Consulting</a>
-                            <ul style="overflow: hidden; display: block; height: 0px; z-index: 120; opacity: 0.0138889;">
-                              <li><a href="#">BI Strategy &amp; Implementation</a></li>
-                            </ul>
-                        </li>
+                        <li> <a href="#" class="sub">Regular League Scores</a> </li>
+                        <li> <a href="#" class="sub">Knockout Scores</a></li>
                       </ul>
+                  </li>
+
+                  <li> <a href="/players_playoffs/score" class="menulink ">Standings</a>
+                      <ul style="overflow: hidden; display: block; z-index: 67; opacity: 0.0208333; height: 0pt;">
+                        <li> <a href="#" class="sub">My Division Standings</a> </li>
+                        <li> <a href="#" class="sub">My Level Standings</a></li>
+                        <li> <a href="#" class="sub">Player Search</a></li>
+                        <li> <a href="#" class="sub">Championship Picture</a></li>
+                      </ul>
+                  </li>
+
+                  <li> <a href="/players_playoffs/score" class="menulink ">Contact Us</a>
                   </li>
                   
               </ul></td>
@@ -170,10 +131,7 @@ $(document).ready(function() {
         <td width="72%" valign="top" ><table width="100%"  border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td height="90">&nbsp;</td>
-          </tr>
+          </tr>          
           <tr>
             <td><span class="content_text"><%= yield %> </span></td>
           </tr>

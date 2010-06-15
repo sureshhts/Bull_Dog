@@ -42,6 +42,7 @@ layout 'player'
 
  def index
    @summary = Tournament.tournament_summary
+   render :layout => "default"
  end
  
 end

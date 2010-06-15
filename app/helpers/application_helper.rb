@@ -8,6 +8,7 @@ module ApplicationHelper
       return false
     end
   end
+  
   def player_opponent_score_display(player, opponents, lsg)    
     op_player = (opponents.length > 0)? TournamentPlayer.find(opponents[0]) : nil
     display_text = ""

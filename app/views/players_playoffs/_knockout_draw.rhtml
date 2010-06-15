@@ -11,7 +11,7 @@
   </tr>
   <% for row in @pob.players %>
   <tr>
-    <td><%= (row[0]!='-')? @ko_players[row[0].to_s] : "" %></td>
+    <td><%= (row[0]!='-')? @ko_players[row[0].to_s][1] : "" %></td>
     <% i = @pob.rounds - 1
        j = 1
        until i <= 0 %>

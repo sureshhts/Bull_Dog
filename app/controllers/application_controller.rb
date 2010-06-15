@@ -8,6 +8,14 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
 
+  def isAdmin?
+    if User.find(session[:user_id]).account_type == "admin"
+      return true
+    else
+      return false
+    end
+  end
+
   def all_tournaments_for_this_month
     today = Time.now
     current_month = today.month

@@ -74,7 +74,7 @@
 <tr>
 	<td>
 	<%= submit_tag "Update Profile", :class => "button" %>
-	<%= submit_tag "Cancel", :class => "button" %>
+	<a href="/account_profile/home/<%= session[:user_id] %>" class="button" >Cancel</a>
 	</td>
 </tr>
 

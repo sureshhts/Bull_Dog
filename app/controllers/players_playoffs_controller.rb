@@ -233,7 +233,7 @@ protect_from_forgery :only => [:destroy]
     @ko_players = Hash.new
     for player in all_players
       if player.knockout.to_s == "1"
-        @ko_players[rank.to_s] = player.id
+        @ko_players[rank.to_s] = [player.id, player.name]
         rank += 1
       end
     end
@@ -323,7 +323,7 @@ protect_from_forgery :only => [:destroy]
     @ko_players = Hash.new
     for player in all_players
       if player.knockout.to_s == "1"
-        @ko_players[rank.to_s] = player.id
+        @ko_players[rank.to_s] = [player.id, player.name]
         rank += 1
       end
     end

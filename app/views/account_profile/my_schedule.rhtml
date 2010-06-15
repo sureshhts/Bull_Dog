@@ -1,0 +1,64 @@
+<style type="text/css">
+
+span.link {
+    	position: relative;
+}
+
+    span.link a span {
+    	display: none;
+}
+
+span.link a:hover {
+    	font-size: 99%;
+    	font-color: #000000;
+}
+
+span.link a:hover span {
+        display: block;
+    	position: absolute;
+    	margin-top: 10px;
+    	margin-left: -10px;
+	width: 300px; padding: 5px;
+    	z-index: 100;
+    	color: #000000;
+    	background: #FFFFAA;
+    	font: 12px "Arial", sans-serif;
+    	text-align: left;
+    	text-decoration: none;
+}
+</style>
+<table>  
+  <tr>
+    <td>Your important League Dates in this month</td>
+  </tr>
+  <tr>
+    <td><br/></td>
+  </tr>
+  <tr>
+    <td>
+<link href="/stylesheets/calendar/red/style.css" rel="stylesheet" type="text/css" />
+<div >
+
+<%=
+calendar({:year =>@year, :month => @month,:abbrev => (0..2),:previous_month_text =>"", :next_month_text =>"" }) do |d|
+cell_text = "#{d.mday}"
+cell_attrs = {:class => 'day'}
+if !@schedules[d.mday.to_s].blank?
+  schedules = @schedules[d.mday.to_s]
+  schedule_descriptions = ""
+
+  for sch in schedules
+    schedule_descriptions += "<br/>- #{sch['tournament']} - #{sch['category']} #{sch['level']}<br/>"
+    schedule_descriptions += "&nbsp;&nbsp;vs #{sch['opponent']} in #{sch['place']}<br/>"
+  end
+  cell_text = "<span class='link'><a href='javascript: void(0)'>#{d.day}<span>#{schedule_descriptions}</span></a>"
+  cell_attrs[:class] = 'specialDay'
+end
+[cell_text, cell_attrs]
+end
+%>
+
+</div>
+    </td>
+  </tr>
+</table>

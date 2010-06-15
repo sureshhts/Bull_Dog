@@ -1,37 +1,47 @@
-<table cellspacing=0 cellpadding=0>
-  <tr>
-    <td>&nbsp;#&nbsp;</td>
-    <% i = 1
-       until i > @pob.rounds - 1 %>
-    <td>Round <%= i %></td>
-    <td>&nbsp;&nbsp;</td>
-    <%i+=1
-      end %>
-    
-  </tr>
-  <% for row in @pob.players %>
-  <tr>
-    <td><%= (row[0]!='-')? @ko_players[row[0].to_s] : "" %></td>
-    <% i = @pob.rounds - 1
-       j = 1
-       until i <= 0 %>
-    <td>
-      <% if row[j]!="-" %>
-      <img src="/images/<%= row[j] %>.gif" />
-      <% end %>
+<div style="text-align: center; border-width: 5px; border-color: #cbcfac; border-style:double;min-height:100px;"><h3>Tournament Draw</h3></div>
+  <table width="95%">
+    <tr>
+     <td width="30%">Tournament Name: </td>
+      <td>
+       <%= @tournament.name %>
     </td>
-    <td>
-      <% if row[j] == "mid" && (row[j+1] == "top" || row[j+1] == "low" || row[j+1] == "non") %>
-      &nbsp;<%= @level_ko_games[i.to_s].pop %>&nbsp;
-      <% else %>
-        <% if row[j] == "non" && (row[j+1] == "top" || row[j+1] == "low") %>
-          <img src="/images/non.gif" />
-        <% end %>
-      <% end %>
+    </tr>
+    <tr>
+     <td>City: </td>
+      <td>
+       <%= @tournament.city %>
     </td>
-    <% j+=1
-       i-=1
-       end %>
-  </tr>
-  <% end %>
-</table>
+    </tr>
+    <tr>
+     <td>Tournament Type: </td>
+      <td>
+      <% {"League" => 'L', "Knockout" => 'K'}.each_pair{|key,val|
+             if val == @tournament.tournament_type %>
+                    <%= key%>
+                    <% end
+            }%>
+    </td>
+    </tr>
+    <tr>
+     <td>Kind of Tournament: </td>
+      <td>
+      <% {"Organised" => 'O', "Self" => 'S'}.each_pair{|key,val|
+             if val == @tournament.kind_of_tournament %>
+                    <%= key%>
+                    <% end
+            }%>
+
+      </td>
+    </tr>
+  </table>
+ <br/>
+
+<div id="kot">
+  <%= render :partial => "knockout_draw" %>
+</div>
+
+ <table>
+   <tr>
+     <td width="30%"><a href="/players_playoffs/selected_knockout_players/<%= @tournament.id %>">Back</a></td>
+   </tr>
+ </table>

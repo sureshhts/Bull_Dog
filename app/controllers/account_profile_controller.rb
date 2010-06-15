@@ -3,7 +3,7 @@ class AccountProfileController < ApplicationController
 layout "player"
 
   def myprofile
-    @profile = AccountProfile.find(params[:id])
+    @profile = AccountProfile.find(session[:user_id])
   end
   
   def update_profile
@@ -21,6 +21,10 @@ layout "player"
   
   def home
     @tournaments = Tournament.tournaments_for_registration(session[:user_id])
+    @month, @year, @schedules = all_tournaments_for_this_month
+  end
+
+  def my_schedule
     @month, @year, @schedules = all_tournaments_for_this_month
   end
   

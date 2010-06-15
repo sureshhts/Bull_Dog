@@ -137,6 +137,10 @@ protect_from_forgery :only => [:destroy]
       end
     end
     @players = TournamentPlayer.tournament_players_league_standings(params[:id])
+    
+    if isAdmin?
+      render :layout => "default"
+    end
   end
 
   def division_playoff_scores
@@ -290,6 +294,9 @@ protect_from_forgery :only => [:destroy]
         end
         i += 1
       end
+      if isAdmin?
+        render :layout => "default"
+      end
     end
 
     pob.root.each{|game|
@@ -326,6 +333,9 @@ protect_from_forgery :only => [:destroy]
     @pob.bracket_players
 
     @level_ko_games = KnockoutGame.level_knockout_games(@tournament.id, @pob.rounds - 1)
+    if isAdmin?
+      render :layout => "default"
+    end
   end
   
 end

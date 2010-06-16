@@ -12,7 +12,7 @@ protect_from_forgery :only => [:destroy]
   end
 
   def playoff_tournament
-    @tp = TournamentPlayer.find_by_sql("select * from tournament_players where tournament_id='#{params[:tournament]}' and user_id='#{session[:user_id]}'")[0]
+    @tp = TournamentPlayer.find_by_sql("select * from tournament_players where tournament_id='#{params[:tournament_id]}' and user_id='#{session[:user_id]}'")[0]
     if @tp != nil
       if @tp.tournament_division_id != nil
         @tp_division = @tp.tournament_division

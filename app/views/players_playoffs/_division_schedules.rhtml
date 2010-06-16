@@ -1,20 +1,15 @@
 <style>
  .oddrow
 {
-  background: #ffbd73;
+  background: #cbcfac;
 }
 
 .evenrow
 {
-  background: #ffe0be;
+  background: #dcdcc4;
 }
 
 </style>
-<%    division = @tournament_division
-      d_players = Tournament.tournament_division_players(division.id)
-      schedules = TournamentDivision.find(division.id).tournament_division_league_schedules
-      total_weeks = schedules.length
-%>
 <span><h3><%= division.name %></h3></span>
 <table width="100%" cellpadding="3" cellspacing="0">
   <thead>

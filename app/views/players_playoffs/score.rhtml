@@ -140,16 +140,16 @@
 <tr>
 <td>Select Tournament</td>
 <td>
- <select name="tournament" id="tournament" >
+ <select name="tournament_id" id="tournament_id" >
   <option value="0">Select Tournament</option>
   <%  @tournaments.each do |t| %>
    <option value="<%= t.id %>"><%= t.name %> </option>
   <%  end %> 
  </select>
-  <%=observe_field "tournament",
+  <%=observe_field "tournament_id",
       :url => {:controller => 'players_playoffs', :action => 'playoff_tournament'},
       :on => 'change',
-      :with => "tournament"%>
+      :with => "tournament_id"%>
 </td> 
 </tr>
 <tr>

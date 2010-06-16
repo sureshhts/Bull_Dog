@@ -1,7 +1,7 @@
 <div style="margin-left:30px;">
-<h1>Login Players</h1>
+<h1>Signup Admin</h1>
 <%= error_messages_for :user %>
-<% @user.password = @user.password_confirmation = nil %>
+
 
 
 <% form_for :user, :url => users_path do |f| -%>
@@ -18,7 +18,7 @@
 <%= f.password_field :password_confirmation %></p>
 
 <p>
-<%= f.hidden_field :account_type, :value => 'player' %></p>
+<%= f.hidden_field :account_type, :value => 'admin' %></p>
 
 <p><%= submit_tag 'Sign up', :class => "button" %></p>
 <% end -%>

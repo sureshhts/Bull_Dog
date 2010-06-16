@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.home '/home', :controller => 'users', :action => 'home'
   map.about_us '/about_us', :controller => 'users', :action => 'about_us'
   map.contact_us '/contact_us', :controller => 'users', :action => 'contact_us'
+  map.new_acc '/new_acc', :controller => 'users', :action => 'new_acc'
   
   map.resources :users
 

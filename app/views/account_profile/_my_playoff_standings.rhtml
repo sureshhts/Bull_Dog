@@ -1,0 +1,67 @@
+<style>
+ .oddrow
+{
+  background: #cbcfac;
+}
+
+.evenrow
+{
+  background: #dcdcc4;
+}
+
+</style>
+<table width="100%" cellpadding="3" cellspacing="0">
+  <% if !@players.blank? %>
+  <thead>
+    <tr bgcolor="#b8ba89">
+      <th>
+        <span>#</span>
+      </th>
+      <th>
+        <span>Name</span>
+      </th>
+      <th>
+        <span>Points</span>
+      </th>
+      <th>
+        <span>Availability</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <%
+      i = 1
+      for player in @players
+    %>
+    <tr class="<%= cycle('oddrow', 'evenrow') %>">
+      <td>
+       <%= i %>
+      </td>
+      <td>
+       <%= player.name %>
+      </td>
+      <td align="center">
+       <%= player.points %>
+      </td>
+      <td align="center">
+        <% if player.knockout.to_s == "1" %>
+
+        <% if player.user_id.to_s == session[:user_id].to_s && @tournament.knockout_created.to_s != "1"%>
+        <input TYPE="checkbox" NAME="player<%= session[:user_id] %>" id="player<%= session[:user_id] %>" VALUE="<%= player.id %>" CHECKED onclick="new Ajax.Request('/players_playoffs/change_my_availability/<%= player.id %>', {asynchronous:true, evalScripts:true, parameters:'tournament=' + encodeURIComponent(value) + '&authenticity_token=' + encodeURIComponent('yFH51UxXdCBusprTn/Hjo348bvtCUr5S1eW291RganQ=')})"/>
+        <% else %>
+        <input TYPE="checkbox" NAME="<%= player.id %>" id="player<%= player.id %>" VALUE="<%= player.knockout %>" CHECKED disabled />
+        <% end %>
+        <% else %>
+        <input TYPE="checkbox" NAME="<%= player.id %>" VALUE="<%= player.knockout %>" disabled />
+        <% end %>
+      </td>
+    </tr>
+    <%
+    i += 1
+    end
+    %>
+  </tbody>
+  <% else %>
+  <tr><td>No Players in this tournament.</td></tr>
+  <% end %>
+</table>

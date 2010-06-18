@@ -1,0 +1,15 @@
+<form action="/account_profile/player_history" id="p_list" method="post" onsubmit="new Ajax.Request('/account_profile/player_history', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;">
+<table>
+  <tr><td>&nbsp;</td></tr>
+  <% for player in @players %>
+  <tr>
+    <td><input type="radio" name="user_id" value="<%= player.id %>"/>&nbsp;<%= player.first_name %>&nbsp;<%= player.last_name %></td>
+  </tr>
+  <% end %>  
+  <tr>
+          <td>
+            <input type="button" name="Get Player History" class="button" value="Get Player History" onclick="$('p_list').onsubmit();return false;"/>
+          </td>
+</tr>
+</table>
+</form>

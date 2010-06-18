@@ -1,0 +1,55 @@
+<div>
+<h3>Division Standings</h3>
+</div>
+
+<div>
+
+<form action="/account_profile/division_standings" id="my_div" method="post" onsubmit="new Ajax.Request('/account_profile/division_standings', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;">
+<table width="95%">
+<tr>
+<td>Select Tournament</td>
+<td>
+ <select name="tournament" id="tournament" >
+  <option value="0">Select Tournament</option>
+  <%  @tournaments.each do |t| %>
+   <option value="<%= t.id %>"><%= t.name %> </option>
+  <%  end %>
+ </select>
+</td>
+</tr>
+<tr>
+<td>Select Event</td>
+<td>
+ <select name="category" id="category" >
+  <option value="0">Select Event</option>
+  <%  @categories.each do |c| %>
+   <option value="<%= c.id %>"><%= c.name %> </option>
+  <%  end %>
+ </select>
+</td>
+</tr>
+<tr>
+<td>Select Level</td>
+<td>
+ <select name="level" id="level" >
+  <option value="0">Select Level</option>
+  <%  @levels.each do |l| %>
+   <option value="<%= l.id %>"><%= l.name %> </option>
+  <%  end %>
+ </select>
+</td>
+</tr>
+<tr>
+          <td colspan="2">
+            <input type="button" name="Get Standings" class="button" value="Get Standings" onclick="$('my_div').onsubmit();return false;"/>
+          </td>
+        </tr>
+<tr>
+  <td colspan="2">
+    <div id="div_stand">
+    </div>
+  </td>
+</tr>
+</table>
+</form>
+</div>

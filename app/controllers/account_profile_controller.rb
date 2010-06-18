@@ -55,6 +55,53 @@ layout "player"
     end
   end
 
+  def search_player
+    if request.xml_http_request?
+      @players = User.search_players(params[:first], params[:last])
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'player_search',:partial => "searched_players"
+          end
+        }
+      end
+    end
+  end
+
+  def player_history
+    user = User.find(params[:user_id])
+    @profile = user.account_profile
+    @history = TournamentPlayer.player_history(user.id)
+    if request.xml_http_request?
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'player_history',:partial => "player_history"
+          end
+        }
+      end
+    end
+  end
+
+  def level_standings
+    @tournaments = Tournament.find_by_sql("select * from tournaments where tournament_type = 'L'")
+    @levels = PlayerLevel.find(:all)
+    
+    if request.xml_http_request?      
+      @players = TournamentPlayer.tournament_players_level_standings(params[:tournament], params[:level])
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'level_stand',:partial => "level_standings"
+          end
+        }
+      end
+    end
+  end
+
   def division_standings
     @tournaments = Tournament.find_by_sql("select * from tournaments where tournament_type = 'L'")
     @levels = PlayerLevel.find(:all)

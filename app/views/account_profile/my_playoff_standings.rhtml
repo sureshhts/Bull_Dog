@@ -1,0 +1,32 @@
+<div>
+<h3>My PlayOff Standings</h3>
+</div>
+
+<div>
+
+<form action="/account_profile/my_playoff_standings" id="my_play" method="post" onsubmit="new Ajax.Request('/account_profile/my_playoff_standings', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;">
+<table width="95%">
+<tr>
+<td>Select Tournament</td>
+<td>
+ <select name="tournament" id="tournament" >
+  <option value="0">Select Tournament</option>
+  <%  @tournaments.each do |t| %>
+   <option value="<%= t.id %>"><%= t.name %> </option>
+  <%  end %>
+ </select>
+</td>
+<td>
+            <input type="button" name="Get My PlayOff" class="button" value="Get My PlayOff" onclick="$('my_play').onsubmit();return false;"/>
+          </td>
+</tr>
+<tr><td><br/></td></tr>
+<tr>
+  <td colspan="3">
+    <div id="my_play_off">
+    </div>
+  </td>
+</tr>
+</table>
+</form>
+</div>

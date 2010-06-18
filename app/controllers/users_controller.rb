@@ -27,9 +27,11 @@ class UsersController < ApplicationController
     
     @user.account_type = params[:user][:account_type]
   
-    @user.time_created = Time.now.to_i
+    @user.time_created = Time.now.to_i 
     success = @user && @user.save
-    if success && @user.errors.empty?
+   
+     @id = @user.id
+    if success && @user.errors.empty? && @user.account_type == 'admin'
       # Protects against session fixation attacks, causes request forgery
       # protection if visitor resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
@@ -37,16 +39,18 @@ class UsersController < ApplicationController
       @user.update_attributes(:time_created => Time.now.to_i)
       self.current_user = @user # !! now logged in
      #redirect_back_or_default('/users/profile/<%= @user.id%>')
+        
+      redirect_to :action => 'home', :controller => 'users'
+      flash[:notice] = "Thanks for signing up..."
+    elsif  success && @user.errors.empty? && @user.account_type == 'player'
+     
+	  redirect_to :action => 'profile', :controller => 'users', :id => @id
+	  flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
+	else
+	  flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
+	  redirect_to :action => 'new'
+	end
     
-      @id = @user.id
-    redirect_to :action => 'profile', :controller => 'users', :id => @id
-      flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
-    else
-      flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-      redirect_to :action => 'new'
-    end
-    
-   
   end
   
   def forgot_password
@@ -95,6 +99,7 @@ class UsersController < ApplicationController
      else
      end
      
+     puts 
     @profile = AccountProfile.create(params[:profile])
  	@id = @profile.user_id
   	if @profile.save
@@ -161,6 +166,16 @@ class UsersController < ApplicationController
   def home
   	@tournament = Tournament.open_tournaments
   	render :layout => 'home'
+  end
+  
+  def new_acc
+    
+    render :layout => 'registration'
+  end
+  
+  def index
+   @user = User.find(:all, :conditions => ["account_type=?", "admin"])
+   render :layout => 'default'
   end
   
 end

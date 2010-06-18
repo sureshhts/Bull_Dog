@@ -1,0 +1,45 @@
+<div>
+<h3>Level Standings</h3>
+</div>
+
+<div>
+
+<form action="/account_profile/level_standings" id="my_level" method="post" onsubmit="new Ajax.Request('/account_profile/level_standings', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;">
+<table width="95%">
+<tr>
+<td>Select Tournament</td>
+<td>
+ <select name="tournament" id="tournament" >
+  <option value="0">Select Tournament</option>
+  <%  @tournaments.each do |t| %>
+   <option value="<%= t.id %>"><%= t.name %> </option>
+  <%  end %>
+ </select>
+</td>
+</tr>
+<tr>
+<td>Select Level</td>
+<td>
+ <select name="level" id="level" >
+  <option value="0">Select Level</option>
+  <%  @levels.each do |l| %>
+   <option value="<%= l.id %>"><%= l.name %> </option>
+  <%  end %>
+ </select>
+</td>
+</tr>
+<tr>
+          <td colspan="2">
+            <input type="button" name="Get Standings" class="button" value="Get Standings" onclick="$('my_level').onsubmit();return false;"/>
+          </td>
+        </tr>
+<tr>
+  <td colspan="2">
+    <div id="level_stand">
+    </div>
+  </td>
+</tr>
+</table>
+</form>
+</div>
+

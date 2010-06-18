@@ -1,0 +1,55 @@
+<style>
+ .oddrow
+{
+  background: #cbcfac;
+}
+
+.evenrow
+{
+  background: #dcdcc4;
+}
+</style>
+<table>
+  <tr><td colspan="2">&nbsp;</td></tr>
+  <tr>
+    <td>Name: </td>
+    <td><%=@profile.first_name %>&nbsp;<%= @profile.last_name %></td>
+  </tr>
+  <tr>
+    <td>Address: </td>
+    <td><%=@profile.address1 %><br/><%= @profile.address2 %><br/><%= @profile.city %><br/><%= @profile.state %><br/><%= @profile.zipcode %></td>
+  </tr>
+  <tr>
+    <td>Contact Number: </td>
+    <td><%=@profile.contact_number %></td>
+  </tr>
+  <tr>
+    <td>Email: </td>
+    <td><%=@profile.email_address %></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      &nbsp;
+    </td>
+</tr>
+</table>
+<table  width="100%" cellspacing="1" cellpadding="0" align="center">
+          <thead>
+           <tr bgcolor="#b8ba89">
+           <th>Season</th>
+           <th>Level </th>
+           <th>Category</th>
+           <th>Points</th>
+           </tr>
+          </thead>
+          <tbody>
+            <% for t in @history %>
+            <tr class="<%= cycle('oddrow', 'evenrow') %>">
+              <td><%= t.name %></td>
+              <td><%= t.category %></td>
+              <td><%= t.level %></td>
+              <td><%= t.points %></td>
+            </tr>
+            <% end %>
+          </tbody>
+       </table>

@@ -1,0 +1,52 @@
+<style>
+ .oddrow
+{
+  background: #cbcfac;
+}
+
+.evenrow
+{
+  background: #dcdcc4;
+}
+
+</style>
+<table width="100%" cellpadding="3" cellspacing="0">
+  <% if !@players.blank? %>
+  <thead>
+    <tr bgcolor="#b8ba89">
+      <th>
+        <span>#</span>
+      </th>
+      <th>
+        <span>Name</span>
+      </th>
+      <th>
+        <span>Points</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <%
+      i = 1
+      for player in @players
+    %>
+    <tr class="<%= cycle('oddrow', 'evenrow') %>">
+      <td>
+       <%= i %>
+      </td>
+      <td>
+       <%= player.name %>
+      </td>
+      <td align="center">
+       <%= player.points %>
+      </td>
+    </tr>
+    <%
+    i += 1
+    end
+    %>
+  </tbody>
+  <% else %>
+  <tr><td>No Players in this tournament.</td></tr>
+  <% end %>
+</table>

@@ -1,6 +1,6 @@
 class TournamentPlayersController < ApplicationController
 
-layout 'player'
+
 
  def tour_player_registration
     @id = session[:user_id]
@@ -10,6 +10,8 @@ layout 'player'
     @player_levels = PlayerLevel.find(:all)
     @category = @tournament.tournament_categories
     @area = AreaName.find(:all)
+    
+    render :layout => "player"
   end
  
  def create
@@ -43,6 +45,12 @@ layout 'player'
  def index
    @summary = Tournament.tournament_summary
    render :layout => "default"
+ end
+ 
+ def details
+  @tournament = Tournament.find(params[:id])
+  
+  
  end
  
 end

@@ -47,7 +47,7 @@
         <% if player.knockout.to_s == "1" %>
 
         <% if player.user_id.to_s == session[:user_id].to_s && @tournament.knockout_created.to_s != "1"%>
-        <input TYPE="checkbox" NAME="player<%= session[:user_id] %>" id="player<%= session[:user_id] %>" VALUE="<%= player.id %>" CHECKED onclick="new Ajax.Request('/players_playoffs/change_my_availability/<%= player.id %>', {asynchronous:true, evalScripts:true, parameters:'tournament=' + encodeURIComponent(value) + '&authenticity_token=' + encodeURIComponent('yFH51UxXdCBusprTn/Hjo348bvtCUr5S1eW291RganQ=')})"/>
+        <input TYPE="checkbox" NAME="player<%= session[:user_id] %>" id="player<%= session[:user_id] %>" VALUE="<%= player.id %>" CHECKED onclick="new Ajax.Request('/account_profile/change_my_availability/<%= player.id %>', {asynchronous:true, evalScripts:true, parameters:'tournament=' + encodeURIComponent(value) + '&authenticity_token=' + encodeURIComponent('yFH51UxXdCBusprTn/Hjo348bvtCUr5S1eW291RganQ=')})"/>
         <% else %>
         <input TYPE="checkbox" NAME="<%= player.id %>" id="player<%= player.id %>" VALUE="<%= player.knockout %>" CHECKED disabled />
         <% end %>

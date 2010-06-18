@@ -2,11 +2,14 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'users', :action => 'create'
+  map.profile '/profile', :controller => 'users', :action => 'profile'
+  map.acc_playing_details '/acc_playing_details', :controller => 'users', :action => 'acc_playing_details'
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.home '/home', :controller => 'users', :action => 'home'
   map.about_us '/about_us', :controller => 'users', :action => 'about_us'
   map.contact_us '/contact_us', :controller => 'users', :action => 'contact_us'
   map.new_acc '/new_acc', :controller => 'users', :action => 'new_acc'
+  map.index '/index', :controller => 'users', :action => 'index'
   
   map.resources :users
 

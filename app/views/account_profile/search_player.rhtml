@@ -1,0 +1,48 @@
+<div>
+<h3>Search Player</h3>
+</div>
+
+<div>
+
+<form action="/account_profile/search_player" id="player" method="post" onsubmit="new Ajax.Request('/account_profile/search_player', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;">
+<table width="95%">
+<tr>
+<td colspan="2">Enter at least the first 2 characters of the first name and last name and click on Search Now</td>
+</tr>
+<tr>
+<td>First Name</td>
+<td>
+ <input type="text" name="first" id="first" />
+</td>
+</tr>
+<tr>
+<td>Last Name</td>
+<td>
+ <input type="text" name="last" id="last" />
+</td>
+</tr>
+<tr>
+          <td colspan="2">
+            <input type="button" name="Search Now" class="button" value="Search Now" onclick="$('player').onsubmit();return false;"/>
+          </td>
+</tr>
+</table>
+</form>
+<table width="95%">
+<tr>
+  <td colspan="2">
+    <div id="player_search">
+    </div>
+  </td>
+</tr>
+</table>
+<table width="95%">
+<tr>
+  <td colspan="2">
+    <div id="player_history">
+    </div>
+  </td>
+</tr>
+</table>
+</div>
+

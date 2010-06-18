@@ -56,6 +56,13 @@ class User < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
 
+  def self.search_players(first_name, last_name)
+    query = %Q{ select u.id, first_name, last_name
+                from users u
+                join account_profiles ap on ap.user_id = u.id
+                where ap.first_name like '#{first_name}%' and ap.last_name like '#{last_name}%'}
+    find_by_sql(query)
+  end
   protected
   
  

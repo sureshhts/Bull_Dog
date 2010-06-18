@@ -44,6 +44,22 @@ layout "player"
       end
     end
   end
+
+  def my_playoff_standings
+    @tournaments = Tournament.find(:all)
+    if request.xml_http_request?
+      @tournament = Tournament.find_by_sql("select * from tournaments where id=#{params[:tournament]}")[0]
+      @players = TournamentPlayer.tournament_players_league_standings(params[:tournament])
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'my_play_off',:partial => "my_playoff_standings"
+          end
+        }
+      end
+    end
+  end
   
   def list
    

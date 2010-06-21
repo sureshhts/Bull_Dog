@@ -1,0 +1,33 @@
+<div>
+<h3>Tournament Draw</h3>
+</div>
+
+<div>
+
+<form action="/players_playoffs/playoff_knockout_score" enctype="multipart/form-data" method="post">
+<table width="95%">
+
+<tr>
+<td>Select Tournament</td>
+<td>
+ <select name="tournament_id" id="tournament_id" >
+  <option value="0">Select Tournament</option>
+  <%  @tournaments.each do |t| %>
+   <option value="<%= t.id %>"><%= t.name %> </option>
+  <%  end %>
+ </select>
+  <%=observe_field "tournament_id",
+      :url => {:controller => 'players_playoffs', :action => 'tournament_draw'},
+      :on => 'change',
+      :with => "tournament_id"%>
+</td>
+</tr>
+<tr>
+  <td colspan="2">
+    <div id="td_div">
+    </div>
+  </td>
+</tr>
+</table>
+</form>
+</div>

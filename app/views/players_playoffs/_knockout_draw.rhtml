@@ -1,7 +1,7 @@
 <table cellspacing=0 cellpadding=0>
   <tr>
     <td>&nbsp;&nbsp;</td>
-    <% i = 1
+    <% i = 1        
        until i > @pob.rounds - 1 %>
     <td>Round <%= i %></td>
     <td>&nbsp;&nbsp;</td>
@@ -20,9 +20,19 @@
       <img src="/images/<%= row[j] %>.gif" />
       <% end %>
     </td>
-    <td>
+    <td align="right">
       <% if row[j] == "mid" && (row[j+1] == "top" || row[j+1] == "low" || row[j+1] == "non") %>
-      &nbsp;<%= @level_ko_games[i.to_s].pop %>&nbsp;
+      <% ko_game = KnockoutGame.find(@level_ko_games[i.to_s].pop)
+         display_image = "yellow"
+         display_text = nil
+         if !ko_game.winner.blank?
+           display_text = knockout_player_display(ko_game.winner, ko_game)
+           display_image = "green"
+         else
+           display_text = knockout_game_display(ko_game)
+         end
+      %>
+      <img src="/images/<%= display_image %>.png" onmouseout="hideTooltip()" onmouseover="showTooltip(event,'<%= display_text %>');return false"/>
       <% else %>
         <% if row[j] == "non" && (row[j+1] == "top" || row[j+1] == "low") %>
           <img src="/images/non.gif" />

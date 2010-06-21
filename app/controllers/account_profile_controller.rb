@@ -187,5 +187,35 @@ layout "player"
   
   end
 
+
+  def show_pic
+    user_id = session[:user_id]
+    @tour_player = TournamentPlayer.find(:all, :conditions => ["user_id=?", user_id])
+    @tour_player.each do |p|
+     @tournament = Tournament.find(:all, :conditions => ["id=?", p.tournament_id])
+    end 
+    
+   
+  end
+  
+  def pictures
+  
+   id=  params[:tournament_id]
+    @tournament = Tournament.find(:first, :conditions => ["id=?",id])
+   @pic = TournamentPhoto.find(:all, :conditions => ["tournament_id=?",id])
+   
+   if request.xml_http_request?
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'div1',:partial => "pics"
+          end
+        }
+      end
+    end
+  
+  end
+  
   
 end

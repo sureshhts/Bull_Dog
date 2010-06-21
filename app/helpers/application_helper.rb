@@ -36,4 +36,28 @@ module ApplicationHelper
     end
     return points, display_text
   end
+
+  def knockout_player_display(player, lsg)
+      display_text = ""
+      op_profile = player.user.account_profile
+      display_text += "#{op_profile.first_name} #{op_profile.last_name}"
+      display_text += "<br>"
+      scores_text = []              
+      scores_text = ["#{lsg.winner_set_1.to_i}","-","#{lsg.loser_set_1.to_i}"," ","#{lsg.winner_set_2.to_i}","-","#{lsg.loser_set_2.to_i}"," ","#{lsg.winner_set_3.to_i}","-","#{lsg.loser_set_3.to_i}"]
+      display_text += scores_text.join       
+    
+    return display_text
+  end
+
+  def knockout_game_display(ko_game)
+    players = ko_game.tournament_players
+    display_text = "Yet to Play"
+    if !players.blank? && players.length == 2
+      player1 = players[0].user.account_profile
+      player2 = players[1].user.account_profile
+      display_text += "<br>"
+      display_text += "#{player1.first_name} #{player1.last_name} vs #{player2.first_name} #{player2.last_name}"
+    end
+    return display_text
+  end
 end

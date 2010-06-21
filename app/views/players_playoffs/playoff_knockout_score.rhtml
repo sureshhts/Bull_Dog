@@ -1,0 +1,14 @@
+<div style="text-align: center; border-width: 5px; border-color: #cbcfac; border-style:double;min-height:100px;"><h3>Knockout Draw</h3></div>
+  <table width="95%">
+    <tr>
+     <td width="30%">Tournament Name: </td>
+      <td>
+       <%= @tournament.name %>
+    </td>
+    </tr>
+  </table>
+ <br/>
+
+<div id="kot">
+  <%= render :partial => "knockout_draw" %>
+</div>

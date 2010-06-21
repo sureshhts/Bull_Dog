@@ -10,8 +10,10 @@ ActionController::Routing::Routes.draw do |map|
   map.contact_us '/contact_us', :controller => 'users', :action => 'contact_us'
   map.new_acc '/new_acc', :controller => 'users', :action => 'new_acc'
   map.index '/index', :controller => 'users', :action => 'index'
+  map.edit_acc '/edit_acc', :controller => 'users', :action => 'edit_acc'
+  map.update '/update', :controller => 'users', :action => 'update'
   
-  map.resources :users
+    map.resources :users
 
   map.resource :session
 

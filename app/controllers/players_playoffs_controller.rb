@@ -11,6 +11,10 @@ protect_from_forgery :only => [:destroy]
    @tournaments = Tournament.find(:all) 
   end
 
+  def knockout_score
+   @tournaments = Tournament.find(:all)
+  end
+
   def playoff_tournament
     @tp = TournamentPlayer.find_by_sql("select * from tournament_players where tournament_id='#{params[:tournament_id]}' and user_id='#{session[:user_id]}'")[0]
     if @tp != nil
@@ -29,6 +33,106 @@ protect_from_forgery :only => [:destroy]
         }
       end
     end
+  end
+
+  def playoff_knockout_tournament
+    @tournament = Tournament.find(params[:tournament_id])
+    @player = TournamentPlayer.find_by_sql("select * from tournament_players where tournament_id = #{params[:tournament_id]} and user_id = #{session[:user_id]}")[0]
+    ko_games = @player.knockout_games
+    @selected_game = nil
+    for game in ko_games
+      if game.winner_score.blank? && game.loser_score.blank?
+        @selected_game = game
+      end
+    end
+    @ko_players = @selected_game.tournament_players
+    @opponent = nil
+    @opponent_profile = nil
+    
+    for kop in @ko_players
+      if kop.id.to_s != @player.id.to_s
+        @opponent = kop
+        @opponent_profile = @opponent.user.account_profile
+      end
+    end
+    if request.xml_http_request?
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'div1',:partial => "playoff_knockout_score"
+          end
+        }
+      end
+    end
+  end
+
+  def playoff_knockout_score
+    player = TournamentPlayer.find(params[:player])
+    opponent = TournamentPlayer.find(params[:opponent])
+    knockout_game = KnockoutGame.find(params[:game])
+
+    case params[:score][:sets]
+      when "won"  then
+        opponent_points = lookup(params[:p2g1].to_i + params[:p2g2].to_i)
+        knockout_game.update_attributes(:winner => player, :loser => opponent, :winner_set_1 => params[:p1g1], :winner_set_2 => params[:p1g2], :loser_set_1 => params[:p2g1], :loser_set_2 => params[:p2g2], :winner_score => 10, :loser_score => opponent_points)
+        pl_points = ((player.points.blank?)? 0 : player.points.to_i) + 10
+        op_points = ((opponent.points.blank?)? 0 : opponent.points.to_i) + opponent_points
+        player.update_attributes(:points => pl_points)
+        opponent.update_attributes(:points => op_points)
+      when "won3"  then
+        knockout_game.update_attributes(:winner => player, :loser => opponent, :winner_set_1 => params[:p1g1], :winner_set_2 => params[:p1g2], :winner_set_3 => params[:p1g3], :loser_set_1 => params[:p2g1], :loser_set_2 => params[:p2g2], :loser_set_3 => params[:p2g3], :winner_score => 8, :loser_score => 6)
+        pl_points = ((player.points.blank?)? 0 : player.points.to_i) + 8
+        op_points = ((opponent.points.blank?)? 0 : opponent.points.to_i) + 6
+        player.update_attributes(:points => pl_points)
+        opponent.update_attributes(:points => op_points)
+      when "lost"  then
+        player_points = lookup(params[:p1g1].to_i + params[:p1g2].to_i)
+        knockout_game.update_attributes(:loser => player, :winner => opponent, :winner_set_1 => params[:p2g1], :winner_set_2 => params[:p2g2], :loser_set_1 => params[:p1g1], :loser_set_2 => params[:p1g2], :winner_score => 10, :loser_score => player_points)
+        pl_points = ((player.points.blank?)? 0 : player.points.to_i) + player_points
+        op_points = ((opponent.points.blank?)? 0 : opponent.points.to_i) + 10
+        player.update_attributes(:points => pl_points)
+        opponent.update_attributes(:points => op_points)
+      when "lost3"  then
+        knockout_game.update_attributes(:loser => player, :winner => opponent, :winner_set_1 => params[:p2g1], :winner_set_2 => params[:p2g2], :winner_set_3 => params[:p2g3], :loser_set_1 => params[:p1g1], :loser_set_2 => params[:p1g2], :loser_set_3 => params[:p1g3], :winner_score => 6, :loser_score => 8)
+        pl_points = ((player.points.blank?)? 0 : player.points.to_i) + 6
+        op_points = ((opponent.points.blank?)? 0 : opponent.points.to_i) + 8
+        player.update_attributes(:points => pl_points)
+        opponent.update_attributes(:points => op_points)
+      when "default" then
+        knockout_game.update_attributes(:loser => player, :winner => opponent, :winner_set_1 => 1, :winner_set_2 => 1, :winner_set_3 => 1, :loser_set_1 => 0, :loser_set_2 => 0, :loser_set_3 => 0, :winner_score => 7, :loser_score => 0)
+        op_points = ((opponent.points.blank?)? 0 : opponent.points.to_i) + 7
+        opponent.update_attributes(:points => op_points)
+      when "opp_default"  then
+        knockout_game.update_attributes(:loser => opponent, :winner => player, :winner_set_1 => 1, :winner_set_2 => 1, :winner_set_3 => 1, :loser_set_1 => 0, :loser_set_2 => 0, :loser_set_3 => 0, :winner_score => 7, :loser_score => 0)
+        pl_points = ((player.points.blank?)? 0 : player.points.to_i) + 7
+        player.update_attributes(:points => pl_points)
+      when "tie"  then "allotted_players"
+        knockout_game.update_attributes(:loser => player, :winner => opponent, :winner_set_1 => 1, :winner_set_2 => 1, :winner_set_3 => 1, :loser_set_1 => 1, :loser_set_2 => 1, :loser_set_3 => 1, :winner_score => 5, :loser_score => 5)
+        pl_points = ((player.points.blank?)? 0 : player.points.to_i) + 5
+        op_points = ((opponent.points.blank?)? 0 : opponent.points.to_i) + 5
+        player.update_attributes(:points => pl_points)
+        opponent.update_attributes(:points => op_points)
+    end
+    
+    KnockoutGamePlayer.create(:knockout_game_id => knockout_game.parent_game_id, :tournament_player_id => knockout_game.winner.id)
+
+    @tournament = player.tournament
+    all_players = TournamentPlayer.tournament_players_league_standings(@tournament.id)
+    rank = 1
+    @ko_players = Hash.new
+    for player in all_players
+      if player.knockout.to_s == "1"
+        @ko_players[rank.to_s] = [player.id, player.name]
+        rank += 1
+      end
+    end
+
+    @pob = Bracket::PlayoffBracket.new(@ko_players.size)
+    @pob.tournament_single_elimination_bracket
+    @pob.bracket_players
+
+    @level_ko_games = KnockoutGame.level_knockout_games(@tournament.id, @pob.rounds - 1)
   end
 
   def playoff_tournament_schedule
@@ -238,36 +342,36 @@ protect_from_forgery :only => [:destroy]
       end
     end
 
-    pob = Bracket::PlayoffBracket.new(@ko_players.size)
-    pob.tournament_single_elimination_bracket
-    pob.bracket_players
+    @pob = Bracket::PlayoffBracket.new(@ko_players.size)
+    @pob.tournament_single_elimination_bracket
+    @pob.bracket_players
 
-    pure, ko, n = pob.determine_pure_knockout_level
-    pob.levels = n-1
+    pure, ko, n = @pob.determine_pure_knockout_level
+    @pob.levels = n-1
     i = 0
-    (pob.levels).times do
+    (@pob.levels).times do
       level_name = "G:"
       no_of_games_in_this_level = 2**i
       j = 1
       no_of_games_in_this_level.times do
         ko_game = KnockoutGame.create(:tournament_id => @tournament.id, :round => i+1)
-        pob.games.push("#{level_name}#{ko_game.id}")
+        @pob.games.push("#{level_name}#{ko_game.id}")
         j+=1
       end
       i += 1
     end
 
-    pob.create_game_tree
+    @pob.create_game_tree
 
     leaves = Array.new
-    pob.root.each_leaf{|leaf|
+    @pob.root.each_leaf{|leaf|
       leaves.push(leaf)
     }
 
     if pure
       i = 0
       for l in leaves
-        team = pob.teams[i]
+        team = @pob.teams[i]
         l << Tree::TreeNode.new("#{@ko_players[team['player1']]}", "player")
         l << Tree::TreeNode.new("#{@ko_players[team['player2']]}", "player")
         i += 1
@@ -279,7 +383,7 @@ protect_from_forgery :only => [:destroy]
       j = 1
 
       for l in leaves
-        team = pob.teams[i]
+        team = @pob.teams[i]
         l << Tree::TreeNode.new("#{@ko_players[team['player1']]}", "player")
         if !team["player2"].blank?
           l << Tree::TreeNode.new("#{@ko_players[team['player2']]}", "player")
@@ -288,7 +392,7 @@ protect_from_forgery :only => [:destroy]
           sub_node = l << Tree::TreeNode.new("#{level_name}#{ko_game.id}", "game")
           j += 1
           i += 1
-          team = pob.teams[i]
+          team = @pob.teams[i]
           sub_node << Tree::TreeNode.new("#{@ko_players[team['player1']]}", "player")
           sub_node << Tree::TreeNode.new("#{@ko_players[team['player2']]}", "player")
         end
@@ -299,7 +403,7 @@ protect_from_forgery :only => [:destroy]
       end
     end
 
-    pob.root.each{|game|
+    @pob.root.each{|game|
       if game.content == "game"
         ko_game_id = game.name.split(":")[1]
         ko_game = KnockoutGame.find(ko_game_id)
@@ -313,7 +417,7 @@ protect_from_forgery :only => [:destroy]
         KnockoutGamePlayer.create(:knockout_game_id => ko_game_id, :tournament_player_id => ko_game_player_id)
       end
     }
-    
+    @tournament.update_attributes(:knockout_rounds => @pob.rounds)
   end
 
   def view_knockout_draw
@@ -336,6 +440,37 @@ protect_from_forgery :only => [:destroy]
     if isAdmin?
       render :layout => "default"
     end
+  end
+
+  def tournament_draw
+    @tournaments = Tournament.find(:all)
+    if request.xml_http_request?
+      @tournament = Tournament.find(params[:tournament_id])
+      all_players = TournamentPlayer.tournament_players_league_standings(params[:tournament_id])
+      rank = 1
+      @ko_players = Hash.new
+      for player in all_players
+        if player.knockout.to_s == "1"
+          @ko_players[rank.to_s] = [player.id, player.name]
+          rank += 1
+        end
+      end
+
+      @pob = Bracket::PlayoffBracket.new(@ko_players.size)
+      @pob.tournament_single_elimination_bracket
+      @pob.bracket_players
+
+      @level_ko_games = KnockoutGame.level_knockout_games(@tournament.id, @pob.rounds - 1)
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'td_div',:partial => "knockout_draw"
+          end
+        }
+      end
+    end
+
   end
   
 end

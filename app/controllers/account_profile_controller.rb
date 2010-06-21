@@ -166,4 +166,26 @@ layout "player"
   
   end
   
+  def champion_pic
+    user_id = session[:user_id]
+    @tour_player = TournamentPlayer.find(:all, :conditions => ["user_id=?", user_id])
+    @tour_player.each do |p|
+     @tournament = Tournament.find(:all , :conditions => ["id=?", p.tournament_id])
+    end
+  end
+  
+  def add_pic
+    @tour_pic = TournamentPhoto.create(params[:tournament])
+
+  if @tour_pic .save
+   
+    flash[:notice] = 'Photos uploaded successfully.'
+       redirect_to :action => 'home', :controller => 'account_profile'
+  else
+    render :action => "#"
+  end
+  
+  end
+
+  
 end

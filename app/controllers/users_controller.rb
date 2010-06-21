@@ -178,4 +178,27 @@ class UsersController < ApplicationController
    render :layout => 'default'
   end
   
+  def edit_acc
+  
+    @user = User.find(params[:id])
+    render :layout => 'default'
+  end
+  
+  def update
+   @user = User.find(params[:id])
+  
+   if @user.update_attributes(params[:user])
+      flash[:notice] = 'Your changes are successfully updated.'
+      redirect_to :action => 'index', :controller => 'users'
+    else
+     
+    end
+  end
+  
+  def delete
+  
+    User.delete(params[:id])
+  	redirect_to :controller => 'users', :action => 'index'
+  end
+  
 end

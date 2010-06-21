@@ -1,0 +1,43 @@
+<div style="margin-left:20px;">
+
+<h3>Edit Account</h3>
+
+<div>
+<% form_for(:user, :url => {:controller =>'users', :action => 'update', :id => @user.id}, :html => { :multipart => true }) do |f| %>
+<table width="95%">
+
+<tr>
+ <td>Name</td>
+  <td><%= f.text_field :login %></td>
+</tr>
+
+<tr>
+ <td>EmailID</td>
+  <td><%= f.text_field :email %></td>
+</tr>
+
+<tr>
+ <td><a href="#" onclick="Effect.Appear('password');">Change Password</a></td>
+<tr>
+
+<tr>
+ <td>
+ <div id="password" style="display:none;">
+ New Password <input type="password">
+ </div>
+ </td>
+</tr>
+
+<tr>
+	<td>
+	<%= submit_tag "Update", :class => "button" %>
+	<a href="/index" class="button" >Cancel</a>
+	</td>
+</tr>
+
+
+</table>
+<%end%>
+</div>
+
+</div>

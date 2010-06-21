@@ -1,0 +1,37 @@
+<div style="margin-left:30px;">
+
+<h3>Upload Champion Pictures </h3>
+
+<div>
+<% form_for(:tournament, :url => {:controller => 'account_profile', :action => 'add_pic'}, :html => { :multipart => true }) do |f| %>
+<table width="95%">
+<tr>
+<td>Tournament </td>
+<td>
+ <select name="tournament[tournament_id]" id="tournament_tournament_id" >
+ <option value="Null">Select Tournament</option>
+ <%@tournament.each do |t| %>
+  <option value="<%=t.id%>"><%=t.name%></option>
+ <%end%>
+ </select>
+</td>
+</tr>
+
+<tr>
+      <td><p>Upload Photo </td>
+      <td><%= f.file_field :photo %></td> 
+</tr>
+
+
+<tr>
+	<td>
+	<%= submit_tag "Submit" , :class => "button"%>
+	<a href="/tournament_players/index" class="button">Cancel</a>
+	</td>
+</tr>
+
+</table>
+<%end%>
+</div>
+
+</div>

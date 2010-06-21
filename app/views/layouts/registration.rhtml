@@ -28,7 +28,7 @@ body {
             <td width="479" align="right"><img src="/images/wherewinning_text.png" width="300" height="87"></td>
             <td width="25">&nbsp;</td>
             <td width="278" height="182" background="/images/login_bg.png">
-             
+            <% form_tag session_path do -%>
               <table width="100%"  border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="4%" height="34">&nbsp;</td>
@@ -47,15 +47,15 @@ body {
                         <td height="10" colspan="2"></td>
                         </tr>
                       <tr>
-                        <td width="35%" align="right" class="black_text">Email:</td>
+                        <td width="35%" align="right" class="black_text">Userid:</td>
                         <td width="65%">
-                            <input type="text" name="textfield">
+                           <%= text_field_tag 'login', @login, :size => '22' %>
                         </td>
                       </tr>
                       <tr>
                         <td align="right" class="black_text">Password:</td>
                         <td>
-                            <input type="text" name="textfield2">
+                          <%= password_field_tag 'password', nil, :size => '22'  %>
                         </td>
                       </tr>
                       <tr>
@@ -71,13 +71,13 @@ body {
                       </tr>
                       <tr align="center">
                         <td height="30" colspan="2">
-                            <input name="Submit" type="submit" class="login_button" value="LOG IN">
+                             <%= submit_tag 'Log in', :class => 'login_button' %>
                         </td>
                       </tr>
                   </table></td>
                   <td>&nbsp;</td>
                 </tr>
-              </table>              </td>
+              </table>  <%end%>            </td>
           </tr>
         </table></td>
       </tr>
@@ -98,7 +98,7 @@ body {
       <tr>
         <td valign="top"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td><img src="/images/register_header.jpg" width="533" height="34"></td>
+        <!--    <td><img src="/images/register_header.jpg" width="533" height="34"></td> -->
           </tr>
           <tr>
             <td height="10"></td>

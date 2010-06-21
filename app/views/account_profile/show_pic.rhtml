@@ -1,0 +1,49 @@
+<head>
+<script>
+
+	funtion show_pic()
+	{
+	 alert("show picture");
+	 
+	
+	}
+
+</script>
+</head>
+
+<div style="margin-left:30px;">
+
+<h3>Champion Pictures </h3>
+
+<div>
+
+<table width="95%">
+<tr>
+<td>Tournament </td>
+<td>
+ <select name="tournament_id" id="tournament_id">
+ <option value="Null">Select Tournament</option>
+ <%@tournament.each do |t| %>
+  <option value="<%=t.id%>"><%=t.name%></option>
+ <%end%>
+ </select>
+ 
+ <%=observe_field "tournament_id",
+      :url => {:controller => 'account_profile', :action => 'pictures'},
+      :on => 'change',
+      :with => "tournament_id"%>
+</td>
+</tr>
+
+
+<tr>
+  <td colspan="2">
+    <div id="div1">
+    </div>
+  </td>
+</tr>
+
+</table>
+</div>
+
+</div>

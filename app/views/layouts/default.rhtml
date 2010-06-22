@@ -29,6 +29,14 @@ body {
 .style2 {font-size: 18px}
 -->
 </style>
+<script>  
+  function closeMe()
+  {
+    //alert("Test");
+    document.getElementById('notification').style.display='none';
+    //document.getElementById('fade').style.display='none';
+  }
+</script>
 
 </head>
 
@@ -65,6 +73,7 @@ body {
                   <li> <a href="/index" class="menulink">Account</a>
                     <ul style="overflow: hidden; display: block; height: 0px; z-index: 117; opacity: 0.0208333;">
                         <li> <a href="/new_acc" class="sub">New Account</a> </li>
+                         <li> <a href="/change_password" class="sub">Change Password</a> </li>
                     </ul>
                   </li>  
                                                                                      
@@ -85,12 +94,21 @@ body {
 		
       <tr>
         <td width="72%" valign="top"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td height="80">&nbsp;</td>
-          </tr>
+           <tr>
+     <td> 
+     <% if flash[:notice] %>
+        <% unless flash[:notice].blank? %>
+
+	  <div id="notification" style=" background: transparent url(/images/orange_shade1.jpg) repeat scroll 0% 0%; width: 988px; height:39px;color: black; font-family: Helvetica; font-size: 12px;"><span style="padding-top:10px;margin-left:5px;"><%= flash[:notice] %></span><div style="color: black; cursor: pointer; font-family: Helvetica; font-size: 12px;margin-left:950px;" ><a href='#' onClick="closeMe();"><u>Close</u></a></div></div>
+	<% end %>
+	
+	<%else %>
+	 <%= flash[:error] %>
+	 <div id="notification" style=" background: transparent url(/images/orange_shade1.jpg) repeat scroll 0% 0%; width: 988px; height:39px;color: black; font-family: Helvetica; font-size: 12px;"><span style="padding-top:10px;margin-left:5px;"><%= flash[:notice] %></span><div style="color: black; cursor: pointer; font-family: Helvetica; font-size: 12px;margin-left:950px;" ><a href='#' onClick="closeMe();"><u>Close</u></a></div></div>
+	 <%end%>
+       </td>
+  </tr>    
+
           <tr>
             <td><span class="content_text"><%= yield %> </span></td>
           </tr>

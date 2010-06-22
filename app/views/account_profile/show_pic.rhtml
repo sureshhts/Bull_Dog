@@ -14,7 +14,7 @@
 <div style="margin-left:30px;">
 
 <h3>Champion Pictures </h3>
-
+<a href="/account_profile/champion_pic" style="text-decoration:underline">Upload Champion Pictures</a>
 <div>
 
 <table width="95%">
@@ -25,7 +25,7 @@
  <option value="Null">Select Tournament</option>
  <%@tournament.each do |t| %>
   <option value="<%=t.id%>"><%=t.name%></option>
- <%end%>
+  <%end%>
  </select>
  
  <%=observe_field "tournament_id",

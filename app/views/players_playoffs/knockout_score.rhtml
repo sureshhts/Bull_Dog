@@ -26,6 +26,67 @@
       document.getElementById("p2g3").style.display="none";
       return false;
     }
+    if(document.forms[0].score_sets.value=='lost')
+    {
+      Effect.Appear('winner_score');
+      Effect.Appear('p1g1');
+      Effect.Appear('p1g2');
+      Effect.Appear('looser_score');
+      Effect.Appear('p2g1');
+      Effect.Appear('p2g2');
+      document.getElementById("p1g3").style.display="none";
+      document.getElementById("p2g3").style.display="none";
+      return false;
+    }
+    if(document.forms[0].score_sets.value== 'lost3')
+    {
+      Effect.Appear('winner_score');
+      Effect.Appear('p1g1');
+      Effect.Appear('p1g2');
+      Effect.Appear('p1g3');
+      Effect.Appear('looser_score');
+      Effect.Appear('p2g1');
+      Effect.Appear('p2g2');
+      Effect.Appear('p2g3');
+      return false;
+    }
+    if(document.forms[0].score_sets.value== 'default')
+    {
+      document.getElementById("winner_score").style.display="none";
+      document.getElementById("p1g1").style.display="none";
+      document.getElementById("p1g2").style.display="none";
+      document.getElementById("p1g3").style.display="none";
+      document.getElementById("looser_score").style.display="none";
+      document.getElementById("p2g1").style.display="none";
+      document.getElementById("p2g2").style.display="none";
+      document.getElementById("p2g3").style.display="none";
+      return false;
+    }
+    if(document.forms[0].score_sets.value== 'opp_default')
+    {
+      document.getElementById("winner_score").style.display="none";
+      document.getElementById("p1g1").style.display="none";
+      document.getElementById("p1g2").style.display="none";
+      document.getElementById("p1g3").style.display="none";
+      document.getElementById("looser_score").style.display="none";
+      document.getElementById("p2g1").style.display="none";
+      document.getElementById("p2g2").style.display="none";
+      document.getElementById("p2g3").style.display="none";
+      return false;
+    }
+    if(document.forms[0].score_sets.value== 'tie')
+    {
+      document.getElementById("winner_score").style.display="none";
+      document.getElementById("p1g1").style.display="none";
+      document.getElementById("p1g2").style.display="none";
+      document.getElementById("p1g3").style.display="none";
+      document.getElementById("looser_score").style.display="none";
+      document.getElementById("p2g1").style.display="none";
+      document.getElementById("p2g2").style.display="none";
+      document.getElementById("p2g3").style.display="none";
+      return false;
+    }
+
    return true;
 
  }

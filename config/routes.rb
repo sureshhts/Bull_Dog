@@ -12,8 +12,10 @@ ActionController::Routing::Routes.draw do |map|
   map.index '/index', :controller => 'users', :action => 'index'
   map.edit_acc '/edit_acc', :controller => 'users', :action => 'edit_acc'
   map.update '/update', :controller => 'users', :action => 'update'
+  map.change_password '/change_password', :controller => 'users', :action => 'change_password'
+  map.update_password '/update_password', :controller => 'users', :action => 'update_password' 
   
-    map.resources :users
+  map.resources :users
 
   map.resource :session
 

@@ -180,9 +180,9 @@ layout "player"
   if @tour_pic .save
    
     flash[:notice] = 'Photos uploaded successfully.'
-       redirect_to :action => 'home', :controller => 'account_profile'
+       redirect_to :action => 'show_pic', :controller => 'account_profile'
   else
-    render :action => "#"
+    render :action => "champion_pic"
   end
   
   end
@@ -215,6 +215,10 @@ layout "player"
       end
     end
   
+  end
+  
+  def change_password
+   id = session[:user_id]
   end
   
   

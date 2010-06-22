@@ -338,6 +338,7 @@ protect_from_forgery :only => [:destroy]
     for player in all_players
       if player.knockout.to_s == "1"
         @ko_players[rank.to_s] = [player.id, player.name]
+        TournamentPlayer.find(player.id).update_attributes(:knockout_rank => rank)
         rank += 1
       end
     end
@@ -422,14 +423,11 @@ protect_from_forgery :only => [:destroy]
 
   def view_knockout_draw
     @tournament = Tournament.find(params[:id])
-    all_players = TournamentPlayer.tournament_players_league_standings(params[:id])
-    rank = 1
+    all_players = TournamentPlayer.tournament_players_knockout_standings(params[:id])
+
     @ko_players = Hash.new
     for player in all_players
-      if player.knockout.to_s == "1"
-        @ko_players[rank.to_s] = [player.id, player.name]
-        rank += 1
-      end
+      @ko_players[player.knockout_rank.to_s] = [player.id, player.name]
     end
 
     @pob = Bracket::PlayoffBracket.new(@ko_players.size)
@@ -446,14 +444,11 @@ protect_from_forgery :only => [:destroy]
     @tournaments = Tournament.find(:all)
     if request.xml_http_request?
       @tournament = Tournament.find(params[:tournament_id])
-      all_players = TournamentPlayer.tournament_players_league_standings(params[:tournament_id])
-      rank = 1
+      all_players = TournamentPlayer.tournament_players_knockout_standings(params[:tournament_id])
+      
       @ko_players = Hash.new
-      for player in all_players
-        if player.knockout.to_s == "1"
-          @ko_players[rank.to_s] = [player.id, player.name]
-          rank += 1
-        end
+      for player in all_players        
+        @ko_players[player.knockout_rank.to_s] = [player.id, player.name]
       end
 
       @pob = Bracket::PlayoffBracket.new(@ko_players.size)

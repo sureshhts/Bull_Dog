@@ -143,6 +143,7 @@ class UsersController < ApplicationController
 	      @playing_details = AccountPlayingDetail.create(:player_level_id => new_level, :facility_id => params[:account][:facility_id], :user_id  => 	   	      params[:playing_details][:user_id])
 	      
 	      if @playing_details.save
+	       Mailer.deliver_signup_activation(@user, self)
 		   flash[:notice] =  'Account Playing Details Created Successfully'
 		   redirect_to :action => 'home', :controller => 'users'
 		  end 
@@ -195,10 +196,42 @@ class UsersController < ApplicationController
     end
   end
   
+  def change_password
+    id = session[:user_id]
+    render :layout => 'default'
+  end
+  
+  def update_password
+    if User.authenticate(current_user.login, params[:old_password])
+       if ((params[:password] == params[:password_confirmation]) && !params[:password_confirmation].blank?)
+       current_user.password_confirmation = params[:password_confirmation]
+       current_user.password = params[:password]
+                
+        if current_user.save!
+          flash[:notice] = "Password successfully updated"
+          redirect_to :action => "home"
+        else
+          flash[:alert] = "Password not changed"
+          render :action => 'change_password'
+        end
+                
+       else
+          flash[:alert] = "New Password mismatch" 
+          render :action => 'change_password'
+       end
+    else
+       flash[:alert] = "Old password incorrect" 
+       render :action => 'change_password'
+    end
+  
+  end
+  
   def delete
   
     User.delete(params[:id])
   	redirect_to :controller => 'users', :action => 'index'
   end
   
+  
+ 
 end

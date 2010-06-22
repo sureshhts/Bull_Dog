@@ -23,6 +23,16 @@ class TournamentPlayer < ActiveRecord::Base
     find_by_sql(query)
   end
 
+  def self.tournament_players_knockout_standings(tournament)
+    query = %Q{ select tp.id, concat(ap.first_name,' ',ap.last_name) as name, ap.contact_number, ap.email_address, tp.points, tp.knockout_rank, tp.user_id
+                from tournament_players tp
+                join users u on u.id = tp.user_id
+                join account_profiles ap on u.id = ap.user_id
+                where tp.tournament_id = #{tournament} and tp.knockout = '1'
+                order by knockout_rank }
+    find_by_sql(query)
+  end
+
   def self.tournament_players_level_standings(tournament, level)
     query = %Q{ select tp.id, concat(ap.first_name,' ',ap.last_name) as name, ap.contact_number, ap.email_address, tp.points, tp.knockout, tp.user_id
                 from tournament_players tp

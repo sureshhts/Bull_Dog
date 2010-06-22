@@ -2,9 +2,15 @@
 <tr>
 <td>
  
-<h3>Champion Pictures of  "<%= @tournament.name %>"</h3>
-  <% @pic.each do |p| %>
- <%= image_tag p.photo.url(:thumb) %> <br/><br/>
+
+ 
+   <% if @pic.size == 0%>
+     <p> No picture available for this tournament </p>
+   <%else%>
+   <h3>Champion Pictures of  "<%= @tournament.name %>"</h3>
+    <% @pic.each do |p| %>
+      <%= image_tag p.photo.url(:thumb) %> <br/><br/>
+    <%end%>
  <%end%>
 
 </td>

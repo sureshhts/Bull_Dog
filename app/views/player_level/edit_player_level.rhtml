@@ -1,0 +1,23 @@
+<div>
+<h3>Edit Player Level </h3>
+</div>
+
+<div>
+<% form_for(:level, :url => {:controller => 'player_level', :action => 'update', :id => params[:id]}, :html => { :multipart => true }) do |f| %>
+<table width="95%">
+<tr>
+ <td>Name</td>
+  <td><%= f.text_field :name %></td>
+</tr>
+
+<tr>
+	<td>
+	<%= submit_tag "Update", :class => "button" %>
+	<a href="/player_level/index" class="button" >Cancel</a>
+	</td>
+</tr>
+
+
+</table>
+<%end%>
+</div>

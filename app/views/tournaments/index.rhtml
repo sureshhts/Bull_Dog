@@ -33,8 +33,10 @@
  <th>Kind of Tournament </th>
  <th>Start Date</th>
  <th>End Date</th>
- <th>Edit</td>
- <th>Delete</td>
+ <th>Torunament Start Date</th>
+ <th>Torunament End Date</th>
+ <th>Edit</th>
+ <th>Delete</th>
 
  </tr>
 </thead>
@@ -59,6 +61,8 @@
    </td>
  <td valign="top"> <%= Time.at(t.registration_starts).strftime("%m/%d/%y") %>&nbsp;</td>
  <td valign="top"> <%= Time.at(t.registration_ends).strftime("%m/%d/%y") %>&nbsp;</td>
+ <td valign="top"> <%= Time.at(t.tournament_starts).strftime("%m/%d/%y") %>&nbsp;</td>
+ <td valign="top"> <%= Time.at(t.tournament_ends).strftime("%m/%d/%y") %>&nbsp;</td>
  <td align="center"><a href="/tournaments/edit_tournament/<%= t.id%>" title="modify"><image src="/images/edit_icon.png" align="center" style="border: 0px"/></a></td>
  <td align="center"><a href="/tournaments/delete/<%= t.id%>" title="drop" onClick="return confirm('Are you sure you want to delete?')"><image src="/images/delete_icon.png" style="border: 0px"/></a></td>
  

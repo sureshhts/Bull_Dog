@@ -501,6 +501,7 @@
     font-weight:bold;
     padding: 1px 3px;
     background-image:url(/images/btn_bg.jpg);
+    text-decoration:none;
 }
 .button: hover
  {

@@ -103,8 +103,9 @@ body {
 	<% end %>
 	
 	<%else %>
-	 <%= flash[:error] %>
+	 <% if flash[:error] %>
 	 <div id="notification" style=" background: transparent url(/images/orange_shade1.jpg) repeat scroll 0% 0%; width: 988px; height:39px;color: black; font-family: Helvetica; font-size: 12px;"><span style="padding-top:10px;margin-left:5px;"><%= flash[:notice] %></span><div style="color: black; cursor: pointer; font-family: Helvetica; font-size: 12px;margin-left:950px;" ><a href='#' onClick="closeMe();"><u>Close</u></a></div></div>
+	 <%end%>
 	 <%end%>
        </td>
   </tr>    

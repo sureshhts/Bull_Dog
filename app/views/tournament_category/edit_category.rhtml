@@ -1,0 +1,25 @@
+<div>
+<h3>Edit Tournament Category </h3>
+</div>
+
+<div>
+<% form_for(:category, :url => {:controller => 'tournament_category', :action => 'update', :id => params[:id]}, :html => { :multipart => true }) do |f| %>
+<table width="95%">
+
+
+<tr>
+ <td>Name</td>
+  <td><%= f.text_field :name %></td>
+</tr>
+
+<tr>
+	<td>
+	<%= submit_tag "Update", :class => "button" %>
+	<a href="/tournament_category/index" class="button" >Cancel</a>
+	</td>
+</tr>
+
+
+</table>
+<%end%>
+</div>

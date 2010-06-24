@@ -1,0 +1,46 @@
+
+<div style="text-align: center; border-width: 5px; border-color: #cbcfac; border-style:double;"><h3>Tournament Summary</h3></div>
+  <table width="95%">
+    <tr>
+     <td width="30%">Tournament Name: </td>
+      <td>
+       <%= @tournament.name %>
+    </td>
+    </tr>
+    <tr>
+     <td>City: </td>
+      <td>
+       <%= @tournament.city %>
+    </td>
+    </tr>
+    <tr>
+     <td>Tournament Type: </td>
+      <td>
+      <% {"League" => 'L', "Knockout" => 'K'}.each_pair{|key,val|
+             if val == @tournament.tournament_type %>
+                    <%= key%>
+                    <% end
+            }%>
+    </td>
+    </tr>
+    <tr>
+     <td>Kind of Tournament: </td>
+      <td>
+      <% {"Organised" => 'O', "Self" => 'S'}.each_pair{|key,val|
+             if val == @tournament.kind_of_tournament %>
+                    <%= key%>
+                    <% end
+            }%>
+
+      </td>
+    </tr>  
+    <tr>
+     <td>Tournament Start Date: </td>
+      <td>
+        <%= Time.at(@tournament.tournament_starts).strftime("%m/%d/%y") %>
+    </td>
+    </tr>
+    <tr><td colspan="2"></td></tr>    
+  </table>
+ <br/>
+</div> 

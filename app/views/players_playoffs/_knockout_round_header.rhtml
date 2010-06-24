@@ -1,0 +1,7 @@
+<table width="100%">
+  <tr>
+    <td align="right">
+      <input name="Edit Rounds" class="button" value="Edit Rounds" onclick="new Ajax.Request('/players_playoffs/edit_tournament_rounds/<%= @tournament.id %>', {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('fMXfBvDVgdzOKiwoTmcQnDFYSwvxrPb+1WbHvXAkZbU=')}); return false;" type="button"/>
+    </td>
+  </tr>
+</table>

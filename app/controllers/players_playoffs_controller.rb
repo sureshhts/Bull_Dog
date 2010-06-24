@@ -118,14 +118,12 @@ protect_from_forgery :only => [:destroy]
     KnockoutGamePlayer.create(:knockout_game_id => knockout_game.parent_game_id, :tournament_player_id => knockout_game.winner.id)
 
     @tournament = player.tournament
-    all_players = TournamentPlayer.tournament_players_league_standings(@tournament.id)
-    rank = 1
+    @rounds = @tournament.knockout_rounds
+    all_players = TournamentPlayer.tournament_players_knockout_standings(@tournament.id)
+
     @ko_players = Hash.new
-    for player in all_players
-      if player.knockout.to_s == "1"
-        @ko_players[rank.to_s] = [player.id, player.name]
-        rank += 1
-      end
+    for pl in all_players
+      @ko_players[pl.knockout_rank.to_s] = [pl.id, pl.name]
     end
 
     @pob = Bracket::PlayoffBracket.new(@ko_players.size)
@@ -336,7 +334,7 @@ protect_from_forgery :only => [:destroy]
     rank = 1
     @ko_players = Hash.new
     for player in all_players
-      if player.knockout.to_s == "1"
+      if player.knockout.to_s == "1" || @tournament.tournament_type == "K"
         @ko_players[rank.to_s] = [player.id, player.name]
         TournamentPlayer.find(player.id).update_attributes(:knockout_rank => rank)
         rank += 1
@@ -346,6 +344,15 @@ protect_from_forgery :only => [:destroy]
     @pob = Bracket::PlayoffBracket.new(@ko_players.size)
     @pob.tournament_single_elimination_bracket
     @pob.bracket_players
+    total_rounds = @pob.rounds
+    
+    @tournament.update_attributes(:knock_out_rounds => total_rounds.to_i)
+    r = 1
+    @rounds = Hash.new
+    until r >= total_rounds
+      @rounds[total_rounds-r] = KnockoutRound.create(:tournament_id => @tournament.id, :round_number => r)
+      r += 1
+    end
 
     pure, ko, n = @pob.determine_pure_knockout_level
     @pob.levels = n-1
@@ -355,7 +362,8 @@ protect_from_forgery :only => [:destroy]
       no_of_games_in_this_level = 2**i
       j = 1
       no_of_games_in_this_level.times do
-        ko_game = KnockoutGame.create(:tournament_id => @tournament.id, :round => i+1)
+        round = @rounds[i+1]
+        ko_game = KnockoutGame.create(:tournament_id => @tournament.id, :round => i+1, :knockout_round_id => round.id)
         @pob.games.push("#{level_name}#{ko_game.id}")
         j+=1
       end
@@ -363,46 +371,6 @@ protect_from_forgery :only => [:destroy]
     end
 
     @pob.create_game_tree
-
-    leaves = Array.new
-    @pob.root.each_leaf{|leaf|
-      leaves.push(leaf)
-    }
-
-    if pure
-      i = 0
-      for l in leaves
-        team = @pob.teams[i]
-        l << Tree::TreeNode.new("#{@ko_players[team['player1']]}", "player")
-        l << Tree::TreeNode.new("#{@ko_players[team['player2']]}", "player")
-        i += 1
-      end
-    else
-      level = i+1
-      level_name = "G:"
-      i = 0
-      j = 1
-
-      for l in leaves
-        team = @pob.teams[i]
-        l << Tree::TreeNode.new("#{@ko_players[team['player1']]}", "player")
-        if !team["player2"].blank?
-          l << Tree::TreeNode.new("#{@ko_players[team['player2']]}", "player")
-        elsif team["player2"].blank?
-          ko_game = KnockoutGame.create(:tournament_id => @tournament.id, :round => level)
-          sub_node = l << Tree::TreeNode.new("#{level_name}#{ko_game.id}", "game")
-          j += 1
-          i += 1
-          team = @pob.teams[i]
-          sub_node << Tree::TreeNode.new("#{@ko_players[team['player1']]}", "player")
-          sub_node << Tree::TreeNode.new("#{@ko_players[team['player2']]}", "player")
-        end
-        i += 1
-      end
-      if isAdmin?
-        render :layout => "default"
-      end
-    end
 
     @pob.root.each{|game|
       if game.content == "game"
@@ -412,17 +380,64 @@ protect_from_forgery :only => [:destroy]
           ko_game_parent_id = game.parent.name.split(":")[1]
           ko_game.update_attributes(:parent_game_id => ko_game_parent_id)
         end
-      elsif game.content == "player"
-        ko_game_player_id = game.name
-        ko_game_id = game.parent.name.split(":")[1]
-        KnockoutGamePlayer.create(:knockout_game_id => ko_game_id, :tournament_player_id => ko_game_player_id)
       end
     }
-    @tournament.update_attributes(:knockout_rounds => @pob.rounds)
+
+    db_tree_leaves = KnockoutGame.find_by_sql("select * from knockout_games where tournament_id = #{@tournament.id} and round = #{total_rounds - 2}")
+    all_pls = Array.new
+    for pl in @pob.teams
+      all_pls.push(pl)
+    end
+
+    all_pls = all_pls.reverse
+    level = i+1
+    round = @rounds[level]
+
+    if pure
+      for l_game in db_tree_leaves
+        g_pls = all_pls.pop
+        player1 = @ko_players[g_pls["player1"].to_s][0]
+        player2 = @ko_players[g_pls["player2"].to_s][0]
+        KnockoutGamePlayer.create(:knockout_game_id => l_game.id, :tournament_player_id => player1)
+        KnockoutGamePlayer.create(:knockout_game_id => l_game.id, :tournament_player_id => player2)
+      end
+    else    
+      for l_game in db_tree_leaves
+        left = all_pls.pop
+        right = all_pls.pop
+        if left["player2"].blank?
+          ko_game_player_id = @ko_players[left["player1"].to_s][0]
+          KnockoutGamePlayer.create(:knockout_game_id => l_game.id, :tournament_player_id => ko_game_player_id)
+        else
+          player1 = @ko_players[left["player1"].to_s][0]
+          player2 = @ko_players[left["player2"].to_s][0]
+          ko_game = KnockoutGame.create(:tournament_id => @tournament.id, :round => level, :knockout_round_id => round.id, :parent_game_id => l_game.id)
+          KnockoutGamePlayer.create(:knockout_game_id => ko_game.id, :tournament_player_id => player1)
+          KnockoutGamePlayer.create(:knockout_game_id => ko_game.id, :tournament_player_id => player2)
+        end
+
+        if right["player2"].blank?
+          ko_game_player_id = @ko_players[right["player1"].to_s][0]
+          KnockoutGamePlayer.create(:knockout_game_id => l_game.id, :tournament_player_id => ko_game_player_id)
+        else
+          player1 = @ko_players[right["player1"].to_s][0]
+          player2 = @ko_players[right["player2"].to_s][0]
+          ko_game = KnockoutGame.create(:tournament_id => @tournament.id, :round => level, :knockout_round_id => round.id, :parent_game_id => l_game.id)
+          KnockoutGamePlayer.create(:knockout_game_id => ko_game.id, :tournament_player_id => player1)
+          KnockoutGamePlayer.create(:knockout_game_id => ko_game.id, :tournament_player_id => player2)
+        end
+      end
+    end
+    @rounds = @tournament.knockout_rounds
+    @level_ko_games = KnockoutGame.level_knockout_games(@tournament.id, @pob.rounds - 1)
+    if isAdmin?
+        render :layout => "default"
+    end
   end
 
   def view_knockout_draw
     @tournament = Tournament.find(params[:id])
+    @rounds = @tournament.knockout_rounds
     all_players = TournamentPlayer.tournament_players_knockout_standings(params[:id])
 
     @ko_players = Hash.new
@@ -435,6 +450,7 @@ protect_from_forgery :only => [:destroy]
     @pob.bracket_players
 
     @level_ko_games = KnockoutGame.level_knockout_games(@tournament.id, @pob.rounds - 1)
+    
     if isAdmin?
       render :layout => "default"
     end
@@ -442,8 +458,10 @@ protect_from_forgery :only => [:destroy]
 
   def tournament_draw
     @tournaments = Tournament.find(:all)
+    
     if request.xml_http_request?
       @tournament = Tournament.find(params[:tournament_id])
+      @rounds = @tournament.knockout_rounds
       all_players = TournamentPlayer.tournament_players_knockout_standings(params[:tournament_id])
       
       @ko_players = Hash.new
@@ -465,7 +483,56 @@ protect_from_forgery :only => [:destroy]
         }
       end
     end
-
   end
-  
+
+  def edit_tournament_rounds
+    @tournament = Tournament.find(params[:id])
+    @rounds = @tournament.knockout_rounds
+    if request.xml_http_request?
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'kor',:partial => "edit_knockout_rounds"
+          end
+        }
+      end
+    end
+  end
+
+  def cancel_edit_tournament_rounds
+    @tournament = Tournament.find(params[:id])
+
+    if request.xml_http_request?
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'kor',:partial => "knockout_round_header"
+          end
+        }
+      end
+    end
+  end
+
+  def update_knockout_rounds
+    @tournament = Tournament.find(params[:id])
+    @rounds = @tournament.knockout_rounds
+
+    for rnd in @rounds
+      st_date = Time.parse(params["rnd_#{rnd.round_number}_st_date"])
+      en_date = Time.parse(params["rnd_#{rnd.round_number}_en_date"])
+      rnd.update_attributes(:start_date => st_date, :end_date => en_date)
+    end
+    if request.xml_http_request?
+      respond_to do |format|
+        format.html
+        format.js {
+          render :update do |page|
+            page.replace_html 'kor',:partial => "knockout_round_header"
+          end
+        }
+      end
+    end
+  end
 end

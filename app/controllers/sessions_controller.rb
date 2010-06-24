@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
   def create
     logout_keeping_session!
     user = User.authenticate(params[:login], params[:password])
-  #puts "dddddddddddddddd",user
+  
     if user
     
       # Protects against session fixation attacks, causes request forgery

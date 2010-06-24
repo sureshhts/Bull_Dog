@@ -1,0 +1,36 @@
+<form action="/players_playoffs/update_knockout_rounds" id="rounds_form" method="post" onsubmit="new Ajax.Request('/players_playoffs/update_knockout_rounds', {asynchronous:true, evalScripts:true, parameters:Form.serialize(this)}); return false;">
+<table>
+  <thead>
+  <tr bgcolor="#b8ba89">
+           <th>Round #</th>
+           <th>Start Date </th>
+           <th>End Date</th>
+           <th># of Games</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% for rnd in @rounds %>
+    <tr class="<%= cycle('oddrow', 'evenrow') %>">
+      <td align="center"><%= rnd.round_number %></td>
+      <td>
+        <input id="rnd_<%= rnd.round_number %>_st_date" name="rnd_<%= rnd.round_number %>_st_date" size="20" type="text" value="<%= (rnd.start_date.blank?)? '' : Time.at(rnd.start_date.to_i).strftime("%B %d, %Y") %>"/> <img alt="Calendar" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {year_range:10} );" src="/images/calendar_date_select/calendar.gif" style="border: 0px none; cursor: pointer;"/>
+      </td>
+      <td>
+        <input id="rnd_<%= rnd.round_number %>_en_date" name="rnd_<%= rnd.round_number %>_en_date" size="20" type="text" value="<%= (rnd.end_date.blank?)? '' : Time.at(rnd.end_date.to_i).strftime("%B %d, %Y") %>"/> <img alt="Calendar" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {year_range:10} );" src="/images/calendar_date_select/calendar.gif" style="border: 0px none; cursor: pointer;"/>
+      </td>
+      <td align="center">
+        <%= rnd.knockout_games.length %>
+      </td>
+    </tr>
+    <% end %>
+    <tr>
+      <td colspan="4">
+        <input type="hidden" name="id" id="id" value="<%= @tournament.id %>" />
+        <input name="Cancel" class="button" value="Cancel" onclick="new Ajax.Request('/players_playoffs/cancel_edit_tournament_rounds/<%= @tournament.id %>', {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('fMXfBvDVgdzOKiwoTmcQnDFYSwvxrPb+1WbHvXAkZbU=')}); return false;" type="button"/>
+        &nbsp;&nbsp;
+        <input name="Update" class="button" value="Update" onclick="$('rounds_form').onsubmit();return false;" type="button"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</form>

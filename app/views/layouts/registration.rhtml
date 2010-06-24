@@ -14,7 +14,6 @@ body {
 }
 -->
 </style>
-<link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
 <script>  
   function closeMe()
   {
@@ -23,6 +22,7 @@ body {
     //document.getElementById('fade').style.display='none';
   }
 </script>
+<link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -109,7 +109,11 @@ body {
         <!--    <td><img src="/images/register_header.jpg" width="533" height="34"></td> -->
           </tr>
           <tr>
-             <td> 
+            <td height="10"></td>
+          </tr>
+          
+          <tr>
+     <td> 
      <% if flash[:notice] %>
         <% unless flash[:notice].blank? %>
 
@@ -118,10 +122,16 @@ body {
 	
 	<%else %>
 	 <% if flash[:error] %>
-	 <div id="notification" style=" background: transparent url(/images/orange_shade1.jpg) repeat scroll 0% 0%; width: 988px; height:39px;color: black; font-family: Helvetica; font-size: 12px;"><span style="padding-top:10px;margin-left:5px;"><%= flash[:notice] %></span><div style="color: black; cursor: pointer; font-family: Helvetica; font-size: 12px;margin-left:950px;" ><a href='#' onClick="closeMe();"><u>Close</u></a></div></div>
+	 <div id="notification" style=" background: transparent url(/images/orange_shade1.jpg) repeat scroll 0% 0%; width: 988px; height:39px;color: black; font-family: Helvetica; font-size: 12px;"><span style="padding-top:10px;margin-left:5px;"><%= flash[:error] %></span><div style="color: black; cursor: pointer; font-family: Helvetica; font-size: 12px;margin-left:950px;" ><a href='#' onClick="closeMe();"><u>Close</u></a></div></div>
 	 <%end%>
 	 <%end%>
        </td>
+  </tr>  
+  <tr>
+  <td>&nbsp;</td>
+  </tr>
+          <tr>
+            <td height="450" class="content_text" style="border:1px solid #cfcf9d; background-color:#fbfbf0;" ><span class="content_text"><%= yield %> </td></td>
           </tr>
           
         </table></td>

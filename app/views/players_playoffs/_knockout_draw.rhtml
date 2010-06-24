@@ -9,6 +9,13 @@
       end %>
 
   </tr>
+  <tr>
+    <td>&nbsp;&nbsp;</td>
+    <% for rnd in @rounds %>
+    <td><%= Time.at(rnd.start_date.to_i).strftime("%d/%m") %>-<%= Time.at(rnd.end_date.to_i).strftime("%d/%m") %></td>
+    <td>&nbsp;&nbsp;</td>
+    <% end %>
+  </tr>
   <% for row in @pob.players %>
   <tr>
     <td><%= (row[0]!='-')? @ko_players[row[0].to_s][1] : "" %></td>
@@ -22,7 +29,9 @@
     </td>
     <td align="right">
       <% if row[j] == "mid" && (row[j+1] == "top" || row[j+1] == "low" || row[j+1] == "non") %>
-      <% ko_game = KnockoutGame.find(@level_ko_games[i.to_s].pop)
+      <% game_id = @level_ko_games[i.to_s].pop
+         if !game_id.blank?
+         ko_game = KnockoutGame.find(game_id)
          display_image = "yellow"
          display_text = nil
          if !ko_game.winner.blank?
@@ -33,6 +42,9 @@
          end
       %>
       <img src="/images/<%= display_image %>.png" onmouseout="hideTooltip()" onmouseover="showTooltip(event,'<%= display_text %>');return false"/>
+        <% else %>
+          <img src="/images/non.gif" />
+        <% end %>
       <% else %>
         <% if row[j] == "non" && (row[j+1] == "top" || row[j+1] == "low") %>
           <img src="/images/non.gif" />

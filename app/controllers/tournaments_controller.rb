@@ -20,7 +20,7 @@ protect_from_forgery :only => [:destroy]
     reg_ends = Time.parse(params[:tournament][:registration_ends])
     tourn_starts = Time.parse(params[:tournament][:tournament_starts])  
     tourn_ends =  Time.parse(params[:tournament][:tournament_ends])      
- 	  @tournament = Tournament.create(:name => params[:tournament][:name], :city => params[:tournament][:city], :tournament_type => 	params[:tournament][:tournament_type], :kind_of_tournament => params[:tournament][:kind_of_tournament], :registration_starts => reg_starts,	:registration_ends => reg_ends, :tournament_starts => tourn_starts, :tournament_starts => tourn_ends)
+ 	  @tournament = Tournament.create(:name => params[:tournament][:name], :city => params[:tournament][:city], :tournament_type => 	params[:tournament][:tournament_type], :kind_of_tournament => params[:tournament][:kind_of_tournament], :registration_starts => reg_starts,	:registration_ends => reg_ends, :tournament_starts => tourn_starts, :tournament_ends => tourn_ends)
 
     if @tournament.save
       for cat in params[:tournament][:category_id]

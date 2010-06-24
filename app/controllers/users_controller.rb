@@ -142,8 +142,11 @@ class UsersController < ApplicationController
 	      
 	      @playing_details = AccountPlayingDetail.create(:player_level_id => new_level, :facility_id => params[:account][:facility_id], :user_id  => 	   	      params[:playing_details][:user_id])
 	      
+	      user_id = @playing_details.user_id
+	      user_name = 
+	      
 	      if @playing_details.save
-	       Mailer.deliver_signup_activation(@user, self)
+	       Mailer.deliver_signup_activation(user_id, self)
 		   flash[:notice] =  'Account Playing Details Created Successfully'
 		   redirect_to :action => 'home', :controller => 'users'
 		  end 

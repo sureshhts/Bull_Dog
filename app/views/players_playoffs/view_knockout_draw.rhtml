@@ -1,3 +1,18 @@
+<%= javascript_include_tag :defaults%>
+<%= calendar_date_select_includes %>
+<%= calendar_date_select_includes "blue" %>
+<style>
+ .oddrow
+{
+  background: #cbcfac;
+}
+
+.evenrow
+{
+  background: #dcdcc4;
+}
+
+</style>
 <div style="text-align: center; border-width: 5px; border-color: #cbcfac; border-style:double;min-height:100px;"><h3>Tournament Draw</h3></div>
   <table width="95%">
     <tr>
@@ -35,7 +50,9 @@
     </tr>
   </table>
  <br/>
-
+ <div id="kor">
+   <%= render :partial => "knockout_round_header" %>
+ </div>
 <div id="kot">
   <%= render :partial => "knockout_draw" %>
 </div>

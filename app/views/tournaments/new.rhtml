@@ -43,22 +43,22 @@
 </tr>
 
 <tr>
-  <td>Registration start date</td>
+  <td>Registration Start date</td>
   <td><%= calendar_date_select :tournament, :registration_starts %> </td>
 </tr>
 
 <tr>
-  <td>Registration end date</td>
+  <td>Registration End date</td>
   <td><%= calendar_date_select :tournament, :registration_ends %> </td>
 </tr>
 
 <tr>
-  <td>Tournament date</td>
+  <td>Tournament Start date</td>
   <td><%= calendar_date_select :tournament, :tournament_starts %> </td>
 </tr>
 
 <tr>
-  <td>Tournament date</td>
+  <td>Tournament End date</td>
   <td><%= calendar_date_select :tournament, :tournament_ends %> </td>
 </tr>
 
@@ -77,7 +77,7 @@
 <tr>
 	<td>
 	<%= submit_tag "Submit" , :class => "button"%>
-	<a href="/tournament_players/index" class="button">Cancel</a>
+	<a href="/tournaments" class="button">Cancel</a>
 	</td>
 </tr>
 

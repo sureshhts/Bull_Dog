@@ -5,7 +5,7 @@
   </tr>
 <% else %>
   <tr>
-    <td>Score for Round: <%= @tournament.knockout_rounds.to_i - @selected_game.round.to_i %></td>
+    <td>Score for Round: <%= @tournament.knock_out_rounds.to_i - @selected_game.round.to_i %></td>
   </tr>
 <% if @opponent == nil %>
   <tr>

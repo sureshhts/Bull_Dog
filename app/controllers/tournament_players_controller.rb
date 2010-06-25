@@ -35,7 +35,7 @@ class TournamentPlayersController < ApplicationController
  	
   	if @reg
 	   flash[:notice] =  'New Player Level Created Successfully'
-	   redirect_to :action => 'index', :controller => 'registration'
+	   redirect_to :action => 'home', :controller => 'account_profile'
 	else
 	   render :action => 'tour_player_registration', :controller => 'tournament_players'
 	end

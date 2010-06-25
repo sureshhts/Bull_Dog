@@ -16,6 +16,6 @@ class TournamentDivision < ActiveRecord::Base
                 order by players desc
                 limit 1}
     result = find_by_sql(query)[0]
-    return result.players
+    return (result.blank?)? 0 : result.players.to_i
   end
 end

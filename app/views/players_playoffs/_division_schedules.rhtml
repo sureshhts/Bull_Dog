@@ -10,15 +10,21 @@
 }
 
 </style>
-<span><h3><%= division.name %></h3></span>
+<%    
+      division = @tournament_division
+      d_players = Tournament.tournament_division_players(division.id)
+      schedules = TournamentDivision.find(division.id).tournament_division_league_schedules
+      total_weeks = schedules.length
+%>
+<span><h3>Division Name: <%= division.name %></h3></span>
 <table width="100%" cellpadding="3" cellspacing="0">
   <thead>
-    <tr bgcolor="#f38001">
+    <tr bgcolor="#b8ba89">
       <th>
         <span>Name\weeks</span>
       </th>
       <% for week in schedules %>
-      <th>
+      <th align="center" onmouseout="hideTooltip()" onmouseover="showTooltip(event,'<%= Time.at(week.start_date.to_i).strftime("%d/%m/%Y") %> - <%= Time.at(week.end_date.to_i).strftime("%d/%m/%Y") %>');return false">
         <span>Week <%= week.week_number+1 %></span>
       </th>
       <% end %>
@@ -40,7 +46,7 @@
                 if g_pls.include?(player.player_id.to_s)
                   pl_pos = g_pls.index(player.player_id)
                   g_pls.delete_at(pl_pos)
-                  
+
                   points, display_text = player_opponent_score_display(tp, g_pls, game)
       %>
       <td onmouseout="hideTooltip()" onmouseover="showTooltip(event,'<%= display_text %>');return false" align="center">

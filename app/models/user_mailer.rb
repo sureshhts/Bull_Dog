@@ -13,7 +13,20 @@ class UserMailer < ActionMailer::Base
     @subject    += 'Your account has been activated!'
     @body[:url]  = "http://YOURSITE/"
  end
-  
+ 
+ def forgot_password(recipient, sub, pwd)
+    body["user"] = recipient.name
+    body["email"] = recipient.email
+    body["password"] = pwd
+    body["userid"] = recipient.email
+    recipients	recipient.name + " <" + recipient.email + ">"
+    from		"#"
+    subject	    sub
+    body["sign"] = SIGNATURE
+    content_type "text/html"
+    
+  end 
+ 
  protected
  def setup_email(user)
       @recipients  = "#{user.email}"

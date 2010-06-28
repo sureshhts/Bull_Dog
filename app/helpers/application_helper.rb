@@ -15,11 +15,14 @@ module ApplicationHelper
     points = ""
     if op_player != nil
       op_profile = op_player.user.account_profile
-      display_text += "vs #{op_profile.first_name} #{op_profile.last_name}"     
-      if !lsg.winner_score.blank? && !lsg.loser_score.blank?        
+      display_text += "vs #{op_profile.first_name} #{op_profile.last_name}"
+    else
+      display_text += "vs Random"
+    end
+    if !lsg.winner_score.blank? && !lsg.loser_score.blank?
         display_text += "<br>"
         scores_text = []
-        game_status = ""         
+        game_status = ""
         if player.id.to_s == lsg.winner.id.to_s
           points = lsg.winner_score
           game_status = (lsg.winner_score.to_i > lsg.loser_score.to_i)? "won" : "tie"
@@ -32,7 +35,6 @@ module ApplicationHelper
         display_text += scores_text.join
         display_text += "<br>"
         display_text += game_status
-      end
     end
     return points, display_text
   end

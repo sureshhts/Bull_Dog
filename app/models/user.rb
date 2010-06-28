@@ -63,8 +63,8 @@ class User < ActiveRecord::Base
                 where ap.first_name like '#{first_name}%' and ap.last_name like '#{last_name}%'}
     find_by_sql(query)
   end
-  protected
   
- 
+    
+  
 
 end

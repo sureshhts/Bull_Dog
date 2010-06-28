@@ -7,12 +7,12 @@
 <% form_for(:profile, :url => {:controller => 'users', :action => 'create_profile'}, :html => { :multipart => true }) do |f| %>
 <table width="95%">
 <tr>
- <td>Name</td>
+ <td>First Name</td>
   <td><%= f.text_field :first_name %></td>
 </tr>
 
 <tr>
- <td>City</td>
+ <td>Last Name</td>
   <td><%= f.text_field :last_name %></td>
 </tr>
 

@@ -61,7 +61,7 @@ for tournament in @summary
     <% end
       end %>
     <% elsif tournament.tournament_type == "K" %>
-      <% if tournament.knockout_selected.to_s == "0" %>
+      <% if tournament.knockout_selected.to_s == "0" || tournament.knockout_selected.blank? %>
         <a href="/tournaments/<%=tournament_next_action(tournament.id)%>/<%=tournament.id%>">View</a> &nbsp;
       <% else 
           if tournament.players.to_i > 0 %>

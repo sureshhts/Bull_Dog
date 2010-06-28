@@ -42,10 +42,17 @@ class ApplicationController < ActionController::Base
           end
           game_players.delete_at(index)
           opponent = game_players[0]
-          opp_profile = opponent.user.account_profile
+          opponent_name = nil
+          if opponent.blank?
+            opponent_name = "Random"
+          else
+            opp_profile = opponent.user.account_profile
+            opponent_name = [opp_profile.first_name, opp_profile.last_name].join(" ")
+          end
+          
           start = Time.at(schedule.start_date.to_i)
           if start.month == current_month && start.year == current_year
-            detail = {"tournament" => tournament.name, "category" => category.name, "level" => level.name, "place" => division.area_name, "opponent" => [opp_profile.first_name, opp_profile.last_name].join(" ")}
+            detail = {"tournament" => tournament.name, "category" => category.name, "level" => level.name, "place" => division.area_name, "opponent" => opponent_name}
             if schedules[start.day.to_s].blank?
               schedules[start.day.to_s] = Array.new
               schedules[start.day.to_s].push(detail)

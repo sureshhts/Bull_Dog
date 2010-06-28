@@ -9,6 +9,7 @@
   </tr>
 <% else %>
 <tr>
+<% if !@opponent.blank? %>
 <td width="45%">Opponent:  <input type="hidden" name="player" value="<%= @tp.id %>" /><input type="hidden" name="opponent" value="<%= @opponent.id %>" /><input type="hidden" name="lsg" value="<%= @selected_lsg.id %>" /></td>
 <td>
   <table width="100%">
@@ -38,6 +39,21 @@
     </tr>
   </table>
 </td>
+<% else %>
+<td width="45%">Opponent:  <input type="hidden" name="player" value="<%= @tp.id %>" /><input type="hidden" name="opponent" value="0" /><input type="hidden" name="lsg" value="<%= @selected_lsg.id %>" /></td>
+<td>
+  <table width="100%">
+    <tr>
+      <td>
+        Name:
+      </td>
+      <td>
+        Random Player
+      </td>
+    </tr>
+  </table>
+</td>
+<% end %>
 </tr>
 <tr>
 <td>Select the set</td>

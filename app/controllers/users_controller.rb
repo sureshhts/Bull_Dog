@@ -27,7 +27,8 @@ class UsersController < ApplicationController
     
     @user.account_type = params[:user][:account_type]
   
-    @user.time_created = Time.now.to_i 
+    @user.time_created = Time.now.to_i
+    
     success = @user && @user.save
    
      @id = @user.id
@@ -47,7 +48,7 @@ class UsersController < ApplicationController
 	  redirect_to :action => 'profile', :controller => 'users', :id => @id
 	  flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
 	else
-	  flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
+	  flash[:error]  = "We couldn't set up that account, sorry.  The Login or the Email already exists."
 	  redirect_to :action => 'new'
 	end
     

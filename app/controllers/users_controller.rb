@@ -56,17 +56,15 @@ class UsersController < ApplicationController
   
   def forgot_password
     if request.post?
-      user = User.find(:first,:conditions=>["login=?", params[:user][:email]])
+      user = User.find(:first,:conditions=>["email=?", params[:user][:email]])
       if !user.nil? 
-        new_pwd = newpass(8)  
-        passphrase_digest = encrypt_password(new_pwd)
+        new_pwd = newpass(8) 
+          passphrase_digest = encrypted_password(new_pwd,user.salt)
           username = user.login
-          employee = User.find(:first, :conditions=> ["username=?", username])
-        flag = employee.update_attributes(:hashed_password => passphrase_digest)   
+          employee = User.find(:first, :conditions=> ["login=?", username])
+        flag = employee.update_attributes(:crypted_password => passphrase_digest)   
         if flag
-
-          # UserMailer.deliver_reset_password(user,new_pwd)
-         # Mailer.deliver_forgot_password(user, "Your Password", new_pwd)
+          UserMailer.deliver_forgot_password(user, "Your Password", new_pwd)
           flash[:notice] = "Your password has been reset."
           redirect_to :action => "home", :controller => "users"
         else
@@ -86,6 +84,10 @@ class UsersController < ApplicationController
     1.upto(len) { |i| newpass << chars[rand(chars.size-1)] }
     return newpass
   end
+  
+  def encrypted_password(password, salt)
+		string_to_hash = password + salt
+		Digest::S
   
   def profile
   

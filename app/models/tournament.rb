@@ -55,7 +55,7 @@ class Tournament < ActiveRecord::Base
    if !conditions[0].blank?
      condition = " and tc.id = #{conditions[0][0]} and pl.id = #{conditions[0][1]}"
    end
-   query = %Q{  SELECT tp.id as player_id, acp.user_id as user_id, concat(acp.first_name,' ',acp.last_name) as name, tc.name as category_name, pl.name as player_level, f.name as facility_name, td.name as division_name
+   query = %Q{  SELECT tp.id as player_id, tp.area_name, acp.user_id as user_id, concat(acp.first_name,' ',acp.last_name) as name, tc.name as category_name, pl.name as player_level, f.name as facility_name, td.name as division_name
                 from tournaments t
                 join tournament_players tp on tp.tournament_id = t.id
                 join account_profiles acp on acp.user_id = tp.user_id
@@ -78,11 +78,9 @@ class Tournament < ActiveRecord::Base
    if !conditions[0][2].blank?
      sort = " order by #{conditions[0][2]}"
    end
-   query = %Q{  SELECT d.id, d.name, d.no_of_players, f.name as facility, d.area_name, count(tp.id) as players, d.draw_created
+   query = %Q{  SELECT d.id, d.name, d.no_of_players, d.area_name, count(tp.id) as players, d.draw_created
                 from tournaments t
                 join tournament_divisions d on d.tournament_id = t.id
-                join facilities_tournament_divisions ftd on ftd.tournament_division_id = d.id
-                join facilities f on f.id = ftd.facility_id
                 join tournament_categories tc on tc.id = d.tournament_category_id
                 join player_levels pl on pl.id = d.player_level_id
                 left outer join tournament_players tp on tp.tournament_division_id = d.id

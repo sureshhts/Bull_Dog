@@ -88,8 +88,11 @@ body {
                 <td><b>If already signed into Bulldog login here:</b></td>
                 <td><b>If new user click here to login:</b></td>
               </tr>
+              <% form_tag session_path do -%>
               <tr>
-                <td background="/images/login_bg.png" style="background-repeat:no-repeat" height="182"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                <td background="/images/login_bg.png" style="background-repeat:no-repeat" height="182">
+                
+                <table width="100%"  border="0" cellspacing="0" cellpadding="0">
                     <tr>
                       <td width="4%" height="34">&nbsp;</td>
                       <td width="92%" class="white_text2">Members Log In </td>
@@ -107,12 +110,12 @@ body {
                             <td height="10" colspan="2"></td>
                           </tr>
                           <tr>
-                            <td width="20%" align="right" class="black_text">Email:</td>
-                            <td width="80%"><input type="text" name="textfield">                            </td>
+                            <td width="20%" align="right" class="black_text">Userid:</td>
+                            <td width="80%"><%= text_field_tag 'login', @login, :size => '22' %>                       </td>
                           </tr>
                           <tr>
                             <td align="right" class="black_text">Password:</td>
-                            <td><input type="text" name="textfield2">                            </td>
+                            <td><%= password_field_tag 'password', nil, :size => '22'  %>                 </td>
                           </tr>
                           <tr>
                             <td>&nbsp;</td>
@@ -124,12 +127,16 @@ body {
                             <td><a href="#" class="content_red_text">Forgot your password?</a></td>
                           </tr>
                           <tr align="center">
-                            <td height="30" colspan="2"><input name="Submit" type="submit" class="login_button" value="LOG IN">                            </td>
+                            <td height="30" colspan="2"> <%= submit_tag 'Log in', :class => 'login_button' %>                         </td>
                           </tr>
-                      </table></td>
+                      </table>
+                      
+                       </td>
                       <td>&nbsp;</td>
                     </tr>
-                </table></td>
+                    <%end%>
+                </table>
+                </td>
                 <td width="20%"><a href="/users/new"><img src="/images/new_register.jpg" alt="" width="224" height="127"></a></td>
               </tr>
             </table></td>

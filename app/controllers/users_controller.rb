@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
-  
+  require 'digest/sha1'
  
   include AuthenticatedSystem
   
@@ -57,6 +57,7 @@ class UsersController < ApplicationController
   def forgot_password
     if request.post?
       user = User.find(:first,:conditions=>["email=?", params[:user][:email]])
+      recipient= user.email
       if !user.nil? 
         new_pwd = newpass(8) 
           passphrase_digest = encrypted_password(new_pwd,user.salt)
@@ -78,7 +79,7 @@ class UsersController < ApplicationController
     end 
   end
   
-  def newpass( len )
+  def newpass(len)
     chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
     newpass = ""
     1.upto(len) { |i| newpass << chars[rand(chars.size-1)] }
@@ -86,8 +87,9 @@ class UsersController < ApplicationController
   end
   
   def encrypted_password(password, salt)
-		string_to_hash = password + salt
-		Digest::S
+	string_to_hash = password + salt
+	Digest::SHA1.hexdigest(string_to_hash)
+  end
   
   def profile
   

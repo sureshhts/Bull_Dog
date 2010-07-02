@@ -37,7 +37,7 @@ layout 'default'
  def update
   @category = TournamentCategory.find(params[:id])
   
-   if @category.update_attributes(params[:level])
+   if @category.update_attributes(params[:category])
       flash[:notice] = 'Player Level updated successfully.'
       redirect_to :action => 'index'
     else

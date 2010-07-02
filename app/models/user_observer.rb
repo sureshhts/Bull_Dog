@@ -5,7 +5,7 @@ class UserObserver < ActiveRecord::Observer
 
   def after_save(user)
   
-    UserMailer.deliver_activation(user) 
+   # UserMailer.deliver_activation(user) 
     
   end
 end

@@ -2,27 +2,28 @@ class UserMailer < ActionMailer::Base
 
  def signup_notification(user)
     setup_email(user)
-    @subject    += 'Please activate your new account'
-  
-    @body[:url]  = "http://YOURSITE/activate/#{}"
+    @subject    += 'New account has been created'
+    @body[:url]  = "http://tennis.hibiscustech.com"
   
  end
   
  def activation(user)
     setup_email(user)
+    from		"BullDOg Tennis League"
     @subject    += 'Your account has been activated!'
     @body[:url]  = "http://YOURSITE/"
  end
  
  def forgot_password(recipient, sub, pwd)
-    body["user"] = recipient.name
+
+    body["user"] = recipient.login
     body["email"] = recipient.email
     body["password"] = pwd
-    body["userid"] = recipient.email
-    recipients	recipient.name + " <" + recipient.email + ">"
-    from		"#"
+    body["userid"] = recipient.login
+    recipients	recipient.login + " <" + recipient.email + ">"
+    from		"BullDOg Tennis League"
     subject	    sub
-    body["sign"] = SIGNATURE
+   
     content_type "text/html"
     
   end 
@@ -30,8 +31,8 @@ class UserMailer < ActionMailer::Base
  protected
  def setup_email(user)
       @recipients  = "#{user.email}"
-      @from        = "ADMINEMAIL"
-      @subject     = "[YOURSITE] "
+      @from        = "BullDOg Tennis League"
+      @subject     = "BullDog Tennis "
       @sent_on     = Time.now
       @body[:user] = user
  end  

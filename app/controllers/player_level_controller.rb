@@ -16,8 +16,12 @@ layout 'default'
 	   return
     else
 	end
-    
-    
+    name = params[:level][:name]
+    @validate = PlayerLevel.find(:all, :conditions => ["name=?", name])
+    redirect_to :action => 'add_level', :controller => 'player_level'
+    if @validate
+      flash[:notice] =  'Player Level already exists. Try again with new name'
+     else 
 	@level= PlayerLevel.create(params[:level])
 
 	if @level.save
@@ -25,6 +29,8 @@ layout 'default'
 	   redirect_to :action => 'index', :controller => 'player_level'
 	else
   	   render :action => 'new'
+    end
+    
     end
   end
   
@@ -34,6 +40,13 @@ layout 'default'
   end
   
   def update
+ 
+    name = params[:level][:name]
+    @validate = PlayerLevel.find(:all, :conditions => ["name=?", name])
+    redirect_to :action => 'edit_player_level', :controller => 'player_level', :id => params[:id]
+    if @validate
+     flash[:notice] =  'Player Level already exists. Try again with new name'
+   else  
    @level = PlayerLevel.find(params[:id])
    
     if @level.update_attributes(params[:level])
@@ -42,7 +55,7 @@ layout 'default'
     else
       redirect_to :action => 'edit_player_lavel', :id => 'params[:id]'
     end
-  
+  end
   end
   
   def delete

@@ -23,10 +23,8 @@ class UsersController < ApplicationController
   def create
     logout_keeping_session!
    
-    @user = User.new(params[:user])
-    
+    @user = User.new(:login => params[:user][:email], :email => params[:user][:email], :password => params[:user][:password], :password_confirmation => params[:user][:password_confirmation])
     @user.account_type = params[:user][:account_type]
-  
     @user.time_created = Time.now.to_i
     
     success = @user && @user.save
@@ -45,7 +43,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Thanks for signing up..."
     elsif  success && @user.errors.empty? && @user.account_type == 'player'
      
-	  redirect_to :action => 'profile', :controller => 'users', :id => @id
+	  redirect_to :action => 'profile', :controller => 'users', :id => @id, :email_address => params[:user][:email]
 	  flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
 	else
 	  flash[:error]  = "We couldn't set up that account, sorry.  The Login or the Email already exists."
@@ -92,29 +90,29 @@ class UsersController < ApplicationController
   end
   
   def profile
-  
+    @level = PlayerLevel.find(:all)
     render :layout => 'registration'
   end
   
-  def create_profile
-  
-     if params['commit']  == 'Cancel'
-	   redirect_to :action => 'new'
-	   return
-     else
-     end
-     
-     puts 
+  def create_profile  
+    if params['commit']  == 'Cancel'
+	    redirect_to :action => 'new'
+	    return
+    end
+          
     @profile = AccountProfile.create(params[:profile])
- 	@id = @profile.user_id
+    @id = @profile.user_id
   	if @profile.save
-	   flash[:notice] =  'Account Profile Created Successfully'
-	   redirect_to :action => 'acc_playing_details', :controller => 'users', :id => @id
-	else
-	   render :action => 'new'
-	end
-  
-   
+	    flash[:notice] =  'Account Profile Created Successfully'
+
+      level = params[:account][:level_id]     
+
+      @playing_details = AccountPlayingDetail.create(:player_level_id => level, :facility_id => 1, :user_id  => params[:profile][:user_id])
+      @playing_details.save	       		  		
+	     redirect_to :action => 'home', :controller => 'users'
+    else
+	    render :action => 'profile', :id => @id, :email_address => @profile.email_address
+    end
   end
   
   

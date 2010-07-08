@@ -1,26 +1,96 @@
+<script Language="JavaScript">
+<!--
+function form_validator(theForm)
+{
 
+if (theForm.profile_first_name.value == "" || theForm.profile_first_name.value.length < 1)
+{
+alert("You must enter First Name.");
+theForm.profile_first_name.focus();
+return (false);
+}
+
+if (theForm.profile_last_name.value == "" || theForm.profile_last_name.value.length < 1)
+{
+alert("You must enter Last Name.");
+theForm.profile_last_name.focus();
+return (false);
+}
+
+// check if no drop down has been selected
+if (theForm.profile_gender.selectedIndex == 0)
+{
+alert("Please select one of the \"Gender\" options.");
+theForm.profile_gender.focus();
+return (false);
+}
+
+if (theForm.profile_address1.value == "" || theForm.profile_address1.value.length < 1)
+{
+alert("You must enter Address.");
+theForm.profile_address1.focus();
+return (false);
+}
+
+if (theForm.profile_city.value == "" || theForm.profile_city.value.length < 1)
+{
+alert("You must enter City.");
+theForm.profile_city.focus();
+return (false);
+}
+
+if (theForm.profile_state.value == "" || theForm.profile_state.value.length < 1)
+{
+alert("You must enter State.");
+theForm.profile_state.focus();
+return (false);
+}
+
+if (theForm.profile_zipcode.value == "" || theForm.profile_zipcode.value.length < 1)
+{
+alert("You must enter Zipcode.");
+theForm.profile_zipcode.focus();
+return (false);
+}
+
+if (theForm.profile_contact_number.value == "" || theForm.profile_contact_number.value.length < 1)
+{
+alert("You must enter Contact Number.");
+theForm.profile_contact_number.focus();
+return (false);
+}
+
+if (theForm.account_level_id.selectedIndex == 0)
+{
+alert("Please select one of the \"Player Level\" options.");
+theForm.account_level_id.focus();
+return (false);
+}
+}
+//-->
+</script>
 <div style="margin-left:30px;">
 
 <h3>User Profile </h3>
 
 <div>
-<% form_for(:profile, :url => {:controller => 'users', :action => 'create_profile'}, :html => { :multipart => true }) do |f| %>
+<% form_for(:profile, :url => {:controller => 'users', :action => 'create_profile'}, :html => { :onsubmit => "return form_validator(this);", :multipart => true }) do |f| %>
 <table width="95%">
 <tr>
- <td>First Name</td>
+  <td>First Name <span style="color: red;">*</span></td>
   <td><%= f.text_field :first_name %></td>
 </tr>
 
 <tr>
- <td>Last Name</td>
+ <td>Last Name <span style="color: red;">*</span></td>
   <td><%= f.text_field :last_name %></td>
 </tr>
 
 <tr>
- <td>Gender</td>
+ <td>Gender <span style="color: red;">*</span></td>
   <td>
  <select name="profile[gender]" id="profile_gender" >
- <option value="">Select Gender</option>
+ <option>Select Gender</option>
  <option value="m">Male</option>
  <option value="f">Female</option>
  </select>
@@ -28,7 +98,7 @@
 </tr>
 
 <tr>
- <td>Address1</td>
+ <td>Address1 <span style="color: red;">*</span></td>
   <td><%= f.text_field :address1 %></td>
 </tr>
 
@@ -39,32 +109,37 @@
 </tr>
 
 <tr>
- <td>City</td>
+ <td>City <span style="color: red;">*</span></td>
   <td><%= f.text_field :city %></td>
 </tr>
 
 <tr>
- <td>State</td>
+ <td>State <span style="color: red;">*</span></td>
   <td><%= f.text_field :state %></td>
 </tr>
 
 <tr>
- <td>Zipcode</td>
+ <td>Zipcode <span style="color: red;">*</span></td>
   <td><%= f.text_field :zipcode %></td>
 </tr>
 
 <tr>
- <td>Contact Number</td>
-  <td><%= f.text_field :contact_number %></td>
+ <td>Contact Number <span style="color: red;">*</span></td>
+  <td><%= f.text_field :contact_number %>
+  <%= f.hidden_field :email_address, :value => params[:email_address] %>
+  <%= f.hidden_field :user_id, :value => params[:id] %></td>
 </tr>
 
 <tr>
- <td>Emailid</td>
-  <td><%= f.text_field :email_address %></td>
-</tr>
-
-<tr>
-  <td><%= f.hidden_field :user_id, :value => params[:id] %></td>
+ <td>Player Level <span style="color: red;">*</span></td>
+  <td>
+ <select name="account[level_id]" id="account_level_id">
+ <option value="">Select the level</option>
+ <%@level.each do |l| %>
+ <option value="<%=l.id%>"><%=l.name%></option>
+ <%end%>
+ </select>
+</td>
 </tr>
 
 <tr>

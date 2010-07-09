@@ -1,9 +1,47 @@
+<script Language="JavaScript">
+<!--
+function form_validator(theForm)
+{
+
+
+var i;
+
+if (theForm.tournament_player_level.selectedIndex == 0)
+{
+alert("Please select one of the \"Player Level\" options.");
+theForm.tournament_player_level.focus();
+return (false);
+}
+
+var cSelected = 0;
+for (i = 0;  i < theForm.tournament_category.length;  i++)
+{
+if (theForm.tournament_category.options[i].selected)
+cSelected++;
+}
+
+if (cSelected < 1)
+{
+alert("Please select atleast one of the \"Category\" options.");
+theForm.tournament_category.focus();
+return (false);
+}
+
+if (theForm.tournament_area.selectedIndex == 0)
+{
+alert("Please select one of the \"Area\" options.");
+theForm.tournament_area.focus();
+return (false);
+}
+}
+//-->
+</script>
 <div>
 
 <h3>Tournament Registration </h3>
 
 <div>
-<% form_for(:tournament, :url => {:controller => 'tournament_players', :action => 'create'}, :html => { :multipart => true }) do |f| %>
+<% form_for(:tournament, :url => {:controller => 'tournament_players', :action => 'create'}, :html => { :onsubmit => "return form_validator(this);", :multipart => true }) do |f| %>
 <table width="95%">
 <tr>
 
@@ -80,6 +118,7 @@
  <td>Player Level</td>
   <td>
  <select name="tournament[player_level]" id="tournament_player_level" >
+   <option>Select a Level</option>
  <%@player_levels.each do |c| %>
    <option value="<%= c.id%>"><%= c.name%></option>
  <% end%>
@@ -102,6 +141,7 @@
  <td>Area</td>
   <td>
  <select name="tournament[area]" id="tournament_area" >
+   <option>Select Area</option>
  <%@area.each do |a| %>
    <option value="<%= a.id%>"><%= a.area_name%></option>
  <% end%>

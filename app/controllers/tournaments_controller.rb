@@ -6,6 +6,14 @@ protect_from_forgery :only => [:destroy]
     @tournament = Tournament.find(:all)
   end
 
+  def rss
+    table = params[:table_name].camelize.singularize
+    @results = table.constantize.find(:all)
+    @columns = table.constantize.column_names
+    render :layout => false
+    response.headers["Content-Type"] = "application/xml; charset=utf-8"
+  end
+
   def new
     @tour_category = TournamentCategory.find(:all)
   end

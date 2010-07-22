@@ -21,13 +21,16 @@
       <th>
         <span>Name\weeks</span>
       </th>
-      <% for week in schedules %>
+      <% i = 1
+      for week in schedules %>
       <th align="center" onmouseout="hideTooltip()" onmouseover="showTooltip(event,'<%= Time.at(week.start_date.to_i).strftime("%d/%m/%Y") %> - <%= Time.at(week.end_date.to_i).strftime("%d/%m/%Y") %>');return false">
         <span>
-          Week <%= week.week_number+1 %>          
+          Week <%= i %>
         </span>
       </th>
-      <% end %>
+      <%
+    i+=1
+    end %>
     </tr>
   </thead>
   <tbody>

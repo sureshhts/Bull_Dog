@@ -74,7 +74,7 @@ class UsersController < ApplicationController
       else 
         flash[:notice]="Email-id doesnt exists" 
       end   
-    end 
+    end    
   end
   
   def newpass(len)
